@@ -35,6 +35,62 @@ const STEP_META = {
     }
 };
 
+const UPPER_GRADE_WORD_BANKS = [
+    [
+        "amizade", "caderno", "janela", "professora", "coragem", "caminho", "combinado", "respeito",
+        "família", "brincadeira", "gentileza", "descoberta", "parceria", "passeio", "memória", "sonho",
+        "escuta", "curiosidade", "presença", "acolhimento"
+    ],
+    [
+        "floresta", "borboleta", "montanha", "nascente", "chuvisco", "passarinho", "semente", "manhã",
+        "horizonte", "perfume", "folhagem", "riozinho", "campina", "pétala", "silêncio", "jardineira",
+        "natureza", "brisa", "cuidado", "trilha"
+    ],
+    [
+        "planeta", "microscópio", "experiência", "energia", "galáxia", "cientista", "observação", "laboratório",
+        "satélite", "combustível", "universo", "descobrir", "hipótese", "pesquisa", "foguete", "solução",
+        "astronomia", "invenção", "protótipo", "tecnologia"
+    ],
+    [
+        "poesia", "capítulo", "personagem", "enredo", "biblioteca", "aventura", "narrativa", "leitura",
+        "mistério", "expressão", "imaginação", "autoria", "descrição", "diálogo", "memórias", "fantasia",
+        "clássico", "cultura", "palavra", "história"
+    ],
+    [
+        "atitude", "equilíbrio", "desafio", "organização", "estratégia", "perseverança", "consciência", "esforço",
+        "aprender", "planejamento", "responsável", "criatividade", "escolha", "mudança", "confiança", "propósito",
+        "autonomia", "convivência", "reflexão", "superação"
+    ]
+];
+
+const UPPER_GRADE_PSEUDO_BANKS = [
+    [
+        "lamiro", "tevano", "piruca", "noride", "beluta", "saveno", "muripe", "caluno",
+        "teriva", "jonipe", "falume", "deroca", "bineta", "soripe", "tuleca", "nerumo",
+        "valiro", "cerupa", "lomide", "fanuro"
+    ],
+    [
+        "brenita", "siluvo", "garume", "tonipa", "melavo", "purina", "veluco", "nanite",
+        "coruma", "davelo", "tirupe", "sumeca", "lorino", "pelura", "zaneco", "ferima",
+        "golupe", "maniro", "quebila", "raveno"
+    ],
+    [
+        "cloripe", "drumela", "fagiro", "nimavo", "torina", "zelume", "prenoca", "vulipe",
+        "gerano", "bretila", "someru", "lupade", "queniro", "talume", "vinoca", "murade",
+        "solipa", "drenuvo", "cafiro", "beruna"
+    ],
+    [
+        "plorina", "ganuve", "trelipo", "morenaf", "sureta", "daluvo", "pirano", "venide",
+        "lomura", "saripo", "trefina", "nolume", "barute", "cilopa", "franide", "temuro",
+        "zelipa", "corune", "virelo", "quetara"
+    ],
+    [
+        "gralume", "ponire", "catuvo", "delipa", "mureno", "salufe", "tronipa", "beluro",
+        "nemica", "frolupe", "tarino", "veluma", "pradico", "sonelu", "girape", "molina",
+        "serupe", "valeco", "durina", "colape"
+    ]
+];
+
 const state = {
     soundEnabled: true,
     audioContext: null,
@@ -130,6 +186,8 @@ const ui = {
     resetBtn: document.getElementById("resetBtn")
 };
 
+let selectionFocusSyncFrame = 0;
+
 function getYearMeta(year) {
     return YEAR_META[year] || YEAR_META[1];
 }
@@ -182,7 +240,7 @@ function getWordsListForDisplay(testData) {
     }
 
     if (state.currentYear === 4) {
-        return getRotatingDisplayWindow(testData.words_list, 20, 4);
+        return getUpperGradeBank(UPPER_GRADE_WORD_BANKS);
     }
 
     return testData.words_list;
@@ -198,7 +256,7 @@ function getPseudoWordsListForDisplay(testData) {
     }
 
     if (state.currentYear === 4) {
-        return getRotatingDisplayWindow(testData.pseudo_words, 20, 2);
+        return getUpperGradeBank(UPPER_GRADE_PSEUDO_BANKS);
     }
 
     return testData.pseudo_words;
@@ -219,6 +277,16 @@ function getEarlyLiteracySequence(list) {
             return left.index - right.index;
         })
         .map((item) => item.word);
+}
+
+function getUpperGradeBank(bankSets) {
+    if (!Array.isArray(bankSets) || bankSets.length === 0) {
+        return [];
+    }
+
+    const index = Number.isInteger(state.currentTestIndex) ? state.currentTestIndex : 0;
+    const selectedSet = bankSets[index % bankSets.length] || [];
+    return selectedSet.slice();
 }
 
 function getRotatingDisplayWindow(list, size, step) {
@@ -637,6 +705,55 @@ function renderTestSelection() {
         .join("");
 
     switchScreen("selection");
+    window.requestAnimationFrame(() => {
+        queueSelectionFocusSync();
+    });
+}
+
+function getSelectionTestCards() {
+    return Array.from(ui.selectionGrid.querySelectorAll(".selection-card--test"));
+}
+
+function syncSelectionFocusState() {
+    if (ui.selectionGrid.dataset.mode !== "tests") {
+        return;
+    }
+
+    const cards = getSelectionTestCards();
+    if (cards.length === 0) {
+        return;
+    }
+
+    const containerRect = ui.selectionGrid.getBoundingClientRect();
+    const centerY = containerRect.top + containerRect.height / 2;
+    let focusedCard = cards[0];
+    let shortestDistance = Number.POSITIVE_INFINITY;
+
+    cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(centerY - cardCenter);
+
+        if (distance < shortestDistance) {
+            shortestDistance = distance;
+            focusedCard = card;
+        }
+    });
+
+    cards.forEach((card) => {
+        card.classList.toggle("is-focus-target", card === focusedCard);
+    });
+}
+
+function queueSelectionFocusSync() {
+    if (selectionFocusSyncFrame) {
+        window.cancelAnimationFrame(selectionFocusSyncFrame);
+    }
+
+    selectionFocusSyncFrame = window.requestAnimationFrame(() => {
+        syncSelectionFocusState();
+        selectionFocusSyncFrame = 0;
+    });
 }
 
 function renderQuestions(testData) {
@@ -1136,6 +1253,14 @@ ui.selectionGrid.addEventListener("click", (event) => {
     }
 });
 
+ui.selectionGrid.addEventListener("scroll", () => {
+    if (ui.selectionGrid.dataset.mode !== "tests") {
+        return;
+    }
+
+    queueSelectionFocusSync();
+});
+
 ui.wordsGrid.addEventListener("click", (event) => {
     if (state.currentYear === 4) {
         return;
@@ -1238,6 +1363,12 @@ resetTimerVisual();
 updateSoundButtons();
 updateBoldButton();
 syncTextWeight();
-window.addEventListener("resize", () => syncQuestionsDrawer(false));
+window.addEventListener("resize", () => {
+    syncQuestionsDrawer(false);
+
+    if (ui.selectionGrid.dataset.mode === "tests") {
+        queueSelectionFocusSync();
+    }
+});
 document.addEventListener("fullscreenchange", syncFullscreenState);
 syncFullscreenState();
