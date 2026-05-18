@@ -1,4 +1,4 @@
-const CACHE_VERSION = "jojo-static-v2026-05-17-2";
+const CACHE_VERSION = "jojo-static-v2026-05-18-1";
 const APP_SHELL = [
     "./",
     "./index.html",
@@ -27,9 +27,9 @@ const APP_SHELL = [
     "./jogos/palavras/assets/jojo-eyes-logo.png",
     "./jogos/textos/",
     "./jogos/textos/index.html",
-    "./jogos/textos/styles.css",
-    "./jogos/textos/app.js",
-    "./jogos/textos/data.js",
+    "./jogos/textos/styles.css?v=2",
+    "./jogos/textos/app.js?v=2",
+    "./jogos/textos/data.js?v=2",
     "./jogos/textos/assets/jojo-eyes-logo.png",
     "./jogos/timer/",
     "./jogos/timer/index.html",
