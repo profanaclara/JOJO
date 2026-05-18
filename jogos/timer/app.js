@@ -64,7 +64,10 @@ const ui = {
     aboutParagraphs: document.getElementById("aboutParagraphs"),
     aboutBullets: document.getElementById("aboutBullets"),
     aboutFooter: document.getElementById("aboutFooter"),
-    soundToggleBtn: document.getElementById("soundToggleBtn")
+    soundToggleBtn: document.getElementById("soundToggleBtn"),
+    fullscreenBtn: document.getElementById("fullscreenBtn"),
+    exitFullscreenBtn: document.getElementById("exitFullscreenBtn"),
+    appShell: document.querySelector(".app-shell")
 };
 
 function getMode() {
@@ -184,6 +187,40 @@ function updateSoundButton() {
     ui.soundToggleBtn.innerHTML = `<span aria-hidden="true">${icon}</span><span class="sr-only">${label}</span>`;
     ui.soundToggleBtn.setAttribute("aria-label", label);
     ui.soundToggleBtn.setAttribute("aria-pressed", String(state.soundEnabled));
+}
+
+function syncFullscreenState() {
+    const isFullscreen = Boolean(document.fullscreenElement);
+    ui.body.classList.toggle("is-fullscreen", isFullscreen);
+    ui.fullscreenBtn.classList.toggle("hidden", isFullscreen);
+    ui.exitFullscreenBtn.classList.toggle("hidden", !isFullscreen);
+}
+
+async function enterFullscreen() {
+    const target = ui.appShell || document.documentElement;
+    try {
+        if (target.requestFullscreen) {
+            await target.requestFullscreen();
+        } else if (document.documentElement.requestFullscreen) {
+            await document.documentElement.requestFullscreen();
+        }
+    } catch (error) {
+        console.warn("Não foi possível entrar em tela cheia.", error);
+    } finally {
+        syncFullscreenState();
+    }
+}
+
+async function exitFullscreen() {
+    try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+            await document.exitFullscreen();
+        }
+    } catch (error) {
+        console.warn("Não foi possível sair da tela cheia.", error);
+    } finally {
+        syncFullscreenState();
+    }
 }
 
 function toggleSound() {
@@ -351,7 +388,6 @@ function selectMode(modeId) {
     ui.setupTitle.textContent = mode.title;
     ui.setupSubtitle.textContent = mode.subtitle;
     ui.setupSubtitle.classList.toggle("hidden", !mode.subtitle);
-    ui.hoursInput.focus();
     updateSetupPreview();
 }
 
@@ -446,9 +482,13 @@ function updateTimerStatus() {
 
     renderDestination(mode);
     ui.countdownValue.textContent = formatTime(state.remainingSeconds);
-    ui.totalTimeValue.textContent = formatTime(state.totalSeconds);
+    if (ui.totalTimeValue) {
+        ui.totalTimeValue.textContent = formatTime(state.totalSeconds);
+    }
     ui.elapsedTimeValue.textContent = formatTime(elapsed);
-    ui.progressPercent.textContent = `${Math.round(progressRatio * 100)}%`;
+    if (ui.progressPercent) {
+        ui.progressPercent.textContent = `${Math.round(progressRatio * 100)}%`;
+    }
     ui.journeyMessage.textContent = getJourneyMessage(progressRatio);
     ui.timerStatusText.textContent = state.isPaused ? "Timer pausado" : getJourneyMessage(progressRatio);
 
@@ -618,9 +658,11 @@ ui.backHomeBtn.addEventListener("click", backToHome);
 ui.finishNewTimerBtn.addEventListener("click", backToHome);
 ui.finishSameModeBtn.addEventListener("click", repeatSameMode);
 ui.soundToggleBtn.addEventListener("click", toggleSound);
+ui.fullscreenBtn.addEventListener("click", enterFullscreen);
+ui.exitFullscreenBtn.addEventListener("click", exitFullscreen);
 
 ui.openInfoBtn.addEventListener("click", openInfoModal);
-ui.openInfoTimerBtn.addEventListener("click", openInfoModal);
+ui.openInfoTimerBtn?.addEventListener("click", openInfoModal);
 ui.closeInfoBtn.addEventListener("click", closeInfoModal);
 ui.infoModal.addEventListener("click", (event) => {
     if (event.target === ui.infoModal || event.target.classList.contains("modal__backdrop")) {
@@ -629,6 +671,13 @@ ui.infoModal.addEventListener("click", (event) => {
 });
 
 window.addEventListener("resize", () => {
+    if (!ui.timerScreen.classList.contains("hidden")) {
+        updateTimerStatus();
+    }
+});
+
+document.addEventListener("fullscreenchange", () => {
+    syncFullscreenState();
     if (!ui.timerScreen.classList.contains("hidden")) {
         updateTimerStatus();
     }
@@ -649,3 +698,4 @@ renderAboutModal();
 updateSoundButton();
 resetInputs();
 buildMilestones();
+syncFullscreenState();

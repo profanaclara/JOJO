@@ -3,8 +3,8 @@ const { words, benchmarks } = window.JOJO_PALAVRAS_DATA;
 const state = {
     soundEnabled: true,
     audioContext: null,
-    mode: null,
-    letter: null,
+    mode: "timed",
+    letter: "lowercase",
     screen: "home",
     session: createIdleSession()
 };
@@ -19,9 +19,13 @@ const ui = {
     openInfoBtn: document.getElementById("openInfoBtn"),
     closeInfoBtn: document.getElementById("closeInfoBtn"),
     toggleSoundBtn: document.getElementById("toggleSoundBtn"),
+    fullscreenBtn: document.getElementById("fullscreenBtn"),
+    exitFullscreenBtn: document.getElementById("exitFullscreenBtn"),
     sessionSoundBtn: document.getElementById("sessionSoundBtn"),
     rotateScreenBtn: document.getElementById("rotateScreenBtn"),
-    startButtons: [...document.querySelectorAll("[data-start-mode]")],
+    letterButtons: [...document.querySelectorAll("[data-letter-option]")],
+    modeButtons: [...document.querySelectorAll("[data-mode-option]")],
+    startSessionBtn: document.getElementById("startSessionBtn"),
     backHomeBtn: document.getElementById("backHomeBtn"),
     nextBtn: document.getElementById("nextBtn"),
     skipBtn: document.getElementById("skipBtn"),
@@ -44,7 +48,8 @@ const ui = {
     resultPace: document.getElementById("resultPace"),
     resultSummary: document.getElementById("resultSummary"),
     resultSkippedBox: document.getElementById("resultSkippedBox"),
-    resultSkippedWords: document.getElementById("resultSkippedWords")
+    resultSkippedWords: document.getElementById("resultSkippedWords"),
+    appShell: document.querySelector(".app-shell")
 };
 
 function createIdleSession() {
@@ -121,6 +126,20 @@ function updateSoundButtons() {
     ui.sessionSoundBtn.setAttribute("aria-label", label);
     ui.toggleSoundBtn.setAttribute("aria-pressed", String(state.soundEnabled));
     ui.sessionSoundBtn.setAttribute("aria-pressed", String(state.soundEnabled));
+}
+
+function renderHomeSelections() {
+    ui.letterButtons.forEach((button) => {
+        const isActive = button.dataset.letterOption === state.letter;
+        button.classList.toggle("is-selected", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    ui.modeButtons.forEach((button) => {
+        const isActive = button.dataset.modeOption === state.mode;
+        button.classList.toggle("is-selected", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+    });
 }
 
 function ensureAudioContext() {
@@ -206,6 +225,40 @@ function switchScreen(nextScreen) {
     ui.resultScreen.classList.toggle("hidden", nextScreen !== "result");
     ui.body.classList.toggle("session-active", nextScreen === "session");
     ui.body.classList.toggle("result-active", nextScreen === "result");
+    syncFullscreenState();
+}
+
+function syncFullscreenState() {
+    const isFullscreen = Boolean(document.fullscreenElement);
+    const sessionVisible = state.screen === "session";
+    ui.body.classList.toggle("is-fullscreen", isFullscreen);
+    ui.fullscreenBtn.classList.toggle("hidden", isFullscreen || !sessionVisible);
+    ui.exitFullscreenBtn.classList.toggle("hidden", !isFullscreen || !sessionVisible);
+}
+
+async function enterFullscreen() {
+    const target = ui.appShell || document.documentElement;
+    try {
+        if (target.requestFullscreen) {
+            await target.requestFullscreen();
+        }
+    } catch (error) {
+        console.warn("Nao foi possivel entrar em tela cheia.", error);
+    } finally {
+        syncFullscreenState();
+    }
+}
+
+async function exitFullscreen() {
+    try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+            await document.exitFullscreen();
+        }
+    } catch (error) {
+        console.warn("Nao foi possivel sair da tela cheia.", error);
+    } finally {
+        syncFullscreenState();
+    }
 }
 
 function openInfoModal() {
@@ -453,17 +506,37 @@ function retrySession() {
     startSession(state.mode, state.letter);
 }
 
-ui.startButtons.forEach((button) => {
+ui.letterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        ensureAudioContext();
+        state.letter = button.dataset.letterOption;
+        renderHomeSelections();
         if (state.soundEnabled) {
             playToggleSound();
         }
-        startSession(button.dataset.startMode, button.dataset.letter);
     });
 });
 
+ui.modeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        state.mode = button.dataset.modeOption;
+        renderHomeSelections();
+        if (state.soundEnabled) {
+            playToggleSound();
+        }
+    });
+});
+
+ui.startSessionBtn.addEventListener("click", () => {
+    ensureAudioContext();
+    if (state.soundEnabled) {
+        playToggleSound();
+    }
+    startSession(state.mode, state.letter);
+});
+
 ui.toggleSoundBtn.addEventListener("click", toggleSound);
+ui.fullscreenBtn.addEventListener("click", enterFullscreen);
+ui.exitFullscreenBtn.addEventListener("click", exitFullscreen);
 ui.sessionSoundBtn.addEventListener("click", toggleSound);
 ui.rotateScreenBtn.addEventListener("click", requestLandscapeOrientation);
 ui.openInfoBtn.addEventListener("click", openInfoModal);
@@ -485,6 +558,8 @@ document.addEventListener("keydown", (event) => {
     if (state.screen !== "session") {
         if (event.key === "Escape" && !ui.infoModal.classList.contains("hidden")) {
             closeInfoModal();
+        } else if (event.key === "Escape" && document.fullscreenElement) {
+            exitFullscreen();
         }
         return;
     }
@@ -512,3 +587,6 @@ document.addEventListener("keydown", (event) => {
 
 renderBenchmarks();
 updateSoundButtons();
+renderHomeSelections();
+document.addEventListener("fullscreenchange", syncFullscreenState);
+syncFullscreenState();

@@ -20,18 +20,19 @@
     <div class="app-shell">
         <div id="homeScreen" class="screen screen--home">
             <div class="home-top-actions">
-                <a class="ghost-button ghost-button--pill utility-button" href="../../" aria-label="Voltar à JOJO">
-                    <span aria-hidden="true">⌂</span>
-                    <span class="sr-only">Voltar à JOJO</span>
+                <a class="brand-link" href="../../" aria-label="Voltar à JOJO">
+                    <img src="../../assets/jojo-horizontal.svg" alt="JOJO">
                 </a>
-                <button id="openInfoBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Abrir ajuda">
-                    <span aria-hidden="true">?</span>
-                    <span class="sr-only">Abrir ajuda</span>
-                </button>
-                <button id="toggleSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                    <span aria-hidden="true">🔊</span>
-                    <span class="sr-only">Som ligado</span>
-                </button>
+                <div class="home-top-actions__group">
+                    <button id="openInfoBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Abrir ajuda">
+                        <span aria-hidden="true">?</span>
+                        <span class="sr-only">Abrir ajuda</span>
+                    </button>
+                    <button id="toggleSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
+                        <span aria-hidden="true">🔊</span>
+                        <span class="sr-only">Som ligado</span>
+                    </button>
+                </div>
             </div>
 
             <div class="home-decor" aria-hidden="true">
@@ -44,91 +45,54 @@
             </div>
 
             <header class="hero">
-                <div class="brand">
-                    <img src="./assets/jojo-eyes-logo.png" alt="Logo JOJO" class="brand__logo">
-                    <div class="brand__copy">
-                        <p class="eyebrow">JOJO</p>
-                        <h1>Teste de Fluência Leitora</h1>
-                        <p class="hero__text">Escolha e comece.</p>
+                <div class="brand brand--home">
+                    <div class="brand__copy brand__copy--home">
+                        <h1>Teste de Leitura</h1>
+                        <p class="hero__subheading">Palavras</p>
                     </div>
                 </div>
             </header>
 
-            <section class="mode-section">
-                <div class="section-heading section-heading--stack">
-                    <p class="eyebrow">⏱</p>
-                    <h2>1 minuto</h2>
-                    <p class="section-text">Ritmo rápido.</p>
+            <section class="setup-panel" aria-label="Configuração do jogo">
+                <div class="setup-group">
+                    <span class="setup-group__label">Letra</span>
+                    <div class="setup-options setup-options--letters">
+                        <button class="option-card is-selected" type="button" data-letter-option="lowercase" aria-pressed="true">
+                            <span class="option-card__icon">abc</span>
+                            <span class="option-card__label">Minúscula</span>
+                        </button>
+                        <button class="option-card" type="button" data-letter-option="uppercase" aria-pressed="false">
+                            <span class="option-card__icon">ABC</span>
+                            <span class="option-card__label">Maiúscula</span>
+                        </button>
+                        <button class="option-card" type="button" data-letter-option="cursive" aria-pressed="false">
+                            <span class="option-card__icon option-card__icon--cursive">Aa</span>
+                            <span class="option-card__label">Cursiva</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="selection-grid">
-                    <button class="mode-card mode-card--timed-lower" type="button" data-start-mode="timed" data-letter="lowercase">
-                        <span class="mode-card__icon">abc</span>
-                        <strong>LETRA IMPRESSA</strong>
-                        <span class="mode-card__subtitle">minúscula</span>
-                        <div class="mode-card__preview">
-                            <p>casa • bola • pato</p>
-                            <p>gato • mala • coco</p>
-                        </div>
-                    </button>
-                    <button class="mode-card mode-card--timed-upper" type="button" data-start-mode="timed" data-letter="uppercase">
-                        <span class="mode-card__icon">AB<br>CD</span>
-                        <strong>LETRA IMPRESSA</strong>
-                        <span class="mode-card__subtitle">MAIÚSCULA</span>
-                        <div class="mode-card__preview">
-                            <p>CASA • BOLA • PATO</p>
-                            <p>GATO • MALA • COCO</p>
-                        </div>
-                    </button>
-                    <button class="mode-card mode-card--timed-cursive" type="button" data-start-mode="timed" data-letter="cursive">
-                        <span class="mode-card__icon mode-card__icon--cursive">Aa</span>
-                        <strong>LETRA CURSIVA</strong>
-                        <span class="mode-card__subtitle">manuscrita</span>
-                        <div class="mode-card__preview mode-card__preview--cursive">
-                            <p>casa • bola • pato</p>
-                            <p>gato • mala • coco</p>
-                        </div>
-                    </button>
+                <div class="setup-group">
+                    <span class="setup-group__label">Tempo</span>
+                    <div class="setup-options setup-options--mode">
+                        <button class="option-card option-card--mode is-selected" type="button" data-mode-option="timed" aria-pressed="true">
+                            <span class="option-card__icon">⏱</span>
+                            <span class="option-card__label">Com cronômetro</span>
+                        </button>
+                        <button class="option-card option-card--mode" type="button" data-mode-option="free" aria-pressed="false">
+                            <span class="option-card__icon">∞</span>
+                            <span class="option-card__label">Sem cronômetro</span>
+                        </button>
+                    </div>
                 </div>
+
+                <button id="startSessionBtn" class="primary-button start-session-button" type="button">Começar</button>
             </section>
 
-            <section class="mode-section">
-                <div class="section-heading section-heading--stack">
-                    <p class="eyebrow">🌿</p>
-                    <h2>Livre</h2>
-                    <p class="section-text">No seu tempo.</p>
-                </div>
-
-                <div class="selection-grid">
-                    <button class="mode-card mode-card--free-lower" type="button" data-start-mode="free" data-letter="lowercase">
-                        <span class="mode-card__icon">abc</span>
-                        <strong>LETRA IMPRESSA</strong>
-                        <span class="mode-card__subtitle">minúscula</span>
-                        <div class="mode-card__preview">
-                            <p>casa • bola • pato</p>
-                            <p>gato • mala • coco</p>
-                        </div>
-                    </button>
-                    <button class="mode-card mode-card--free-upper" type="button" data-start-mode="free" data-letter="uppercase">
-                        <span class="mode-card__icon">AB<br>CD</span>
-                        <strong>LETRA IMPRESSA</strong>
-                        <span class="mode-card__subtitle">MAIÚSCULA</span>
-                        <div class="mode-card__preview">
-                            <p>CASA • BOLA • PATO</p>
-                            <p>GATO • MALA • COCO</p>
-                        </div>
-                    </button>
-                    <button class="mode-card mode-card--free-cursive" type="button" data-start-mode="free" data-letter="cursive">
-                        <span class="mode-card__icon mode-card__icon--cursive">Aa</span>
-                        <strong>LETRA CURSIVA</strong>
-                        <span class="mode-card__subtitle">manuscrita</span>
-                        <div class="mode-card__preview mode-card__preview--cursive">
-                            <p>casa • bola • pato</p>
-                            <p>gato • mala • coco</p>
-                        </div>
-                    </button>
-                </div>
-            </section>
+            <footer class="home-footer" aria-label="Créditos do jogo">
+                <img class="home-footer__logo" src="../../assets/logo-profanapixelart.png" alt="Logo Ana Clara Silva de Lima">
+                <p>Idealizado por Ana Clara Silva de Lima</p>
+            </footer>
         </div>
 
         <div id="sessionScreen" class="screen screen--session hidden" data-mode="timed">
@@ -147,6 +111,14 @@
                         <button id="sessionSoundBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-pressed="true" aria-label="Som ligado">
                             <span aria-hidden="true">🔊</span>
                             <span class="sr-only">Som ligado</span>
+                        </button>
+                        <button id="fullscreenBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-label="Entrar em tela cheia">
+                            <span aria-hidden="true">⛶</span>
+                            <span class="sr-only">Entrar em tela cheia</span>
+                        </button>
+                        <button id="exitFullscreenBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light hidden" type="button" aria-label="Sair da tela cheia">
+                            <span aria-hidden="true">⤫</span>
+                            <span class="sr-only">Sair da tela cheia</span>
                         </button>
                         <button id="rotateScreenBtn" class="ghost-button ghost-button--small ghost-button--light orientation-button utility-button utility-button--light" type="button" aria-label="Girar para horizontal">
                             <span aria-hidden="true">↔</span>

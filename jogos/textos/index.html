@@ -19,90 +19,72 @@
 <body>
     <div class="app-shell">
         <div id="homeScreen" class="screen screen--home">
-            <div class="home-top-actions">
-                <a class="ghost-button ghost-button--pill utility-button" href="../../" aria-label="Voltar à JOJO">
-                    <span aria-hidden="true">⌂</span>
-                    <span class="sr-only">Voltar à JOJO</span>
+            <div class="screen-topbar">
+                <a class="brand-link" href="../../" aria-label="Voltar à JOJO">
+                    <img src="../../assets/jojo-horizontal.svg" alt="JOJO" class="brand-link__logo">
                 </a>
-                <button id="openInfoBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Abrir ajuda">
-                    <span aria-hidden="true">?</span>
-                    <span class="sr-only">Abrir ajuda</span>
-                </button>
-                <button id="toggleSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                    <span aria-hidden="true">🔊</span>
-                    <span class="sr-only">Som ligado</span>
-                </button>
-            </div>
-
-            <div class="home-decor" aria-hidden="true">
-                <span class="home-decor__emoji home-decor__emoji--left">📚</span>
-                <span class="home-decor__emoji home-decor__emoji--right">✨</span>
-                <span class="home-decor__emoji home-decor__emoji--bottom">🏆</span>
-                <span class="home-decor__dot home-decor__dot--yellow"></span>
-                <span class="home-decor__dot home-decor__dot--pink"></span>
-                <span class="home-decor__dot home-decor__dot--blue"></span>
+                <div class="home-top-actions">
+                    <button id="openInfoBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Abrir ajuda">
+                        <span aria-hidden="true">?</span>
+                        <span class="sr-only">Abrir ajuda</span>
+                    </button>
+                    <button id="toggleSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
+                        <span aria-hidden="true">🔊</span>
+                        <span class="sr-only">Som ligado</span>
+                    </button>
+                </div>
             </div>
 
             <header class="hero">
                 <div class="brand">
-                    <img src="./assets/jojo-eyes-logo.png" alt="Logo JOJO" class="brand__logo">
                     <div class="brand__copy">
-                        <p class="eyebrow">JOJO | Língua Portuguesa</p>
                         <h1>Simulado de Fluência Leitora</h1>
                     </div>
                 </div>
             </header>
 
             <section class="mode-section">
-                <div class="section-heading section-heading--stack">
-                    <p class="eyebrow">🧭</p>
-                    <h2>Ano escolar</h2>
-                </div>
-
                 <div class="year-grid">
                     <button class="year-card year-card--one" type="button" data-year="1">
                         <span class="year-card__icon">🌱</span>
                         <strong>1º Ano</strong>
-                        <span>Textos curtos e início da fluência.</span>
                     </button>
                     <button class="year-card year-card--two" type="button" data-year="2">
                         <span class="year-card__icon">🌿</span>
                         <strong>2º Ano</strong>
-                        <span>Mais ritmo, precisão e compreensão.</span>
                     </button>
                     <button class="year-card year-card--three" type="button" data-year="3">
                         <span class="year-card__icon">🌳</span>
                         <strong>3º Ano</strong>
-                        <span>Séries A e B para percursos diferentes.</span>
                     </button>
                     <button class="year-card year-card--four" type="button" data-year="4">
                         <span class="year-card__icon">🌟</span>
                         <strong>4º e 5º Ano</strong>
-                        <span>Mais volume, automação e desafio.</span>
                     </button>
                 </div>
             </section>
 
             <div class="credits-strip">
-                <img src="./assets/jojo-eyes-logo.png" alt="JOJO">
+                <img src="../../assets/logo-profanapixelart.png" alt="Logo Prof Ana Clara">
                 <p>Idealizado por Ana Clara Silva de Lima</p>
             </div>
         </div>
 
         <div id="selectionScreen" class="screen screen--selection hidden">
-            <div class="home-top-actions">
-                <button id="selectionBackBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Voltar">
-                    <span aria-hidden="true">←</span>
-                    <span class="sr-only">Voltar</span>
+            <div class="screen-topbar">
+                <button id="selectionBackBtn" class="brand-link brand-link--button" type="button" aria-label="Voltar">
+                    <img src="../../assets/jojo-horizontal.svg" alt="JOJO" class="brand-link__logo">
                 </button>
-                <button id="selectionInfoBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Abrir ajuda">
-                    <span aria-hidden="true">?</span>
-                    <span class="sr-only">Abrir ajuda</span>
-                </button>
-                <button id="selectionSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                    <span aria-hidden="true">🔊</span>
-                    <span class="sr-only">Som ligado</span>
-                </button>
+                <div class="home-top-actions">
+                    <button id="selectionInfoBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Abrir ajuda">
+                        <span aria-hidden="true">?</span>
+                        <span class="sr-only">Abrir ajuda</span>
+                    </button>
+                    <button id="selectionSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
+                        <span aria-hidden="true">🔊</span>
+                        <span class="sr-only">Som ligado</span>
+                    </button>
+                </div>
             </div>
 
             <section class="surface-card selection-panel">
@@ -110,6 +92,11 @@
                 <h2 id="selectionTitle"></h2>
                 <div id="selectionGrid" class="selection-card-grid"></div>
             </section>
+
+            <div class="credits-strip credits-strip--selection">
+                <img src="../../assets/logo-profanapixelart.png" alt="Logo Prof Ana Clara">
+                <p>Idealizado por Ana Clara Silva de Lima</p>
+            </div>
         </div>
 
         <div id="sessionScreen" class="screen screen--session hidden">
@@ -119,7 +106,6 @@
                 <div class="session-center">
                     <p id="sessionEyebrow" class="session-pill"></p>
                     <div id="sessionHeading" class="session-heading"></div>
-                    <p id="sessionCode" class="session-caption"></p>
                 </div>
 
                 <div class="session-tools">
@@ -131,6 +117,10 @@
                         <span aria-hidden="true">𝐁</span>
                         <span class="sr-only">Ativar texto em negrito</span>
                     </button>
+                    <button id="toggleFullscreenBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-label="Entrar em tela cheia" title="Tela cheia">
+                        <span aria-hidden="true">⛶</span>
+                        <span class="sr-only">Entrar em tela cheia</span>
+                    </button>
                     <button id="rotateScreenBtn" class="ghost-button ghost-button--small ghost-button--light orientation-button utility-button utility-button--light" type="button" aria-label="Girar para horizontal">
                         <span aria-hidden="true">↔</span>
                         <span class="sr-only">Girar para horizontal</span>
@@ -140,14 +130,9 @@
 
             <section class="surface-card session-summary">
                 <div class="session-toolbar">
-                    <div>
-                        <p id="sessionStepHint" class="eyebrow"></p>
-                        <h2>Acompanhe tempo e erros</h2>
-                    </div>
+                    <div id="stepNavigation" class="step-nav"></div>
                     <button id="backToSelectionBtn" class="text-link-button" type="button">Voltar aos testes</button>
                 </div>
-
-                <div id="stepNavigation" class="step-nav"></div>
 
                 <div class="stats-row">
                     <article class="stat-card">
@@ -164,15 +149,39 @@
             </section>
 
             <div class="control-dock">
-                <button id="startBtn" class="control-button control-button--start" type="button">Iniciar</button>
-                <button id="stopBtn" class="control-button control-button--stop" type="button" disabled>Parar</button>
-                <button id="errorBtn" class="control-button control-button--warn" type="button">+1 Erro</button>
-                <button id="resetBtn" class="control-button control-button--reset" type="button">Reset</button>
+                <button id="startBtn" class="control-button control-button--start" type="button" aria-label="Iniciar" title="Iniciar">
+                    <span aria-hidden="true">▶</span>
+                    <span class="sr-only">Iniciar</span>
+                </button>
+                <button id="stopBtn" class="control-button control-button--stop" type="button" disabled aria-label="Parar" title="Parar">
+                    <span aria-hidden="true">⏸</span>
+                    <span class="sr-only">Parar</span>
+                </button>
+                <button id="errorBtn" class="control-button control-button--warn" type="button" aria-label="Marcar erro" title="Marcar erro">
+                    <span aria-hidden="true">✕</span>
+                    <span class="sr-only">Marcar erro</span>
+                </button>
+                <button id="resetBtn" class="control-button control-button--reset" type="button" aria-label="Reiniciar" title="Reiniciar">
+                    <span aria-hidden="true">↺</span>
+                    <span class="sr-only">Reiniciar</span>
+                </button>
+            </div>
+
+            <button id="exitFullscreenBtn" class="fullscreen-exit hidden" type="button" aria-label="Sair da tela cheia" title="Sair da tela cheia">
+                <span aria-hidden="true">✕</span>
+                <span class="sr-only">Sair da tela cheia</span>
+            </button>
+
+            <div id="fullscreenTimerDock" class="fullscreen-timer hidden" aria-hidden="true">
+                <strong id="fullscreenTimerValue">00:00</strong>
+            </div>
+
+            <div id="fullscreenErrorDock" class="fullscreen-error hidden" aria-hidden="true">
+                <strong id="fullscreenErrorValue">0</strong>
+                <span>Erros</span>
             </div>
 
             <section id="textStep" class="surface-card step-panel">
-                <h3 class="step-title">📖 Leitura do Texto</h3>
-
                 <div class="text-stage">
                     <h4 id="textTitle"></h4>
                     <div id="readingText" class="reading-text"></div>
@@ -180,16 +189,15 @@
 
                 <div class="content-grid">
                     <article class="info-box">
-                        <h4>📋 Critérios de avaliação</h4>
+                        <h4>Critérios</h4>
                         <div class="criteria-list">
-                            <p><strong>Prosódia:</strong> Ritmo e entonação adequados.</p>
                             <p><strong>Precisão:</strong> <span id="criteriaMaxErrors"></span></p>
                             <p><strong>Tempo:</strong> <span id="criteriaMaxTime"></span></p>
                         </div>
                     </article>
 
                     <details id="questionsDetails" class="info-box info-box--questions questions-drawer" open>
-                        <summary class="questions-drawer__summary">❓ Perguntas de compreensão</summary>
+                        <summary class="questions-drawer__summary">Perguntas</summary>
                         <div class="questions-drawer__content">
                             <div id="questions" class="question-list"></div>
                             <button id="checkAnswersBtn" class="primary-button question-check-button" type="button">Verificar respostas</button>
@@ -200,9 +208,6 @@
             </section>
 
             <section id="wordsStep" class="surface-card step-panel hidden">
-                <h3 class="step-title">📝 Leitura de Palavras</h3>
-                <p class="step-text">Treine o reconhecimento rápido das palavras antes de seguir para a próxima etapa.</p>
-
                 <div id="wordsGrid" class="chip-grid"></div>
 
                 <div id="autoWordsInterface" class="auto-panel hidden">
@@ -212,8 +217,14 @@
                             <strong><span id="wordCounter">0</span> de <span id="totalWords">0</span></strong>
                         </div>
                         <div class="auto-panel__actions">
-                            <button id="startAutoWords" class="primary-button" type="button">Iniciar palavras</button>
-                            <button id="markNotRead" class="secondary-button" type="button" disabled>Não leu</button>
+                            <button id="startAutoWords" class="primary-button auto-action-button" type="button" aria-label="Iniciar palavras" title="Iniciar palavras">
+                                <span aria-hidden="true">▶</span>
+                                <span class="sr-only">Iniciar palavras</span>
+                            </button>
+                            <button id="markNotRead" class="secondary-button auto-action-button" type="button" disabled aria-label="Marcar como não lida" title="Marcar como não lida">
+                                <span aria-hidden="true">✕</span>
+                                <span class="sr-only">Marcar como não lida</span>
+                            </button>
                         </div>
                     </div>
 
@@ -228,9 +239,6 @@
             </section>
 
             <section id="pseudoStep" class="surface-card step-panel hidden">
-                <h3 class="step-title">🔤 Leitura de Pseudopalavras</h3>
-                <p class="step-text">Palavras inventadas que seguem as regras do português e ajudam a avaliar a decodificação.</p>
-
                 <div id="pseudoGrid" class="chip-grid chip-grid--pseudo"></div>
 
                 <div id="autoPseudoInterface" class="auto-panel hidden">
@@ -240,8 +248,14 @@
                             <strong><span id="pseudoCounter">0</span> de <span id="totalPseudos">0</span></strong>
                         </div>
                         <div class="auto-panel__actions">
-                            <button id="startAutoPseudos" class="primary-button" type="button">Iniciar pseudopalavras</button>
-                            <button id="markPseudoNotRead" class="secondary-button" type="button" disabled>Não leu</button>
+                            <button id="startAutoPseudos" class="primary-button auto-action-button" type="button" aria-label="Iniciar pseudopalavras" title="Iniciar pseudopalavras">
+                                <span aria-hidden="true">▶</span>
+                                <span class="sr-only">Iniciar pseudopalavras</span>
+                            </button>
+                            <button id="markPseudoNotRead" class="secondary-button auto-action-button" type="button" disabled aria-label="Marcar como não lida" title="Marcar como não lida">
+                                <span aria-hidden="true">✕</span>
+                                <span class="sr-only">Marcar como não lida</span>
+                            </button>
                         </div>
                     </div>
 
@@ -268,15 +282,13 @@
                 </div>
 
                 <div class="modal__content">
-                    <p>Este jogo foi pensado para treinar fluência leitora com a mesma lógica de um simulado: texto, compreensão, palavras e pseudopalavras.</p>
+                    <p>Use o jogo de forma rápida e direta.</p>
                     <ul class="bullet-list">
-                        <li>Escolha o ano escolar e depois o teste desejado.</li>
-                        <li>Use o cronômetro para acompanhar o tempo da leitura.</li>
-                        <li>Marque erros durante a aplicação sem perder o foco no texto.</li>
-                        <li>No 4º e 5º ano, as listas podem ser exibidas automaticamente em sequência.</li>
-                        <li>Os sons ajudam a sinalizar começo, erros, conferência e avisos.</li>
+                        <li>Escolha o ano e depois o texto.</li>
+                        <li>Use o cronômetro e marque erros durante a leitura.</li>
+                        <li>Nas etapas de palavras e pseudopalavras, toque para destacar ou use o avanço automático.</li>
+                        <li>O som sinaliza início, erro e conferência.</li>
                     </ul>
-                    <p>O conteúdo dos testes foi mantido como na versão original; aqui nós melhoramos a experiência visual, a navegação e a organização do código.</p>
                 </div>
             </div>
         </div>

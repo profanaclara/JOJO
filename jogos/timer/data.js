@@ -3,7 +3,7 @@ window.JOJO_TIMER_DATA = {
         lanche: {
             id: "lanche",
             eyebrow: "",
-            title: "TÁ QUASE NA HORA DO LANCHINHO",
+            title: "LANCHE",
             subtitle: "",
             cardDescription: "",
             accentClass: "is-lanche",
@@ -35,7 +35,7 @@ window.JOJO_TIMER_DATA = {
         casa: {
             id: "casa",
             eyebrow: "",
-            title: "TÁ QUASE NA HORA DE IR PARA CASA",
+            title: "CASA",
             subtitle: "",
             cardDescription: "",
             accentClass: "is-casa",

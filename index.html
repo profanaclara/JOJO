@@ -22,24 +22,33 @@
         <main class="app-screen">
             <header class="brand-hero">
                 <img
-                    class="brand-hero__logo"
-                    src="./assets/jojo-eyes-logo.png"
-                    alt="Logo JOJO"
+                    class="brand-hero__logo brand-hero__logo--horizontal"
+                    src="./assets/jojo-horizontal.svg"
+                    alt="JOJO"
                 >
-                <div class="brand-hero__copy">
-                    <p class="brand-hero__eyebrow">Plataforma de jogos e ferramentas assistivas</p>
-                    <h1>JOJO</h1>
-                </div>
             </header>
 
             <section class="home-actions" aria-label="Acesso rápido da plataforma">
-                <button class="home-action" type="button" data-section="games">Jogos</button>
-                <button class="home-action" type="button" data-section="tools">Ferramentas de apoio</button>
-                <button class="home-action" type="button" data-section="freeReading">Leitura livre</button>
-                <button class="home-action home-action--about" type="button" data-section="about">Sobre</button>
+                <button class="home-action home-action--games" type="button" data-section="games">
+                    <img class="home-action__icon home-action__icon--controle" src="./assets/controle.svg" alt="" aria-hidden="true">
+                    <span class="home-action__label">Jogos</span>
+                </button>
+                <button class="home-action home-action--tools" type="button" data-section="tools">
+                    <img class="home-action__icon home-action__icon--cerebro" src="./assets/cerebro.png" alt="" aria-hidden="true">
+                    <span class="home-action__label">Ferramentas</span>
+                </button>
             </section>
 
             <button id="installAppBtn" class="install-app-button" type="button" hidden>Baixar app JOJO</button>
+
+            <footer class="app-footer" aria-label="Créditos da plataforma">
+                <img
+                    class="app-footer__logo"
+                    src="./assets/logo-profanapixelart.png"
+                    alt="Logo Ana Clara Silva de Lima"
+                >
+                <p>Desenvolvido por Ana Clara Silva de Lima</p>
+            </footer>
         </main>
 
         <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>

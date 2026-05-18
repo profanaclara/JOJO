@@ -1,4 +1,4 @@
-const CACHE_VERSION = "jojo-static-v2026-05-16-1";
+const CACHE_VERSION = "jojo-static-v2026-05-17-2";
 const APP_SHELL = [
     "./",
     "./index.html",
@@ -9,6 +9,11 @@ const APP_SHELL = [
     "./scripts/data.js",
     "./scripts/pwa.js",
     "./assets/jojo-eyes-logo.png",
+    "./assets/jojo-horizontal.svg",
+    "./assets/jojologo-fundo-branco.svg",
+    "./assets/logo-profanapixelart.png",
+    "./assets/controle.svg",
+    "./assets/cerebro.png",
     "./assets/fonts/Maria_lucia.woff2",
     "./assets/icon-192.png",
     "./assets/icon-512.png",
@@ -33,6 +38,7 @@ const APP_SHELL = [
     "./jogos/timer/data.js",
     "./jogos/timer/assets/jojo-eyes-logo.png",
     "./jogos/timer/assets/carnes.gif",
+    "./jogos/timer/assets/comida.svg",
     "./jogos/timer/assets/casa.gif",
     "./jogos/timer/assets/coracao-com-fome.gif",
     "./jogos/timer/assets/coracao-feliz.gif",

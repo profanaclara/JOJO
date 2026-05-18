@@ -1,44 +1,37 @@
-const { testSeries, testsData } = window.JOJO_TEXTOS_DATA;
+const { testsData } = window.JOJO_TEXTOS_DATA;
 
 const YEAR_META = {
     1: {
         label: "1º Ano",
-        eyebrow: "Ano escolar",
         icon: "🌱",
-        subtitle: "Textos curtos, leitura guiada e começo da fluência."
+        subtitle: ""
     },
     2: {
         label: "2º Ano",
-        eyebrow: "Ano escolar",
         icon: "🌿",
-        subtitle: "Mais ritmo, precisão e perguntas de compreensão."
+        subtitle: ""
     },
     3: {
         label: "3º Ano",
-        eyebrow: "Ano escolar",
         icon: "🌳",
-        subtitle: "Séries A e B para percursos diferentes de leitura."
+        subtitle: ""
     },
     4: {
         label: "4º e 5º Ano",
-        eyebrow: "Ano escolar",
         icon: "🌟",
-        subtitle: "Sessões longas, leitura automática e mais desafio."
+        subtitle: ""
     }
 };
 
 const STEP_META = {
     text: {
-        title: "Texto",
-        hint: "Leia o texto, acompanhe o tempo e confira a compreensão."
+        title: "Texto"
     },
     words: {
-        title: "Palavras",
-        hint: "Treine a leitura rápida das palavras com foco e precisão."
+        title: "Palavras"
     },
     pseudo: {
-        title: "Pseudopalavras",
-        hint: "Observe a decodificação com palavras inventadas."
+        title: "Pseudopalavras"
     }
 };
 
@@ -64,7 +57,9 @@ const state = {
     currentWordIndex: 0,
     currentPseudoIndex: 0,
     wordsNotRead: [],
-    pseudosNotRead: []
+    pseudosNotRead: [],
+    selectedWords: [],
+    selectedPseudos: []
 };
 
 const ui = {
@@ -80,6 +75,12 @@ const ui = {
     selectionSoundBtn: document.getElementById("selectionSoundBtn"),
     sessionSoundBtn: document.getElementById("sessionSoundBtn"),
     toggleBoldBtn: document.getElementById("toggleBoldBtn"),
+    toggleFullscreenBtn: document.getElementById("toggleFullscreenBtn"),
+    exitFullscreenBtn: document.getElementById("exitFullscreenBtn"),
+    fullscreenTimerDock: document.getElementById("fullscreenTimerDock"),
+    fullscreenTimerValue: document.getElementById("fullscreenTimerValue"),
+    fullscreenErrorDock: document.getElementById("fullscreenErrorDock"),
+    fullscreenErrorValue: document.getElementById("fullscreenErrorValue"),
     rotateScreenBtn: document.getElementById("rotateScreenBtn"),
     selectionBackBtn: document.getElementById("selectionBackBtn"),
     selectionEyebrow: document.getElementById("selectionEyebrow"),
@@ -88,8 +89,6 @@ const ui = {
     sessionHomeBtn: document.getElementById("sessionHomeBtn"),
     sessionEyebrow: document.getElementById("sessionEyebrow"),
     sessionHeading: document.getElementById("sessionHeading"),
-    sessionCode: document.getElementById("sessionCode"),
-    sessionStepHint: document.getElementById("sessionStepHint"),
     backToSelectionBtn: document.getElementById("backToSelectionBtn"),
     stepNavigation: document.getElementById("stepNavigation"),
     timer: document.getElementById("timer"),
@@ -136,7 +135,15 @@ function getYearMeta(year) {
 }
 
 function getCurrentSeriesTests() {
-    if (!state.currentYear || !state.currentSeries) {
+    if (!state.currentYear) {
+        return [];
+    }
+
+    if (state.currentYear === 3) {
+        return testsData[3]?.[1] || [];
+    }
+
+    if (!state.currentSeries) {
         return [];
     }
 
@@ -151,22 +158,87 @@ function getCurrentTest() {
     return getCurrentSeriesTests()[state.currentTestIndex] || null;
 }
 
-function getSeriesLabel(seriesNumber) {
-    return testSeries[seriesNumber]?.name || `Série ${seriesNumber}`;
-}
-
 function getAvailableSteps(testData) {
     const steps = ["text"];
 
-    if (Array.isArray(testData.words_list) && testData.words_list.length > 0) {
+    if (getWordsListForDisplay(testData).length > 0) {
         steps.push("words");
     }
 
-    if (Array.isArray(testData.pseudo_words) && testData.pseudo_words.length > 0) {
+    if (getPseudoWordsListForDisplay(testData).length > 0) {
         steps.push("pseudo");
     }
 
     return steps;
+}
+
+function getWordsListForDisplay(testData) {
+    if (!testData || !Array.isArray(testData.words_list)) {
+        return [];
+    }
+
+    if (state.currentYear === 1 || state.currentYear === 2) {
+        return getEarlyLiteracySequence(testData.words_list);
+    }
+
+    if (state.currentYear === 4) {
+        return getRotatingDisplayWindow(testData.words_list, 20, 4);
+    }
+
+    return testData.words_list;
+}
+
+function getPseudoWordsListForDisplay(testData) {
+    if (!testData || !Array.isArray(testData.pseudo_words)) {
+        return [];
+    }
+
+    if (state.currentYear === 1 || state.currentYear === 2) {
+        return getEarlyLiteracySequence(testData.pseudo_words);
+    }
+
+    if (state.currentYear === 4) {
+        return getRotatingDisplayWindow(testData.pseudo_words, 20, 2);
+    }
+
+    return testData.pseudo_words;
+}
+
+function getEarlyLiteracySequence(list) {
+    return list
+        .map((word, index) => ({
+            word,
+            index,
+            size: String(word).normalize("NFD").replace(/[\u0300-\u036f]/g, "").length
+        }))
+        .sort((left, right) => {
+            if (left.size !== right.size) {
+                return left.size - right.size;
+            }
+
+            return left.index - right.index;
+        })
+        .map((item) => item.word);
+}
+
+function getRotatingDisplayWindow(list, size, step) {
+    if (!Array.isArray(list) || list.length === 0) {
+        return [];
+    }
+
+    if (list.length <= size) {
+        return list.slice();
+    }
+
+    const index = Number.isInteger(state.currentTestIndex) ? state.currentTestIndex : 0;
+    const start = (index * step) % list.length;
+    const windowItems = [];
+
+    for (let offset = 0; offset < size; offset += 1) {
+        windowItems.push(list[(start + offset) % list.length]);
+    }
+
+    return windowItems;
 }
 
 function parseTimeLimit(maxTimeLabel) {
@@ -260,7 +332,9 @@ function syncQuestionsDrawer(force = false) {
         return;
     }
 
-    ui.questionsDetails.open = true;
+    if (force) {
+        ui.questionsDetails.open = false;
+    }
 }
 
 function ensureAudioContext() {
@@ -373,6 +447,30 @@ function toggleTextBold() {
     playUiSound();
 }
 
+async function enterFullscreen() {
+    playUiSound();
+
+    try {
+        if (document.fullscreenElement == null && ui.sessionScreen.requestFullscreen) {
+            await ui.sessionScreen.requestFullscreen();
+        }
+    } catch (error) {
+        console.warn("Nao foi possivel entrar em tela cheia.", error);
+    }
+}
+
+async function exitFullscreen() {
+    playUiSound();
+
+    try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+            await document.exitFullscreen();
+        }
+    } catch (error) {
+        console.warn("Nao foi possivel sair da tela cheia.", error);
+    }
+}
+
 async function requestLandscapeOrientation() {
     playUiSound();
 
@@ -395,7 +493,10 @@ async function requestLandscapeOrientation() {
 function resetTimerVisual() {
     ui.timer.textContent = "00:00";
     ui.timer.classList.remove("timer-warning");
+    ui.fullscreenTimerValue.textContent = "00:00";
+    ui.fullscreenTimerValue.classList.remove("timer-warning");
     ui.errorCount.textContent = "0";
+    ui.fullscreenErrorValue.textContent = "0";
 }
 
 function stopTimer() {
@@ -410,8 +511,22 @@ function stopTimer() {
 
 function renderTimerAndErrors() {
     ui.timer.textContent = formatSeconds(state.seconds);
+    ui.fullscreenTimerValue.textContent = formatSeconds(state.seconds);
     ui.errorCount.textContent = String(state.errors);
+    ui.fullscreenErrorValue.textContent = String(state.errors);
     ui.timer.classList.toggle("timer-warning", state.seconds > state.timeLimit);
+    ui.fullscreenTimerValue.classList.toggle("timer-warning", state.seconds > state.timeLimit);
+}
+
+function syncFullscreenState() {
+    const isFullscreen = document.fullscreenElement === ui.sessionScreen;
+    ui.body.classList.toggle("textos-fullscreen", isFullscreen);
+    ui.exitFullscreenBtn.classList.toggle("hidden", !isFullscreen);
+    ui.fullscreenTimerDock.classList.toggle("hidden", !isFullscreen);
+    ui.fullscreenErrorDock.classList.toggle("hidden", !isFullscreen);
+    ui.fullscreenTimerDock.setAttribute("aria-hidden", String(!isFullscreen));
+    ui.fullscreenErrorDock.setAttribute("aria-hidden", String(!isFullscreen));
+    ui.toggleFullscreenBtn.classList.toggle("hidden", isFullscreen);
 }
 
 function startTimer() {
@@ -465,6 +580,8 @@ function resetAutoState() {
     state.currentPseudoIndex = 0;
     state.wordsNotRead = [];
     state.pseudosNotRead = [];
+    state.selectedWords = [];
+    state.selectedPseudos = [];
 }
 
 function resetTest() {
@@ -492,11 +609,6 @@ function goHome() {
 }
 
 function goBackFromSelection() {
-    if (state.selectionView === "tests" && state.currentYear === 3 && Object.keys(testsData[3] || {}).length > 1) {
-        renderSeriesSelection();
-        return;
-    }
-
     goHome();
 }
 
@@ -506,45 +618,18 @@ function backToSelection() {
     switchScreen("selection");
 }
 
-function renderSeriesSelection() {
-    state.selectionView = "series";
-    const yearMeta = getYearMeta(state.currentYear);
-    const seriesKeys = Object.keys(testsData[state.currentYear] || {});
-    ui.selectionEyebrow.textContent = `${yearMeta.eyebrow} • ${yearMeta.label}`;
-    ui.selectionTitle.textContent = "Série";
-    ui.selectionGrid.dataset.mode = "series";
-    ui.selectionGrid.innerHTML = seriesKeys
-        .map((seriesKey) => {
-            const seriesNumber = Number(seriesKey);
-            const series = testSeries[seriesNumber];
-            const count = testsData[state.currentYear][seriesNumber].length;
-
-            return `
-                <button class="selection-card ${seriesNumber === 2 ? "selection-card--series-b" : ""}" type="button" data-select-series="${seriesNumber}">
-                    <span class="selection-card__icon">${seriesNumber === 1 ? "📘" : "🚀"}</span>
-                    <strong>${escapeHtml(series.name)}</strong>
-                </button>
-            `;
-        })
-        .join("");
-
-    switchScreen("selection");
-}
-
 function renderTestSelection() {
     state.selectionView = "tests";
     const yearMeta = getYearMeta(state.currentYear);
-    const seriesLabel = state.currentYear === 3 ? ` • ${getSeriesLabel(state.currentSeries)}` : "";
     const tests = getCurrentSeriesTests();
 
-    ui.selectionEyebrow.textContent = `${yearMeta.eyebrow} • ${yearMeta.label}${seriesLabel}`;
-    ui.selectionTitle.textContent = "Teste";
+    ui.selectionEyebrow.textContent = yearMeta.label;
+    ui.selectionTitle.textContent = "Escolha o texto";
     ui.selectionGrid.dataset.mode = "tests";
     ui.selectionGrid.innerHTML = tests
         .map((testData, index) => {
             return `
                 <button class="selection-card selection-card--test" type="button" data-select-test="${index}">
-                    <span class="selection-card__badge">${testData.code ? escapeHtml(testData.code) : `Teste ${index + 1}`}</span>
                     <strong>${escapeHtml(testData.title)}</strong>
                 </button>
             `;
@@ -580,7 +665,7 @@ function renderQuestions(testData) {
 }
 
 function renderTextStep(testData) {
-    ui.textTitle.textContent = testData.title;
+    ui.textTitle.textContent = "";
     ui.readingText.innerHTML = testData.text
         .split("\n")
         .map((line) => `<p>${escapeHtml(line)}</p>`)
@@ -593,12 +678,11 @@ function renderTextStep(testData) {
     ui.results.innerHTML = "";
 }
 
-function renderStaticChipGrid(container, items, pseudo = false) {
+function renderStaticChipGrid(container, items, selectedIndexes = [], pseudo = false) {
     container.innerHTML = items
         .map((item, index) => {
             return `
-                <article class="chip ${pseudo ? "chip--pseudo" : ""}">
-                    <span class="chip__index">${index + 1}</span>
+                <article class="chip ${pseudo ? "chip--pseudo" : ""} ${selectedIndexes.includes(index) ? "is-selected" : ""}" data-chip-index="${index}">
                     <strong class="chip__word">${escapeHtml(item)}</strong>
                 </article>
             `;
@@ -606,7 +690,7 @@ function renderStaticChipGrid(container, items, pseudo = false) {
         .join("");
 }
 
-function buildAutoChipMarkup(items, currentIndex, missedIndexes, running, pseudo = false) {
+function buildAutoChipMarkup(items, currentIndex, missedIndexes, selectedIndexes, running, pseudo = false) {
     return items
         .map((item, index) => {
             const classes = ["chip"];
@@ -621,11 +705,12 @@ function buildAutoChipMarkup(items, currentIndex, missedIndexes, running, pseudo
                 classes.push("is-missed");
             } else if (index < currentIndex) {
                 classes.push("is-read");
+            } else if (selectedIndexes.includes(index)) {
+                classes.push("is-selected");
             }
 
             return `
-                <article class="${classes.join(" ")}">
-                    <span class="chip__index">${index + 1}</span>
+                <article class="${classes.join(" ")}" data-chip-index="${index}">
                     <strong class="chip__word">${escapeHtml(item)}</strong>
                 </article>
             `;
@@ -635,39 +720,43 @@ function buildAutoChipMarkup(items, currentIndex, missedIndexes, running, pseudo
 
 function updateNotReadDisplay() {
     const testData = getCurrentTest();
-    const labels = state.wordsNotRead.map((index) => `${index + 1}. ${testData.words_list[index]}`);
+    const wordsList = getWordsListForDisplay(testData);
+    const labels = state.wordsNotRead.map((index) => `${index + 1}. ${wordsList[index]}`);
     ui.notReadCount.textContent = String(labels.length);
     ui.notReadList.textContent = labels.length > 0 ? labels.join(" • ") : "Nenhuma palavra marcada.";
 }
 
 function updatePseudoNotReadDisplay() {
     const testData = getCurrentTest();
-    const labels = state.pseudosNotRead.map((index) => `${index + 1}. ${testData.pseudo_words[index]}`);
+    const pseudoList = getPseudoWordsListForDisplay(testData);
+    const labels = state.pseudosNotRead.map((index) => `${index + 1}. ${pseudoList[index]}`);
     ui.pseudoNotReadCount.textContent = String(labels.length);
     ui.pseudoNotReadList.textContent = labels.length > 0 ? labels.join(" • ") : "Nenhuma pseudopalavra marcada.";
 }
 
 function renderAutoWordsSection() {
     const testData = getCurrentTest();
+    const wordsList = getWordsListForDisplay(testData);
 
-    if (!testData || state.currentYear !== 4 || !Array.isArray(testData.words_list)) {
+    if (!testData || wordsList.length === 0) {
         ui.autoWordsInterface.classList.add("hidden");
         return;
     }
 
     ui.autoWordsInterface.classList.remove("hidden");
-    ui.totalWords.textContent = String(testData.words_list.length);
+    ui.totalWords.textContent = String(wordsList.length);
     ui.wordCounter.textContent = String(
         state.autoWordsRunning
-            ? Math.min(state.currentWordIndex + 1, testData.words_list.length)
+            ? Math.min(state.currentWordIndex + 1, wordsList.length)
             : state.currentWordIndex
     );
     ui.startAutoWords.disabled = state.autoWordsRunning;
     ui.markNotRead.disabled = !state.autoWordsRunning;
     ui.autoWordsGrid.innerHTML = buildAutoChipMarkup(
-        testData.words_list,
+        wordsList,
         state.currentWordIndex,
         state.wordsNotRead,
+        state.selectedWords,
         state.autoWordsRunning
     );
     updateNotReadDisplay();
@@ -675,25 +764,27 @@ function renderAutoWordsSection() {
 
 function renderAutoPseudoSection() {
     const testData = getCurrentTest();
+    const pseudoList = getPseudoWordsListForDisplay(testData);
 
-    if (!testData || state.currentYear !== 4 || !Array.isArray(testData.pseudo_words)) {
+    if (!testData || pseudoList.length === 0) {
         ui.autoPseudoInterface.classList.add("hidden");
         return;
     }
 
     ui.autoPseudoInterface.classList.remove("hidden");
-    ui.totalPseudos.textContent = String(testData.pseudo_words.length);
+    ui.totalPseudos.textContent = String(pseudoList.length);
     ui.pseudoCounter.textContent = String(
         state.autoPseudoRunning
-            ? Math.min(state.currentPseudoIndex + 1, testData.pseudo_words.length)
+            ? Math.min(state.currentPseudoIndex + 1, pseudoList.length)
             : state.currentPseudoIndex
     );
     ui.startAutoPseudos.disabled = state.autoPseudoRunning;
     ui.markPseudoNotRead.disabled = !state.autoPseudoRunning;
     ui.autoPseudoGrid.innerHTML = buildAutoChipMarkup(
-        testData.pseudo_words,
+        pseudoList,
         state.currentPseudoIndex,
         state.pseudosNotRead,
+        state.selectedPseudos,
         state.autoPseudoRunning,
         true
     );
@@ -701,27 +792,41 @@ function renderAutoPseudoSection() {
 }
 
 function renderWordsStep(testData) {
-    if (state.currentYear === 4) {
-        ui.wordsGrid.classList.add("hidden");
-        renderAutoWordsSection();
-        return;
-    }
-
-    ui.wordsGrid.classList.remove("hidden");
-    ui.autoWordsInterface.classList.add("hidden");
-    renderStaticChipGrid(ui.wordsGrid, testData.words_list || []);
+    ui.wordsGrid.classList.add("hidden");
+    renderAutoWordsSection();
 }
 
 function renderPseudoStep(testData) {
-    if (state.currentYear === 4) {
-        ui.pseudoGrid.classList.add("hidden");
-        renderAutoPseudoSection();
-        return;
+    ui.pseudoGrid.classList.add("hidden");
+    renderAutoPseudoSection();
+}
+
+function toggleWordSelection(index) {
+    if (state.selectedWords.includes(index)) {
+        state.selectedWords = state.selectedWords.filter((item) => item !== index);
+    } else {
+        state.selectedWords = [...state.selectedWords, index];
     }
 
-    ui.pseudoGrid.classList.remove("hidden");
-    ui.autoPseudoInterface.classList.add("hidden");
-    renderStaticChipGrid(ui.pseudoGrid, testData.pseudo_words || [], true);
+    const testData = getCurrentTest();
+    if (testData) {
+        renderWordsStep(testData);
+        playUiSound();
+    }
+}
+
+function togglePseudoSelection(index) {
+    if (state.selectedPseudos.includes(index)) {
+        state.selectedPseudos = state.selectedPseudos.filter((item) => item !== index);
+    } else {
+        state.selectedPseudos = [...state.selectedPseudos, index];
+    }
+
+    const testData = getCurrentTest();
+    if (testData) {
+        renderPseudoStep(testData);
+        playUiSound();
+    }
 }
 
 function renderStepNavigation(testData) {
@@ -732,17 +837,16 @@ function renderStepNavigation(testData) {
     }
 
     ui.stepNavigation.innerHTML = steps
-        .map((step, index) => {
+        .map((step) => {
             const activeClass = step === state.currentStep ? "is-active" : "";
             return `
                 <button class="step-button ${activeClass}" type="button" data-step="${step}">
-                    ${index + 1}. ${STEP_META[step].title}
+                    ${STEP_META[step].title}
                 </button>
             `;
         })
         .join("");
 
-    ui.sessionStepHint.textContent = STEP_META[state.currentStep].hint;
 }
 
 function renderVisibleStep() {
@@ -758,13 +862,8 @@ function renderSession() {
     }
 
     const yearMeta = getYearMeta(state.currentYear);
-    const yearLine = state.currentYear === 3
-        ? `${yearMeta.label} • ${getSeriesLabel(state.currentSeries)}`
-        : yearMeta.label;
-
-    ui.sessionEyebrow.textContent = yearLine;
+    ui.sessionEyebrow.textContent = yearMeta.label;
     ui.sessionHeading.textContent = testData.title;
-    ui.sessionCode.textContent = `${testData.code} • ${testData.words} palavras`;
     ui.timeLimitLabel.textContent = `Meta: ${testData.maxTime}`;
     ui.maxErrorsLabel.textContent = `Meta: até ${testData.maxErrors} erros`;
     renderTextStep(testData);
@@ -792,20 +891,7 @@ function selectYear(year) {
     state.currentSeries = null;
     state.currentTestIndex = null;
     playUiSound();
-
-    if (year === 3 && Object.keys(testsData[year] || {}).length > 1) {
-        renderSeriesSelection();
-        return;
-    }
-
-    state.currentSeries = 1;
-    renderTestSelection();
-}
-
-function selectSeries(seriesNumber) {
-    state.currentSeries = seriesNumber;
-    state.currentTestIndex = null;
-    playUiSound();
+    state.currentSeries = year === 3 ? null : 1;
     renderTestSelection();
 }
 
@@ -875,6 +961,7 @@ function checkAnswers() {
 
 function scheduleNextAutoWord() {
     const testData = getCurrentTest();
+    const wordsList = getWordsListForDisplay(testData);
     if (!testData || !state.autoWordsRunning) {
         return;
     }
@@ -885,9 +972,9 @@ function scheduleNextAutoWord() {
     state.autoWordTimer = window.setTimeout(() => {
         state.currentWordIndex += 1;
 
-        if (state.currentWordIndex >= testData.words_list.length) {
+        if (state.currentWordIndex >= wordsList.length) {
             state.autoWordsRunning = false;
-            state.currentWordIndex = testData.words_list.length;
+            state.currentWordIndex = wordsList.length;
             renderAutoWordsSection();
             playSuccessSound();
             return;
@@ -899,7 +986,8 @@ function scheduleNextAutoWord() {
 
 function startAutoWords() {
     const testData = getCurrentTest();
-    if (!testData || !Array.isArray(testData.words_list) || testData.words_list.length === 0) {
+    const wordsList = getWordsListForDisplay(testData);
+    if (!testData || wordsList.length === 0) {
         return;
     }
 
@@ -919,12 +1007,13 @@ function startAutoWords() {
 
 function markWordNotRead() {
     const testData = getCurrentTest();
+    const wordsList = getWordsListForDisplay(testData);
     if (!testData || !state.autoWordsRunning) {
         return;
     }
 
     const index = state.currentWordIndex;
-    if (index >= testData.words_list.length || state.wordsNotRead.includes(index)) {
+    if (index >= wordsList.length || state.wordsNotRead.includes(index)) {
         return;
     }
 
@@ -935,6 +1024,7 @@ function markWordNotRead() {
 
 function scheduleNextAutoPseudo() {
     const testData = getCurrentTest();
+    const pseudoList = getPseudoWordsListForDisplay(testData);
     if (!testData || !state.autoPseudoRunning) {
         return;
     }
@@ -945,9 +1035,9 @@ function scheduleNextAutoPseudo() {
     state.autoPseudoTimer = window.setTimeout(() => {
         state.currentPseudoIndex += 1;
 
-        if (state.currentPseudoIndex >= testData.pseudo_words.length) {
+        if (state.currentPseudoIndex >= pseudoList.length) {
             state.autoPseudoRunning = false;
-            state.currentPseudoIndex = testData.pseudo_words.length;
+            state.currentPseudoIndex = pseudoList.length;
             renderAutoPseudoSection();
             playSuccessSound();
             return;
@@ -959,7 +1049,8 @@ function scheduleNextAutoPseudo() {
 
 function startAutoPseudos() {
     const testData = getCurrentTest();
-    if (!testData || !Array.isArray(testData.pseudo_words) || testData.pseudo_words.length === 0) {
+    const pseudoList = getPseudoWordsListForDisplay(testData);
+    if (!testData || pseudoList.length === 0) {
         return;
     }
 
@@ -979,12 +1070,13 @@ function startAutoPseudos() {
 
 function markPseudoNotRead() {
     const testData = getCurrentTest();
+    const pseudoList = getPseudoWordsListForDisplay(testData);
     if (!testData || !state.autoPseudoRunning) {
         return;
     }
 
     const index = state.currentPseudoIndex;
-    if (index >= testData.pseudo_words.length || state.pseudosNotRead.includes(index)) {
+    if (index >= pseudoList.length || state.pseudosNotRead.includes(index)) {
         return;
     }
 
@@ -1006,6 +1098,8 @@ ui.toggleSoundBtn.addEventListener("click", toggleSound);
 ui.selectionSoundBtn.addEventListener("click", toggleSound);
 ui.sessionSoundBtn.addEventListener("click", toggleSound);
 ui.toggleBoldBtn.addEventListener("click", toggleTextBold);
+ui.toggleFullscreenBtn.addEventListener("click", enterFullscreen);
+ui.exitFullscreenBtn.addEventListener("click", exitFullscreen);
 ui.rotateScreenBtn.addEventListener("click", requestLandscapeOrientation);
 ui.selectionBackBtn.addEventListener("click", goBackFromSelection);
 ui.sessionHomeBtn.addEventListener("click", goHome);
@@ -1034,18 +1128,64 @@ document.querySelectorAll("[data-year]").forEach((button) => {
 });
 
 ui.selectionGrid.addEventListener("click", (event) => {
-    const seriesButton = event.target.closest("[data-select-series]");
-    if (seriesButton) {
-        selectSeries(Number(seriesButton.dataset.selectSeries));
-        return;
-    }
-
     const testButton = event.target.closest("[data-select-test]");
     if (testButton) {
         ensureAudioContext();
         playUiSound();
         openTest(Number(testButton.dataset.selectTest));
     }
+});
+
+ui.wordsGrid.addEventListener("click", (event) => {
+    if (state.currentYear === 4) {
+        return;
+    }
+
+    const chip = event.target.closest("[data-chip-index]");
+    if (!chip) {
+        return;
+    }
+
+    toggleWordSelection(Number(chip.dataset.chipIndex));
+});
+
+ui.pseudoGrid.addEventListener("click", (event) => {
+    if (state.currentYear === 4) {
+        return;
+    }
+
+    const chip = event.target.closest("[data-chip-index]");
+    if (!chip) {
+        return;
+    }
+
+    togglePseudoSelection(Number(chip.dataset.chipIndex));
+});
+
+ui.autoWordsGrid.addEventListener("click", (event) => {
+    if (state.autoWordsRunning) {
+        return;
+    }
+
+    const chip = event.target.closest("[data-chip-index]");
+    if (!chip) {
+        return;
+    }
+
+    toggleWordSelection(Number(chip.dataset.chipIndex));
+});
+
+ui.autoPseudoGrid.addEventListener("click", (event) => {
+    if (state.autoPseudoRunning) {
+        return;
+    }
+
+    const chip = event.target.closest("[data-chip-index]");
+    if (!chip) {
+        return;
+    }
+
+    togglePseudoSelection(Number(chip.dataset.chipIndex));
 });
 
 ui.stepNavigation.addEventListener("click", (event) => {
@@ -1069,7 +1209,11 @@ document.addEventListener("keydown", (event) => {
 
     if (event.key === "Escape") {
         event.preventDefault();
-        backToSelection();
+        if (document.fullscreenElement === ui.sessionScreen) {
+            exitFullscreen();
+        } else {
+            backToSelection();
+        }
         return;
     }
 
@@ -1095,3 +1239,5 @@ updateSoundButtons();
 updateBoldButton();
 syncTextWeight();
 window.addEventListener("resize", () => syncQuestionsDrawer(false));
+document.addEventListener("fullscreenchange", syncFullscreenState);
+syncFullscreenState();
