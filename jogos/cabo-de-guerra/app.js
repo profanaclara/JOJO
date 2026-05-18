@@ -20,7 +20,6 @@ const refs = {
     roundsInput: document.getElementById("roundsInput"),
     leftTeamInput: document.getElementById("leftTeamInput"),
     rightTeamInput: document.getElementById("rightTeamInput"),
-    swapTeamsBtn: document.getElementById("swapTeamsBtn"),
     changeTeamsBtn: document.getElementById("changeTeamsBtn"),
     prevStepBtn: document.getElementById("prevStepBtn"),
     nextStepBtn: document.getElementById("nextStepBtn"),
@@ -57,6 +56,7 @@ const refs = {
     zoomValue: document.getElementById("zoomValue"),
     fullscreenBtn: document.getElementById("fullscreenBtn"),
     soundToggleBtn: document.getElementById("soundToggleBtn"),
+    backgroundMusic: document.getElementById("backgroundMusic"),
     keypads: {
         left: document.querySelector('[data-keypad="left"]'),
         right: document.querySelector('[data-keypad="right"]'),
@@ -154,7 +154,6 @@ function bindEvents() {
         renderSetupState();
     });
 
-    refs.swapTeamsBtn.addEventListener("click", swapTeamInputs);
     refs.changeTeamsBtn.addEventListener("click", () => openSetup(3, true));
     refs.prevStepBtn.addEventListener("click", handlePrevStep);
     refs.nextStepBtn.addEventListener("click", handleNextStep);
@@ -204,6 +203,42 @@ function loadSavedTeams() {
 
     refs.leftTeamInput.value = state.config.teamNames.left;
     refs.rightTeamInput.value = state.config.teamNames.right;
+    configureBackgroundMusic();
+}
+
+function configureBackgroundMusic() {
+    if (!refs.backgroundMusic) {
+        return;
+    }
+
+    refs.backgroundMusic.loop = true;
+    refs.backgroundMusic.volume = 0.32;
+}
+
+function startBackgroundMusic(restart = false) {
+    if (!refs.backgroundMusic || !state.ui.soundOn) {
+        return;
+    }
+
+    if (restart) {
+        refs.backgroundMusic.currentTime = 0;
+    }
+
+    const playPromise = refs.backgroundMusic.play();
+    if (playPromise?.catch) {
+        playPromise.catch(() => {});
+    }
+}
+
+function pauseBackgroundMusic(reset = false) {
+    if (!refs.backgroundMusic) {
+        return;
+    }
+
+    refs.backgroundMusic.pause();
+    if (reset) {
+        refs.backgroundMusic.currentTime = 0;
+    }
 }
 
 function ensureAudioContext() {
@@ -302,7 +337,12 @@ function syncFullscreenState() {
 function toggleSound() {
     state.ui.soundOn = !state.ui.soundOn;
     if (state.ui.soundOn) {
+        if (state.game.active || state.game.countdown || state.game.inRound) {
+            startBackgroundMusic();
+        }
         playTone("start");
+    } else {
+        pauseBackgroundMusic();
     }
     renderZoomControls();
 }
@@ -340,13 +380,6 @@ function toggleOperation(operation) {
 
     renderSetupState();
     renderBottomMeta();
-    playTone("step");
-}
-
-function swapTeamInputs() {
-    const leftValue = refs.leftTeamInput.value;
-    refs.leftTeamInput.value = refs.rightTeamInput.value;
-    refs.rightTeamInput.value = leftValue;
     playTone("step");
 }
 
@@ -392,6 +425,7 @@ function startMatchFromSetup() {
 
 function openSetup(step = 1, resetMatch = false) {
     clearAllTimers();
+    pauseBackgroundMusic(resetMatch);
 
     if (resetMatch) {
         state.game = createGameState();
@@ -420,6 +454,7 @@ function beginMatch() {
     state.game = createGameState();
     state.game.active = true;
     state.game.countdown = true;
+    startBackgroundMusic(true);
     setStatus("left", "PREPARE-SE PARA A LARGADA", "waiting");
     setStatus("right", "PREPARE-SE PARA A LARGADA", "waiting");
     renderAll();
@@ -564,6 +599,7 @@ function finishMatch() {
     state.game.active = false;
     state.game.inRound = false;
     state.game.over = true;
+    pauseBackgroundMusic();
     renderGame();
 
     let title = "EMPATE";

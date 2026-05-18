@@ -59,6 +59,12 @@ button {
     transition: filter 220ms ease, transform 220ms ease, opacity 220ms ease;
 }
 
+#installAppBtn.install-app-button--floating {
+    top: calc(env(safe-area-inset-top, 0px) + 72px);
+    right: 18px;
+    z-index: 5;
+}
+
 .math-tug-app.is-setup-open .topbar,
 .math-tug-app.is-setup-open .game-layout,
 .math-tug-app.is-setup-open .zoom-dock {
@@ -565,6 +571,21 @@ button {
     box-shadow: 0 10px 24px rgba(9, 49, 81, 0.16);
 }
 
+.math-tug-app.is-fullscreen {
+    padding-top: max(54px, env(safe-area-inset-top) + 54px);
+}
+
+.math-tug-app.is-fullscreen .game-layout {
+    margin-top: max(46px, env(safe-area-inset-top) + 46px);
+    min-height: calc(100vh - 176px);
+    align-items: center;
+}
+
+.math-tug-app.is-fullscreen ~ #installAppBtn,
+.math-tug-app.is-fullscreen + #installAppBtn {
+    display: none !important;
+}
+
 .setup-backdrop {
     position: fixed;
     inset: 0;
@@ -937,6 +958,12 @@ button {
 }
 
 @media (max-width: 920px) {
+    #installAppBtn.install-app-button--floating {
+        top: auto;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 78px);
+        right: 12px;
+    }
+
     .topbar {
         grid-template-columns: 1fr auto;
         gap: 12px;
@@ -1135,6 +1162,15 @@ button {
 
     .zoom-dock strong {
         font-size: 1rem;
+    }
+
+    .math-tug-app.is-fullscreen {
+        padding-top: max(40px, env(safe-area-inset-top) + 40px);
+    }
+
+    .math-tug-app.is-fullscreen .game-layout {
+        margin-top: max(30px, env(safe-area-inset-top) + 30px);
+        min-height: auto;
     }
 }
 
