@@ -1,13 +1,13 @@
-const CACHE_VERSION = "jojo-static-v2026-05-27-2";
+const CACHE_VERSION = "jojo-static-v2026-05-27-6";
 const APP_SHELL = [
     "./",
     "./index.html",
     "./offline.html",
     "./manifest.webmanifest",
-    "./styles/main.css",
+    "./styles/main.css?v=2",
     "./scripts/app.js",
     "./scripts/data.js",
-    "./scripts/pwa.js?v=5",
+    "./scripts/pwa.js?v=9",
     "./assets/jojo-eyes-logo.png",
     "./assets/jojo-horizontal.svg",
     "./assets/jojologo-fundo-branco.svg",

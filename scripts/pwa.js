@@ -15,7 +15,14 @@ function normalizePath(pathname) {
 
 function isPlatformHome() {
     const path = normalizePath(window.location.pathname);
-    return /\/JOJO\/?$/.test(path) || /\/JOJO\/index\.html$/.test(path);
+    const isRootHome = path === "/" || path === "/index.html";
+    const isProjectHome = /\/JOJO\/?$/.test(path) || /\/JOJO\/index\.html$/.test(path);
+    const hasPlatformHomeMarkup = Boolean(
+        document.getElementById("installAppBtn")
+        && document.querySelector(".app-screen .home-actions")
+    );
+
+    return isRootHome || isProjectHome || hasPlatformHomeMarkup;
 }
 
 function isVisibleHomeScreen() {
@@ -214,15 +221,7 @@ function updateInstallButtonVisibility() {
         return;
     }
 
-    if (isStandaloneMode()) {
-        hideInstallButton();
-        return;
-    }
-
-    const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-    const canInstall = Boolean(deferredInstallPrompt) || isIos;
-
-    if (!canInstall || !shouldShowInstallButtonForCurrentView()) {
+    if (!shouldShowInstallButtonForCurrentView()) {
         hideInstallButton();
         return;
     }
