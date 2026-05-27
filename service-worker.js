@@ -1,4 +1,4 @@
-const CACHE_VERSION = "jojo-static-v2026-05-18-1";
+const CACHE_VERSION = "jojo-static-v2026-05-27-2";
 const APP_SHELL = [
     "./",
     "./index.html",
@@ -7,10 +7,11 @@ const APP_SHELL = [
     "./styles/main.css",
     "./scripts/app.js",
     "./scripts/data.js",
-    "./scripts/pwa.js",
+    "./scripts/pwa.js?v=5",
     "./assets/jojo-eyes-logo.png",
     "./assets/jojo-horizontal.svg",
     "./assets/jojologo-fundo-branco.svg",
+    "./assets/JOJOdownload.svg",
     "./assets/logo-profanapixelart.png",
     "./assets/controle.svg",
     "./assets/cerebro.png",
@@ -33,8 +34,8 @@ const APP_SHELL = [
     "./jogos/textos/assets/jojo-eyes-logo.png",
     "./jogos/timer/",
     "./jogos/timer/index.html",
-    "./jogos/timer/styles.css",
-    "./jogos/timer/app.js",
+    "./jogos/timer/styles.css?v=3",
+    "./jogos/timer/app.js?v=2",
     "./jogos/timer/data.js",
     "./jogos/timer/assets/jojo-eyes-logo.png",
     "./jogos/timer/assets/carnes.gif",
@@ -60,7 +61,19 @@ const APP_SHELL = [
     "./jogos/cabo-de-guerra/assets/equipe-azul.gif",
     "./jogos/cabo-de-guerra/assets/equipe-vermelha.gif",
     "./jogos/cabo-de-guerra/assets/ganhou-azul.gif",
-    "./jogos/cabo-de-guerra/assets/ganhou-vermelho.gif"
+    "./jogos/cabo-de-guerra/assets/ganhou-vermelho.gif",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/index.html",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/styles.css?v=7",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/app.js?v=6",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/gif-frame.html",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/jojo-eyes-logo.png",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/cabo-de-guerra-2.gif",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/equipe-azul.gif",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/equipe-vermelha.gif",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/ganhou-azul.gif",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/ganhou-vermelho.gif",
+    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/musicacabodeguerra.mp3"
 ];
 
 self.addEventListener("install", (event) => {

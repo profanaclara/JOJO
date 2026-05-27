@@ -9,6 +9,45 @@ function isStandaloneMode() {
     return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
 }
 
+function normalizePath(pathname) {
+    return String(pathname || "").replace(/\\/g, "/");
+}
+
+function isPlatformHome() {
+    const path = normalizePath(window.location.pathname);
+    return /\/JOJO\/?$/.test(path) || /\/JOJO\/index\.html$/.test(path);
+}
+
+function isVisibleHomeScreen() {
+    const homeScreen = document.querySelector("#homeScreen.screen--home");
+    return Boolean(homeScreen && !homeScreen.classList.contains("hidden"));
+}
+
+function isVisibleMathSetupFirstStep() {
+    const app = document.getElementById("app");
+    if (!app || !app.classList.contains("math-tug-app") || !app.classList.contains("is-setup-open")) {
+        return false;
+    }
+
+    const firstStep = document.querySelector('[data-step-panel="1"]');
+    return Boolean(firstStep && !firstStep.classList.contains("hidden"));
+}
+
+function shouldShowInstallButtonForCurrentView() {
+    return isPlatformHome();
+}
+
+function removeInstallButtonOutsidePlatform() {
+    if (isPlatformHome()) {
+        return;
+    }
+
+    const button = document.getElementById("installAppBtn");
+    if (button) {
+        button.remove();
+    }
+}
+
 function ensureFloatingButtonStyles() {
     if (document.getElementById("pwaFloatingStyles")) {
         return;
@@ -22,16 +61,40 @@ function ensureFloatingButtonStyles() {
             top: calc(env(safe-area-inset-top, 0px) + 14px);
             right: 14px;
             z-index: 999;
-            min-height: 46px;
-            padding: 0 16px;
+            width: 68px;
+            height: 68px;
+            padding: 0;
             border: 0;
-            border-radius: 999px;
+            border-radius: 24px;
             background: rgba(255, 255, 255, 0.96);
             color: #197bc0;
-            font-family: "Archivo", "Inter", system-ui, sans-serif;
-            font-size: 0.92rem;
-            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 0 12px 30px rgba(15, 75, 121, 0.16);
+        }
+
+        .install-app-button--floating[hidden] {
+            display: none !important;
+        }
+
+        .install-app-button__icon {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         .install-app-button--floating:active {
@@ -42,9 +105,14 @@ function ensureFloatingButtonStyles() {
             .install-app-button--floating {
                 top: calc(env(safe-area-inset-top, 0px) + 10px);
                 right: 10px;
-                min-height: 42px;
-                padding: 0 14px;
-                font-size: 0.84rem;
+                width: 58px;
+                height: 58px;
+                border-radius: 20px;
+            }
+
+            .install-app-button__icon {
+                width: 28px;
+                height: 28px;
             }
         }
     `;
@@ -53,18 +121,29 @@ function ensureFloatingButtonStyles() {
 }
 
 function ensureInstallButton() {
+    if (!isPlatformHome()) {
+        removeInstallButtonOutsidePlatform();
+        return null;
+    }
+
     let button = document.getElementById("installAppBtn");
+    const rootUrl = getRootUrl();
+    const iconUrl = new URL("assets/JOJOdownload.svg", rootUrl);
 
     if (!button) {
         ensureFloatingButtonStyles();
         button = document.createElement("button");
         button.type = "button";
         button.id = "installAppBtn";
-        button.className = "install-app-button install-app-button--floating";
-        button.hidden = true;
-        button.textContent = "Baixar app JOJO";
         document.body.appendChild(button);
     }
+
+    ensureFloatingButtonStyles();
+    button.className = "install-app-button install-app-button--floating";
+    button.hidden = true;
+    button.setAttribute("aria-label", "Baixar app JOJO");
+    button.setAttribute("title", "Baixar app JOJO");
+    button.innerHTML = `<img class="install-app-button__icon" src="${iconUrl}" alt=""><span class="sr-only">Baixar app JOJO</span>`;
 
     return button;
 }
@@ -89,6 +168,9 @@ function registerServiceWorker() {
 
 function showInstallButton() {
     const button = ensureInstallButton();
+    if (!button) {
+        return;
+    }
     button.hidden = false;
 }
 
@@ -102,6 +184,9 @@ function hideInstallButton() {
 
 function bindInstallButton() {
     const button = ensureInstallButton();
+    if (!button) {
+        return;
+    }
 
     button.addEventListener("click", async () => {
         if (deferredInstallPrompt) {
@@ -123,10 +208,52 @@ function bindInstallButton() {
     });
 }
 
+function updateInstallButtonVisibility() {
+    if (!isPlatformHome()) {
+        removeInstallButtonOutsidePlatform();
+        return;
+    }
+
+    if (isStandaloneMode()) {
+        hideInstallButton();
+        return;
+    }
+
+    const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+    const canInstall = Boolean(deferredInstallPrompt) || isIos;
+
+    if (!canInstall || !shouldShowInstallButtonForCurrentView()) {
+        hideInstallButton();
+        return;
+    }
+
+    showInstallButton();
+}
+
+function watchInstallButtonContext() {
+    if (!document.body) {
+        return;
+    }
+
+    const observer = new MutationObserver(() => {
+        updateInstallButtonVisibility();
+    });
+
+    observer.observe(document.body, {
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["class", "data-setup-step"],
+    });
+
+    window.addEventListener("pageshow", updateInstallButtonVisibility);
+    window.addEventListener("resize", updateInstallButtonVisibility);
+    document.addEventListener("visibilitychange", updateInstallButtonVisibility);
+}
+
 window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     deferredInstallPrompt = event;
-    showInstallButton();
+    updateInstallButtonVisibility();
 });
 
 window.addEventListener("appinstalled", () => {
@@ -136,7 +263,6 @@ window.addEventListener("appinstalled", () => {
 
 registerServiceWorker();
 bindInstallButton();
+watchInstallButtonContext();
 
-if (!isStandaloneMode() && /iphone|ipad|ipod/i.test(window.navigator.userAgent)) {
-    showInstallButton();
-}
+updateInstallButtonVisibility();

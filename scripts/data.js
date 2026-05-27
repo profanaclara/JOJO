@@ -24,8 +24,8 @@ window.JOJO_DATA = {
                     label: "Matemática",
                     items: [
                         {
-                            title: "CABO DE GUERRA MATEMÁTICO",
-                            href: "./jogos/cabo-de-guerra/"
+                            title: "CABO DE GUERRA MATEMÁTICO - OPERAÇÕES E FRAÇÕES",
+                            href: "./jogos/cabo-de-guerra-operacoes-fracoes/"
                         }
                     ]
                 }

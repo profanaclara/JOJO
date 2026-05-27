@@ -2,10 +2,7 @@ const STORAGE_KEY = "jojo_math_tug_teams_v1";
 const STANDARD_ROUNDS = [5, 10, 15, 20];
 
 const OPERATION_META = {
-    add: { label: "ADIÇÃO", symbol: "+" },
-    subtract: { label: "SUBTRAÇÃO", symbol: "-" },
-    multiply: { label: "MULTIPLICAÇÃO", symbol: "×" },
-    divide: { label: "DIVISÃO", symbol: "÷" },
+    fraction: { label: "FRAÇÕES", symbol: "🍕" },
 };
 
 const refs = {
@@ -30,6 +27,10 @@ const refs = {
     rightProblem: document.getElementById("rightProblem"),
     leftAnswerDisplay: document.getElementById("leftAnswerDisplay"),
     rightAnswerDisplay: document.getElementById("rightAnswerDisplay"),
+    leftNumeratorField: document.getElementById("leftNumeratorField"),
+    leftDenominatorField: document.getElementById("leftDenominatorField"),
+    rightNumeratorField: document.getElementById("rightNumeratorField"),
+    rightDenominatorField: document.getElementById("rightDenominatorField"),
     leftStatus: document.getElementById("leftStatus"),
     rightStatus: document.getElementById("rightStatus"),
     leftPanelName: document.getElementById("leftPanelName"),
@@ -67,7 +68,7 @@ const state = {
     setupOpen: true,
     setupStep: 1,
     config: {
-        operations: ["add"],
+        operations: ["fraction"],
         level: 1,
         rounds: 5,
         teamNames: {
@@ -92,6 +93,14 @@ const timers = {
 
 let audioContext = null;
 
+function createFractionAnswerBuffer() {
+    return {
+        numerator: "",
+        denominator: "",
+        activePart: "numerator",
+    };
+}
+
 function createGameState() {
     return {
         active: false,
@@ -102,10 +111,14 @@ function createGameState() {
         rightScore: 0,
         tugPosition: 0,
         answerBuffers: {
-            left: "",
-            right: "",
+            left: createFractionAnswerBuffer(),
+            right: createFractionAnswerBuffer(),
         },
         problems: {
+            left: null,
+            right: null,
+        },
+        lastShapes: {
             left: null,
             right: null,
         },
@@ -167,6 +180,17 @@ function bindEvents() {
     refs.zoomInBtn.addEventListener("click", () => changeZoom(0.1));
     refs.fullscreenBtn.addEventListener("click", toggleFullscreen);
     refs.soundToggleBtn.addEventListener("click", toggleSound);
+
+    [refs.leftNumeratorField, refs.leftDenominatorField, refs.rightNumeratorField, refs.rightDenominatorField].forEach((field) => {
+        field.addEventListener("click", () => {
+            if (state.setupOpen || state.game.over) {
+                return;
+            }
+
+            state.game.answerBuffers[field.dataset.side].activePart = field.dataset.part;
+            renderAnswerBuffers();
+        });
+    });
 
     window.addEventListener("resize", updateRopeShift);
     document.addEventListener("fullscreenchange", renderZoomControls);
@@ -366,6 +390,14 @@ function saveTeams() {
 }
 
 function toggleOperation(operation) {
+    if (operation === "fraction") {
+        state.config.operations = ["fraction"];
+        renderSetupState();
+        renderBottomMeta();
+        playTone("step");
+        return;
+    }
+
     const operations = state.config.operations;
     const index = operations.indexOf(operation);
 
@@ -505,12 +537,15 @@ function updateMatchTimer() {
 
 function startRound() {
     state.game.inRound = true;
-    state.game.answerBuffers.left = "";
-    state.game.answerBuffers.right = "";
-    state.game.problems.left = generateProblem();
-    state.game.problems.right = generateProblem();
-    setStatus("left", "RESOLVA A CONTA", "");
-    setStatus("right", "RESOLVA A CONTA", "");
+    state.game.answerBuffers.left = createFractionAnswerBuffer();
+    state.game.answerBuffers.right = createFractionAnswerBuffer();
+    const roundProblems = generateRoundProblems();
+    state.game.problems.left = roundProblems.left;
+    state.game.problems.right = roundProblems.right;
+    state.game.lastShapes.left = roundProblems.left.shape;
+    state.game.lastShapes.right = roundProblems.right.shape;
+    setStatus("left", "ESCREVA A FRAÇÃO", "");
+    setStatus("right", "ESCREVA A FRAÇÃO", "");
     renderGame();
 }
 
@@ -527,18 +562,26 @@ function handleKeypadPress(side, key) {
     }
 
     if (key === "clear") {
-        state.game.answerBuffers[side] = "";
+        if (buffer[buffer.activePart]) {
+            buffer[buffer.activePart] = "";
+        } else {
+            state.game.answerBuffers[side] = createFractionAnswerBuffer();
+        }
         renderAnswerBuffers();
         return;
     }
 
     if (key === "submit") {
-        if (!buffer) {
+        if (!buffer.numerator || !buffer.denominator) {
             return;
         }
 
-        const submittedValue = Number(buffer);
-        if (submittedValue === activeProblem.answer) {
+        const submittedNumerator = Number(buffer.numerator);
+        const submittedDenominator = Number(buffer.denominator);
+        if (
+            submittedNumerator === activeProblem.numerator &&
+            submittedDenominator === activeProblem.denominator
+        ) {
             applyOutcome(side, true);
         } else {
             playTone("error");
@@ -547,9 +590,15 @@ function handleKeypadPress(side, key) {
         return;
     }
 
-    const maxLength = Math.max(String(activeProblem.answer).length + 1, 2);
-    const nextBuffer = buffer === "0" ? key : `${buffer}${key}`;
-    state.game.answerBuffers[side] = nextBuffer.slice(0, maxLength);
+    const activePart = buffer.activePart;
+    const maxLength = activeProblem.denominator >= 10 ? 2 : 1;
+    const nextBuffer = buffer[activePart] === "0" ? key : `${buffer[activePart]}${key}`;
+    buffer[activePart] = nextBuffer.slice(0, maxLength);
+
+    if (activePart === "numerator" && buffer.numerator) {
+        buffer.activePart = "denominator";
+    }
+
     renderAnswerBuffers();
 }
 
@@ -577,13 +626,24 @@ function applyOutcome(actorSide, isCorrect) {
         showFeedback(`${getTeamName(actorSide)} ERROU`);
     }
 
-    state.game.answerBuffers[actorSide] = "";
-    state.game.problems[actorSide] = generateProblem();
+    state.game.answerBuffers[actorSide] = createFractionAnswerBuffer();
+    const replacementShape = pickNextShapeForSide(
+        state.config.level,
+        state.game.problems[otherSide(actorSide)]?.shape ?? null,
+        state.game.lastShapes[actorSide],
+    );
+    state.game.problems[actorSide] = generateFractionProblem(
+        state.config.level,
+        [],
+        state.game.lastShapes[actorSide],
+        replacementShape,
+    );
+    state.game.lastShapes[actorSide] = state.game.problems[actorSide].shape;
     renderGame();
 
     clearTimeout(timers.feedback);
     timers.feedback = window.setTimeout(() => {
-        setStatus(actorSide, "RESOLVA A CONTA", "");
+        setStatus(actorSide, "ESCREVA A FRAÇÃO", "");
         hideFeedback();
         renderStatuses();
     }, 320);
@@ -732,13 +792,24 @@ function renderScores() {
 }
 
 function renderProblem() {
-    refs.leftProblem.textContent = state.game.problems.left ? state.game.problems.left.leftText : "? + ? = ?";
-    refs.rightProblem.textContent = state.game.problems.right ? state.game.problems.right.rightText : "? + ? = ?";
+    refs.leftProblem.innerHTML = state.game.problems.left ? buildFractionVisual(state.game.problems.left, "left") : "🍕";
+    refs.rightProblem.innerHTML = state.game.problems.right ? buildFractionVisual(state.game.problems.right, "right") : "🍕";
 }
 
 function renderAnswerBuffers() {
-    refs.leftAnswerDisplay.textContent = state.game.answerBuffers.left || "—";
-    refs.rightAnswerDisplay.textContent = state.game.answerBuffers.right || "—";
+    renderAnswerBufferForSide("left");
+    renderAnswerBufferForSide("right");
+}
+
+function renderAnswerBufferForSide(side) {
+    const buffer = state.game.answerBuffers[side];
+    const numeratorField = side === "left" ? refs.leftNumeratorField : refs.rightNumeratorField;
+    const denominatorField = side === "left" ? refs.leftDenominatorField : refs.rightDenominatorField;
+
+    numeratorField.textContent = buffer.numerator || "?";
+    denominatorField.textContent = buffer.denominator || "?";
+    numeratorField.classList.toggle("is-active", buffer.activePart === "numerator");
+    denominatorField.classList.toggle("is-active", buffer.activePart === "denominator");
 }
 
 function renderStatuses() {
@@ -757,9 +828,7 @@ function renderStatuses() {
 }
 
 function renderBottomMeta() {
-    refs.operationsLabel.textContent = state.config.operations
-        .map((operation) => OPERATION_META[operation].label)
-        .join(" • ");
+    refs.operationsLabel.textContent = "FRAÇÕES";
 }
 
 function updateRopeShift() {
@@ -792,151 +861,244 @@ function clearAllTimers() {
 }
 
 function generateProblem() {
-    const operation = randomItem(state.config.operations);
-
-    switch (operation) {
-        case "add":
-            return generateAddition(state.config.level);
-        case "subtract":
-            return generateSubtraction(state.config.level);
-        case "multiply":
-            return generateMultiplication(state.config.level);
-        case "divide":
-            return generateDivision(state.config.level);
-        default:
-            return generateAddition(1);
-    }
+    return generateFractionProblem(state.config.level, [], null);
 }
 
-function generateAddition(level) {
-    let a;
-    let b;
+function generateRoundProblems() {
+    const pair = pickDistinctRoundShapes(state.config.level);
+    const leftProblem = generateFractionProblem(state.config.level, [], state.game.lastShapes.left, pair.left);
+    const rightProblem = generateFractionProblem(state.config.level, [], state.game.lastShapes.right, pair.right);
 
-    if (level === 1) {
-        a = randomInt(0, 9);
-        b = randomInt(0, 9);
-    } else if (level === 2) {
-        const tensA = randomInt(1, 8);
-        const tensB = randomInt(1, 9 - tensA);
-        const onesA = randomInt(0, 8);
-        const onesB = randomInt(0, 9 - onesA);
-        a = tensA * 10 + onesA;
-        b = tensB * 10 + onesB;
-    } else {
-        const tensA = randomInt(1, 7);
-        const tensB = randomInt(1, 8 - tensA);
-        const onesA = randomInt(1, 9);
-        const onesB = randomInt(Math.max(10 - onesA, 1), 9);
-        a = tensA * 10 + onesA;
-        b = tensB * 10 + onesB;
-    }
-
-    return buildProblem("add", a, b, a + b);
+    return {
+        left: leftProblem,
+        right: rightProblem,
+    };
 }
 
-function generateSubtraction(level) {
-    let a;
-    let b;
+function generateFractionProblem(level, excludedShapes = [], previousShape = null, forcedShape = null) {
+    const shape = forcedShape || chooseShapeForLevel(level, excludedShapes, previousShape);
+    const denominators = getDenominatorsForShape(level, shape);
+    const denominator = randomItem(denominators);
+    const numerator = randomInt(1, denominator - 1);
 
-    if (level === 1) {
-        a = randomInt(1, 9);
-        b = randomInt(0, a);
-    } else if (level === 2) {
-        do {
-            const tensA = randomInt(1, 9);
-            const tensB = randomInt(0, tensA);
-            const onesA = randomInt(0, 9);
-            const onesB = randomInt(0, onesA);
-            a = tensA * 10 + onesA;
-            b = tensB * 10 + onesB;
-        } while (a === b);
-    } else {
-        const tensA = randomInt(2, 9);
-        const tensB = randomInt(0, tensA - 1);
-        const onesA = randomInt(0, 8);
-        const onesB = randomInt(onesA + 1, 9);
-        a = tensA * 10 + onesA;
-        b = tensB * 10 + onesB;
-    }
-
-    return buildProblem("subtract", a, b, a - b);
+    return {
+        numerator,
+        denominator,
+        shape,
+    };
 }
 
-function generateMultiplication(level) {
-    let a;
-    let b;
-
-    if (level === 1) {
-        a = randomInt(2, 9);
-        b = randomInt(2, 9);
-    } else if (level === 2) {
-        b = randomInt(2, 4);
-        const tensDigit = randomInt(1, Math.max(1, Math.floor(9 / b)));
-        const onesDigit = randomInt(0, Math.floor(9 / b));
-        a = tensDigit * 10 + onesDigit;
-    } else {
-        do {
-            a = randomInt(12, 99);
-            b = randomInt(2, 9);
-        } while ((a % 10) * b < 10 && Math.floor(a / 10) * b < 10);
+function getLevelDenominators(level) {
+    if (level === 2) {
+        return [4, 5, 6, 8];
     }
-
-    return buildProblem("multiply", a, b, a * b);
+    if (level === 3) {
+        return [6, 8, 9, 10];
+    }
+    return [2, 3, 4];
 }
 
-function generateDivision(level) {
-    let divisor;
-    let quotient;
-    let dividend;
-
-    if (level === 1) {
-        divisor = randomInt(2, 9);
-        quotient = randomInt(1, 9);
-    } else if (level === 2) {
-        do {
-            divisor = randomInt(2, 9);
-            quotient = randomInt(10, 15);
-            dividend = divisor * quotient;
-        } while (dividend > 99);
-        return buildProblem("divide", dividend, divisor, quotient);
-    } else {
-        do {
-            divisor = randomInt(2, 9);
-            quotient = randomInt(16, 49);
-            dividend = divisor * quotient;
-        } while (dividend > 99);
-        return buildProblem("divide", dividend, divisor, quotient);
+function getRenderableShapes(denominator) {
+    const shapes = ["circle", "bar"];
+    const grid = getGridDimensions(denominator);
+    if (grid && grid.rows > 1 && grid.cols > 1) {
+        shapes.push("grid");
     }
-
-    dividend = divisor * quotient;
-    return buildProblem("divide", dividend, divisor, quotient);
+    return shapes;
 }
 
-function buildProblem(operation, a, b, answer) {
-    const meta = OPERATION_META[operation];
-    const originalText = `${a} ${meta.symbol} ${b} = ?`;
-    let leftText = originalText;
-    let rightText = originalText;
+function getAvailableShapesForLevel(level) {
+    const shapes = new Set();
+    getLevelDenominators(level).forEach((denominator) => {
+        getRenderableShapes(denominator).forEach((shape) => shapes.add(shape));
+    });
+    return [...shapes];
+}
 
-    if ((operation === "add" || operation === "multiply") && a !== b) {
-        const reversedText = `${b} ${meta.symbol} ${a} = ?`;
-        if (Math.random() > 0.5) {
-            leftText = reversedText;
-            rightText = originalText;
-        } else {
-            leftText = originalText;
-            rightText = reversedText;
+function getDenominatorsForShape(level, shape) {
+    const denominators = getLevelDenominators(level).filter((denominator) => getRenderableShapes(denominator).includes(shape));
+    return denominators.length ? denominators : getLevelDenominators(level);
+}
+
+function pickShapeFromPool(pool, previousShape = null) {
+    const filtered = previousShape ? pool.filter((shape) => shape !== previousShape) : pool;
+    return randomItem(filtered.length ? filtered : pool);
+}
+
+function chooseShapeForLevel(level, excludedShapes = [], previousShape = null) {
+    let shapes = getAvailableShapesForLevel(level);
+
+    if (excludedShapes.length) {
+        const filtered = shapes.filter((shape) => !excludedShapes.includes(shape));
+        if (filtered.length) {
+            shapes = filtered;
         }
     }
 
+    return pickShapeFromPool(shapes, previousShape);
+}
+
+function pickDistinctRoundShapes(level) {
+    const allShapes = getAvailableShapesForLevel(level);
+    const leftShape = pickShapeFromPool(allShapes, state.game.lastShapes.left);
+    const rightPool = allShapes.filter((shape) => shape !== leftShape);
+    const rightShape = pickShapeFromPool(rightPool.length ? rightPool : allShapes, state.game.lastShapes.right);
+
     return {
-        operation,
-        a,
-        b,
-        answer,
-        text: originalText,
-        leftText,
-        rightText,
+        left: leftShape,
+        right: rightShape === leftShape && rightPool.length ? randomItem(rightPool) : rightShape,
+    };
+}
+
+function pickNextShapeForSide(level, blockedShape, previousShape) {
+    const allShapes = getAvailableShapesForLevel(level);
+    const allowedShapes = allShapes.filter((shape) => shape !== blockedShape);
+    return pickShapeFromPool(allowedShapes.length ? allowedShapes : allShapes, previousShape);
+}
+
+function buildFractionVisual(problem, side) {
+    switch (problem.shape) {
+        case "bar":
+            return buildBarSvg(problem, side);
+        case "grid":
+            return buildGridSvg(problem, side);
+        case "circle":
+        default:
+            return buildCircleSvg(problem, side);
+    }
+}
+
+function buildCircleSvg(problem, side) {
+    const fill = side === "left" ? "#5aa9ff" : "#ff7793";
+    const crust = "#f0b86a";
+    const cheese = "#ffe5a3";
+    const stroke = "#ffffff";
+    const size = 210;
+    const radius = 78;
+    const center = size / 2;
+    const angleStep = 360 / problem.denominator;
+    let slices = "";
+
+    for (let index = 0; index < problem.denominator; index += 1) {
+        const startAngle = index * angleStep;
+        const endAngle = startAngle + angleStep;
+        const path = describeSlice(center, center, radius, startAngle, endAngle);
+        const sliceFill = index < problem.numerator ? fill : cheese;
+        slices += `<path d="${path}" fill="${sliceFill}" stroke="${stroke}" stroke-width="4"></path>`;
+    }
+
+    return `
+        <svg class="fraction-visual fraction-visual--circle" width="108" height="108" style="width:108px;height:108px;max-width:108px;max-height:108px;display:block;" viewBox="0 0 ${size} ${size}" role="img" aria-label="Círculo representando ${problem.numerator} de ${problem.denominator}">
+            <circle cx="${center}" cy="${center}" r="${radius + 10}" fill="${crust}"></circle>
+            ${slices}
+            <circle cx="${center}" cy="${center}" r="10" fill="#fff7dc" opacity="0.85"></circle>
+        </svg>
+    `;
+}
+
+function buildBarSvg(problem, side) {
+    const fill = side === "left" ? "#5aa9ff" : "#ff7793";
+    const base = "#ffe5a3";
+    const stroke = "#ffffff";
+    const width = 230;
+    const height = 120;
+    const innerX = 20;
+    const innerY = 28;
+    const innerWidth = 190;
+    const innerHeight = 64;
+    const partWidth = innerWidth / problem.denominator;
+    let cells = "";
+
+    for (let index = 0; index < problem.denominator; index += 1) {
+        const x = innerX + index * partWidth;
+        const cellFill = index < problem.numerator ? fill : base;
+        cells += `<rect x="${x}" y="${innerY}" width="${partWidth}" height="${innerHeight}" fill="${cellFill}" stroke="${stroke}" stroke-width="3"></rect>`;
+    }
+
+    return `
+        <svg class="fraction-visual fraction-visual--bar" width="141" height="51" style="width:141px;height:51px;max-width:141px;max-height:51px;display:block;" viewBox="0 0 ${width} ${height}" role="img" aria-label="Barra representando ${problem.numerator} de ${problem.denominator}">
+            <rect x="${innerX}" y="${innerY}" width="${innerWidth}" height="${innerHeight}" rx="20" fill="#f5f8ff"></rect>
+            ${cells}
+        </svg>
+    `;
+}
+
+function buildGridSvg(problem, side) {
+    const fill = side === "left" ? "#5aa9ff" : "#ff7793";
+    const base = "#ffe5a3";
+    const stroke = "#ffffff";
+    const size = 210;
+    const frame = 150;
+    const x0 = (size - frame) / 2;
+    const y0 = (size - frame) / 2;
+    const dimensions = getGridDimensions(problem.denominator) || { rows: 1, cols: problem.denominator };
+    const cellWidth = frame / dimensions.cols;
+    const cellHeight = frame / dimensions.rows;
+    let cells = "";
+
+    for (let row = 0; row < dimensions.rows; row += 1) {
+        for (let col = 0; col < dimensions.cols; col += 1) {
+            const index = row * dimensions.cols + col;
+            const x = x0 + col * cellWidth;
+            const y = y0 + row * cellHeight;
+            const cellFill = index < problem.numerator ? fill : base;
+            cells += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" rx="10" fill="${cellFill}" stroke="${stroke}" stroke-width="3"></rect>`;
+        }
+    }
+
+    return `
+        <svg class="fraction-visual fraction-visual--grid" width="87" height="87" style="width:87px;height:87px;max-width:87px;max-height:87px;display:block;" viewBox="0 0 ${size} ${size}" role="img" aria-label="Grade representando ${problem.numerator} de ${problem.denominator}">
+            ${cells}
+        </svg>
+    `;
+}
+
+function getGridDimensions(denominator) {
+    let best = null;
+
+    for (let rows = 2; rows <= Math.sqrt(denominator); rows += 1) {
+        if (denominator % rows !== 0) {
+            continue;
+        }
+        const cols = denominator / rows;
+        if (!best || Math.abs(cols - rows) < Math.abs(best.cols - best.rows)) {
+            best = { rows, cols };
+        }
+    }
+
+    if (best) {
+        return best;
+    }
+
+    if (denominator % 2 === 0 && denominator >= 4) {
+        return { rows: 2, cols: denominator / 2 };
+    }
+
+    return null;
+}
+
+function otherSide(side) {
+    return side === "left" ? "right" : "left";
+}
+
+function describeSlice(cx, cy, radius, startAngle, endAngle) {
+    const start = polarToCartesian(cx, cy, radius, endAngle);
+    const end = polarToCartesian(cx, cy, radius, startAngle);
+    const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+
+    return [
+        `M ${cx} ${cy}`,
+        `L ${start.x} ${start.y}`,
+        `A ${radius} ${radius} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`,
+        "Z",
+    ].join(" ");
+}
+
+function polarToCartesian(cx, cy, radius, angleDeg) {
+    const angleRad = ((angleDeg - 90) * Math.PI) / 180;
+    return {
+        x: cx + radius * Math.cos(angleRad),
+        y: cy + radius * Math.sin(angleRad),
     };
 }
 

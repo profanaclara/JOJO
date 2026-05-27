@@ -14,14 +14,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css?v=12">
+    <link rel="stylesheet" href="./styles.css?v=36">
 </head>
 <body>
     <div id="app" class="math-tug-app is-setup-open">
         <header class="topbar">
-            <a class="top-pill top-pill--home" href="../../">
-                <span class="top-pill__icon">⌂</span>
-                <span>HOME</span>
+            <a class="brand-link brand-link--topbar" href="../../" aria-label="Voltar à JOJO">
+                <img src="../../assets/jojo-horizontal.svg" alt="JOJO" class="brand-link__logo">
             </a>
 
             <div class="brand-block">
@@ -42,8 +41,12 @@
                 </header>
 
                 <div class="problem-board">
-                    <div id="leftProblem" class="problem-expression">? + ? = ?</div>
-                    <div id="leftAnswerDisplay" class="answer-display">—</div>
+                    <div id="leftProblem" class="problem-expression">🍕</div>
+                    <div id="leftAnswerDisplay" class="answer-display answer-display--fraction">
+                        <button id="leftNumeratorField" class="fraction-answer__field is-active" type="button" data-side="left" data-part="numerator">?</button>
+                        <span class="fraction-answer__line"></span>
+                        <button id="leftDenominatorField" class="fraction-answer__field" type="button" data-side="left" data-part="denominator">?</button>
+                    </div>
                 </div>
 
                 <div class="keypad" data-keypad="left">
@@ -109,8 +112,8 @@
                     </div>
 
                     <div class="round-chip round-chip--accent">
-                        <span>OPERAÇÕES</span>
-                        <strong id="operationsLabel">ADIÇÃO</strong>
+                        <span>CONTEÚDO</span>
+                        <strong id="operationsLabel">FRAÇÕES</strong>
                     </div>
                 </div>
             </section>
@@ -122,8 +125,12 @@
                 </header>
 
                 <div class="problem-board problem-board--red">
-                    <div id="rightProblem" class="problem-expression">? + ? = ?</div>
-                    <div id="rightAnswerDisplay" class="answer-display">—</div>
+                    <div id="rightProblem" class="problem-expression">🍕</div>
+                    <div id="rightAnswerDisplay" class="answer-display answer-display--fraction">
+                        <button id="rightNumeratorField" class="fraction-answer__field is-active" type="button" data-side="right" data-part="numerator">?</button>
+                        <span class="fraction-answer__line"></span>
+                        <button id="rightDenominatorField" class="fraction-answer__field" type="button" data-side="right" data-part="denominator">?</button>
+                    </div>
                 </div>
 
                 <div class="keypad keypad--red" data-keypad="right">
@@ -179,25 +186,13 @@
             <div class="setup-modal__body">
                 <section class="setup-step" data-step-panel="1">
                     <div class="setup-copy">
-                        <h3>OPERAÇÕES</h3>
+                        <h3>CONTEÚDO</h3>
                     </div>
 
                     <div class="selection-grid selection-grid--operations">
-                        <button class="selection-card is-selected" type="button" data-operation="add">
-                            <span class="selection-card__symbol">+</span>
-                            <strong>ADIÇÃO</strong>
-                        </button>
-                        <button class="selection-card" type="button" data-operation="subtract">
-                            <span class="selection-card__symbol">−</span>
-                            <strong>SUBTRAÇÃO</strong>
-                        </button>
-                        <button class="selection-card" type="button" data-operation="multiply">
-                            <span class="selection-card__symbol">×</span>
-                            <strong>MULTIPLICAÇÃO</strong>
-                        </button>
-                        <button class="selection-card" type="button" data-operation="divide">
-                            <span class="selection-card__symbol">÷</span>
-                            <strong>DIVISÃO</strong>
+                        <button class="selection-card is-selected" type="button" data-operation="fraction">
+                            <span class="selection-card__symbol">🍕</span>
+                            <strong>FRAÇÕES</strong>
                         </button>
                     </div>
                 </section>
@@ -211,23 +206,20 @@
                         <button class="selection-card selection-card--level is-selected" type="button" data-level="1">
                             <span class="selection-card__level-icon">◔</span>
                             <strong>NÍVEL 1</strong>
-                            <small>OPERAÇÕES COM 1 ALGARISMO</small>
                         </button>
                         <button class="selection-card selection-card--level" type="button" data-level="2">
                             <span class="selection-card__level-icon">◑</span>
                             <strong>NÍVEL 2</strong>
-                            <small>2 ALGARISMOS SEM RESERVA</small>
                         </button>
                         <button class="selection-card selection-card--level" type="button" data-level="3">
                             <span class="selection-card__level-icon">◕</span>
                             <strong>NÍVEL 3</strong>
-                            <small>2 ALGARISMOS COM RESERVA</small>
                         </button>
                     </div>
 
                     <div class="quantity-panel">
                         <div class="setup-copy setup-copy--compact">
-                            <h3>QUANTIDADE DE OPERAÇÕES</h3>
+                            <h3>QUANTIDADE DE RODADAS</h3>
                         </div>
 
                         <div class="quantity-panel__row">
@@ -266,7 +258,10 @@
             </div>
 
             <footer class="setup-modal__footer">
-                <button id="prevStepBtn" class="secondary-action secondary-action--ghost" type="button">← VOLTAR</button>
+                <button id="prevStepBtn" class="secondary-action secondary-action--ghost secondary-action--icon" type="button" aria-label="Etapa anterior" title="Etapa anterior">
+                    <img src="../../assets/jojologo-fundo-branco.svg" alt="" class="secondary-action__logo">
+                    <span class="sr-only">Etapa anterior</span>
+                </button>
                 <button id="nextStepBtn" class="primary-action" type="button">PRÓXIMO →</button>
                 <button id="startMatchBtn" class="primary-action hidden" type="button">▶ INICIAR PARTIDA</button>
             </footer>
@@ -275,7 +270,7 @@
 
     <audio id="backgroundMusic" src="./assets/musicacabodeguerra.mp3" preload="auto" loop></audio>
 
-    <script src="./app.js?v=12"></script>
-    <script src="../../scripts/pwa.js"></script>
+    <script src="./app.js?v=36"></script>
+    <script src="../../scripts/pwa.js?v=5"></script>
 </body>
 </html>

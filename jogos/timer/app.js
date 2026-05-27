@@ -320,6 +320,9 @@ function switchScreen(screen) {
     ui.homeScreen.classList.toggle("hidden", screen !== "home");
     ui.timerScreen.classList.toggle("hidden", screen !== "timer");
     ui.finishScreen.classList.toggle("hidden", screen !== "finish");
+    ui.body.classList.toggle("is-timer-home-screen", screen === "home");
+    ui.body.classList.toggle("is-timer-running-screen", screen === "timer");
+    ui.body.classList.toggle("is-timer-finish-screen", screen === "finish");
 }
 
 function renderAboutModal() {
@@ -698,4 +701,5 @@ renderAboutModal();
 updateSoundButton();
 resetInputs();
 buildMilestones();
+switchScreen("home");
 syncFullscreenState();

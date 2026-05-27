@@ -1,0 +1,565 @@
+:root {
+    --bg-top: #eef5ff;
+    --bg-bottom: #d7e6ff;
+    --blue-strong: #0f89d0;
+    --blue-soft: #eaf5ff;
+    --red-strong: #e84853;
+    --red-soft: #fff0f3;
+    --ink: #14324e;
+    --muted: #6d8197;
+    --card: rgba(255, 255, 255, 0.94);
+    --shadow: 0 24px 56px rgba(22, 86, 148, 0.14);
+    --rope-shift: 0px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    font-family: "Inter", sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(255, 249, 219, 0.6), transparent 24%),
+        radial-gradient(circle at top right, rgba(255, 228, 236, 0.44), transparent 28%),
+        linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+    color: var(--ink);
+}
+
+body {
+    min-height: 100vh;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.fraction-tug-app {
+    min-height: 100vh;
+    padding: 20px 18px 24px;
+}
+
+.fraction-tug-app.is-setup-open .game-layout,
+.fraction-tug-app.is-setup-open .topbar {
+    filter: blur(10px);
+    opacity: 0.42;
+    pointer-events: none;
+}
+
+.topbar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    align-items: center;
+    max-width: 1520px;
+    margin: 0 auto;
+}
+
+.brand-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.brand-link img {
+    width: min(290px, 28vw);
+    min-width: 180px;
+    height: auto;
+}
+
+.topbar__title {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+}
+
+.topbar__title h1 {
+    margin: 0;
+    font-family: "Archivo", sans-serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.topbar__title p {
+    margin: 0;
+    font-family: "Archivo", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #4f75a3;
+}
+
+.top-action {
+    justify-self: end;
+    min-height: 46px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 22px rgba(14, 63, 106, 0.12);
+    color: #0f6fae;
+    font-family: "Archivo", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.game-layout {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.9fr) minmax(320px, 1.12fr) minmax(240px, 0.9fr);
+    gap: 16px;
+    align-items: stretch;
+    max-width: 1520px;
+    margin: 18px auto 0;
+}
+
+.team-panel,
+.arena-panel,
+.setup-modal__box {
+    border-radius: 28px;
+    background: var(--card);
+    box-shadow: var(--shadow);
+}
+
+.team-panel {
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+    gap: 14px;
+    padding-bottom: 14px;
+}
+
+.team-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 18px 16px;
+    color: #fff;
+    font-family: "Archivo", sans-serif;
+    font-size: 1.08rem;
+    font-weight: 700;
+}
+
+.team-panel--blue .team-panel__header {
+    background: linear-gradient(135deg, #0c5b93, var(--blue-strong));
+}
+
+.team-panel--red .team-panel__header {
+    background: linear-gradient(135deg, #8e2227, var(--red-strong));
+}
+
+.score-badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 56px;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    color: #0a486f;
+    font-family: "Archivo", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.fraction-card {
+    margin: 0 14px;
+    padding: 18px 16px;
+    border-radius: 24px;
+    background: var(--blue-soft);
+    border: 2px solid rgba(34, 125, 192, 0.16);
+}
+
+.fraction-card--red {
+    background: var(--red-soft);
+    border-color: rgba(231, 72, 83, 0.16);
+}
+
+.pizza-display {
+    display: grid;
+    place-items: center;
+    min-height: 212px;
+}
+
+.pizza-display svg {
+    width: min(100%, 190px);
+    height: auto;
+    filter: drop-shadow(0 14px 26px rgba(18, 58, 98, 0.12));
+}
+
+.fraction-card__prompt {
+    margin: 0 0 12px;
+    text-align: center;
+    font-weight: 600;
+    color: #4e6d89;
+}
+
+.fraction-input {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+}
+
+.fraction-line {
+    width: 104px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(15, 73, 112, 0.42);
+}
+
+.fraction-field {
+    width: 108px;
+    min-height: 58px;
+    border: 2px solid transparent;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+    font-family: "Archivo", sans-serif;
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #24415d;
+}
+
+.fraction-field.is-active {
+    border-color: #4a7dff;
+    box-shadow: 0 0 0 6px rgba(74, 125, 255, 0.12);
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0 14px;
+}
+
+.keypad button {
+    min-height: 74px;
+    border: 0;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 10px 24px rgba(19, 65, 102, 0.12);
+    font-family: "Archivo", sans-serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #23435d;
+    transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.keypad button:active,
+.keypad button.is-pressed {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 4px 12px rgba(19, 65, 102, 0.12);
+}
+
+.keypad__danger {
+    background: #ffede9 !important;
+    color: #ad372f !important;
+}
+
+.keypad__success {
+    background: #e7f9ef !important;
+    color: #147342 !important;
+}
+
+.team-status {
+    min-height: 24px;
+    padding: 0 18px;
+    text-align: center;
+    font-weight: 600;
+    color: #5e7892;
+}
+
+.team-status.is-success {
+    color: #147342;
+}
+
+.team-status.is-error {
+    color: #b53c38;
+}
+
+.arena-panel {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 14px;
+    padding: 14px;
+    background: #ffffff;
+}
+
+.arena-panel__top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 12px;
+    align-items: center;
+}
+
+.round-chip,
+.match-timer {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    padding: 14px 16px;
+    border-radius: 22px;
+    background: rgba(236, 244, 255, 0.94);
+}
+
+.round-chip span,
+.match-timer span {
+    font-family: "Archivo", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6482a0;
+}
+
+.round-chip strong,
+.match-timer strong {
+    font-family: "Archivo", sans-serif;
+    font-size: 1.55rem;
+    font-weight: 800;
+}
+
+.round-chip--accent {
+    background: linear-gradient(135deg, rgba(222, 245, 255, 0.96), rgba(241, 253, 240, 0.98));
+}
+
+.arena-stage {
+    position: relative;
+    min-height: 540px;
+    border-radius: 28px;
+    background:
+        radial-gradient(circle at top, rgba(240, 246, 255, 0.78), transparent 56%),
+        #ffffff;
+    overflow: hidden;
+}
+
+.arena-stage__line {
+    position: absolute;
+    inset: 0 auto 0 50%;
+    width: 4px;
+    transform: translateX(-50%);
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(73, 103, 127, 0.45) 0 10px,
+            rgba(73, 103, 127, 0) 10px 22px
+        );
+    opacity: 0.7;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.rope-wrapper {
+    position: absolute;
+    left: calc(50% + var(--rope-shift));
+    top: 53%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    transition: left 180ms cubic-bezier(.2, .85, .25, 1);
+    overflow: hidden;
+}
+
+.rope-wrapper__frame {
+    display: block;
+    width: 100%;
+    height: 240px;
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+}
+
+.feedback-banner {
+    position: absolute;
+    left: 50%;
+    top: 24px;
+    transform: translateX(-50%);
+    padding: 14px 22px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 12px 22px rgba(15, 75, 121, 0.16);
+    font-family: "Archivo", sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #104a72;
+    z-index: 3;
+}
+
+.countdown-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(8, 31, 51, 0.5);
+    backdrop-filter: blur(6px);
+    z-index: 5;
+}
+
+.countdown-overlay__value {
+    display: grid;
+    place-items: center;
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.94);
+    font-family: "Archivo", sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    color: #0b446d;
+}
+
+.setup-modal {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(8, 31, 51, 0.36);
+    backdrop-filter: blur(10px);
+    z-index: 30;
+}
+
+.setup-modal__box {
+    width: min(100%, 620px);
+    padding: 30px 28px;
+}
+
+.setup-eyebrow {
+    margin: 0 0 8px;
+    font-family: "Archivo", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #5e82ff;
+}
+
+.setup-modal__box h2 {
+    margin: 0;
+    font-family: "Archivo", sans-serif;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 800;
+}
+
+.setup-copy {
+    margin: 10px 0 0;
+    color: #617b96;
+    line-height: 1.55;
+}
+
+.setup-group {
+    margin-top: 22px;
+}
+
+.setup-group__label {
+    display: block;
+    margin-bottom: 10px;
+    font-family: "Archivo", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #69809a;
+}
+
+.setup-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.setup-chip {
+    min-height: 52px;
+    padding: 0 18px;
+    border: 2px solid rgba(96, 129, 160, 0.14);
+    border-radius: 18px;
+    background: rgba(247, 250, 255, 0.96);
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    color: #365372;
+}
+
+.setup-chip.is-selected {
+    border-color: rgba(91, 111, 255, 0.22);
+    background: linear-gradient(135deg, #6b7cff, #52a4ff);
+    color: #fff;
+}
+
+.setup-actions {
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.primary-action {
+    min-height: 56px;
+    padding: 0 24px;
+    border: 0;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #5f71ff, #4db6ff);
+    color: #fff;
+    font-family: "Archivo", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 18px 30px rgba(72, 123, 255, 0.28);
+}
+
+@media (max-width: 1100px) {
+    .topbar {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .top-action {
+        justify-self: center;
+    }
+
+    .game-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .arena-stage {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 720px) {
+    .fraction-tug-app {
+        padding: 16px 12px 20px;
+    }
+
+    .brand-link img {
+        width: 220px;
+        min-width: 0;
+    }
+
+    .topbar__title h1 {
+        font-size: 1.6rem;
+    }
+
+    .topbar__title p {
+        font-size: 0.75rem;
+    }
+
+    .arena-panel__top {
+        grid-template-columns: 1fr;
+    }
+
+    .arena-stage {
+        min-height: 360px;
+    }
+
+    .rope-wrapper__frame {
+        height: 180px;
+    }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#dbe8ff">
+    <title>JOJO | Cabo de Guerra Frações</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div id="app" class="fraction-tug-app is-setup-open">
+        <header class="topbar">
+            <a class="brand-link" href="../../">
+                <img src="../../assets/jojo-horizontal.svg" alt="JOJO">
+            </a>
+
+            <div class="topbar__title">
+                <h1>CABO DE GUERRA DE FRAÇÕES</h1>
+                <p>PIZZA, NUMERADOR E DENOMINADOR</p>
+            </div>
+
+            <button id="restartBtn" class="top-action" type="button">RECOMEÇAR</button>
+        </header>
+
+        <main class="game-layout">
+            <section class="team-panel team-panel--blue">
+                <header class="team-panel__header">
+                    <strong>Equipe Azul</strong>
+                    <span id="leftScore" class="score-badge">0</span>
+                </header>
+
+                <div class="fraction-card">
+                    <div id="leftPizza" class="pizza-display" aria-label="Fração em pizza da equipe azul"></div>
+                    <p class="fraction-card__prompt">Escreva a fração da pizza.</p>
+                    <div class="fraction-input">
+                        <button id="leftNumeratorField" class="fraction-field is-active" type="button" data-side="left" data-part="numerator">?</button>
+                        <span class="fraction-line"></span>
+                        <button id="leftDenominatorField" class="fraction-field" type="button" data-side="left" data-part="denominator">?</button>
+                    </div>
+                </div>
+
+                <div class="keypad" data-side="left">
+                    <button type="button" data-key="1">1</button>
+                    <button type="button" data-key="2">2</button>
+                    <button type="button" data-key="3">3</button>
+                    <button type="button" data-key="4">4</button>
+                    <button type="button" data-key="5">5</button>
+                    <button type="button" data-key="6">6</button>
+                    <button type="button" data-key="7">7</button>
+                    <button type="button" data-key="8">8</button>
+                    <button type="button" data-key="9">9</button>
+                    <button type="button" class="keypad__danger" data-key="clear">×</button>
+                    <button type="button" data-key="0">0</button>
+                    <button type="button" class="keypad__success" data-key="submit">✓</button>
+                </div>
+
+                <div id="leftStatus" class="team-status">Escolha numerador e denominador.</div>
+            </section>
+
+            <section class="arena-panel">
+                <div class="arena-panel__top">
+                    <div class="round-chip">
+                        <span>Rodada</span>
+                        <strong id="roundCounter">0 / 5</strong>
+                    </div>
+                    <div class="match-timer">
+                        <span>Tempo</span>
+                        <strong id="matchTimer">00:00</strong>
+                    </div>
+                    <div class="round-chip round-chip--accent">
+                        <span>Nível</span>
+                        <strong id="levelLabel">Fácil</strong>
+                    </div>
+                </div>
+
+                <div class="arena-stage">
+                    <div class="arena-stage__line"></div>
+                    <div id="ropeWrapper" class="rope-wrapper">
+                        <iframe
+                            class="rope-wrapper__frame"
+                            src="../cabo-de-guerra/gif-frame.html"
+                            title="Cabo de guerra animado"
+                            tabindex="-1"
+                            loading="eager"
+                        ></iframe>
+                    </div>
+
+                    <div id="feedback" class="feedback-banner hidden"></div>
+
+                    <div id="countdownOverlay" class="countdown-overlay hidden">
+                        <div id="countdownValue" class="countdown-overlay__value">3</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="team-panel team-panel--red">
+                <header class="team-panel__header">
+                    <strong>Equipe Vermelha</strong>
+                    <span id="rightScore" class="score-badge">0</span>
+                </header>
+
+                <div class="fraction-card fraction-card--red">
+                    <div id="rightPizza" class="pizza-display" aria-label="Fração em pizza da equipe vermelha"></div>
+                    <p class="fraction-card__prompt">Escreva a fração da pizza.</p>
+                    <div class="fraction-input">
+                        <button id="rightNumeratorField" class="fraction-field is-active" type="button" data-side="right" data-part="numerator">?</button>
+                        <span class="fraction-line"></span>
+                        <button id="rightDenominatorField" class="fraction-field" type="button" data-side="right" data-part="denominator">?</button>
+                    </div>
+                </div>
+
+                <div class="keypad keypad--red" data-side="right">
+                    <button type="button" data-key="1">1</button>
+                    <button type="button" data-key="2">2</button>
+                    <button type="button" data-key="3">3</button>
+                    <button type="button" data-key="4">4</button>
+                    <button type="button" data-key="5">5</button>
+                    <button type="button" data-key="6">6</button>
+                    <button type="button" data-key="7">7</button>
+                    <button type="button" data-key="8">8</button>
+                    <button type="button" data-key="9">9</button>
+                    <button type="button" class="keypad__danger" data-key="clear">×</button>
+                    <button type="button" data-key="0">0</button>
+                    <button type="button" class="keypad__success" data-key="submit">✓</button>
+                </div>
+
+                <div id="rightStatus" class="team-status">Escolha numerador e denominador.</div>
+            </section>
+        </main>
+
+        <section id="setupModal" class="setup-modal" role="dialog" aria-modal="true" aria-labelledby="setupTitle">
+            <div class="setup-modal__box">
+                <p class="setup-eyebrow">NOVA VERSÃO EM FRAÇÕES</p>
+                <h2 id="setupTitle">Prepare a partida</h2>
+                <p class="setup-copy">Cada equipe vê uma pizza fracionada e precisa digitar o numerador e o denominador.</p>
+
+                <div class="setup-group">
+                    <span class="setup-group__label">Nível</span>
+                    <div class="setup-options">
+                        <button class="setup-chip is-selected" type="button" data-level="easy">Fácil</button>
+                        <button class="setup-chip" type="button" data-level="medium">Médio</button>
+                        <button class="setup-chip" type="button" data-level="hard">Desafio</button>
+                    </div>
+                </div>
+
+                <div class="setup-group">
+                    <span class="setup-group__label">Rodadas</span>
+                    <div class="setup-options">
+                        <button class="setup-chip is-selected" type="button" data-rounds="5">5</button>
+                        <button class="setup-chip" type="button" data-rounds="10">10</button>
+                        <button class="setup-chip" type="button" data-rounds="15">15</button>
+                    </div>
+                </div>
+
+                <div class="setup-actions">
+                    <button id="startMatchBtn" class="primary-action" type="button">Iniciar partida</button>
+                </div>
+            </div>
+        </section>
+
+        <audio id="backgroundMusic" src="../cabo-de-guerra/assets/musicacabodeguerra.mp3" preload="auto" loop></audio>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>
