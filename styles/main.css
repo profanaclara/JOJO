@@ -110,19 +110,22 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 68px;
-    height: 68px;
-    min-height: 58px;
-    margin: 20px auto 0;
+    gap: 10px;
+    width: auto;
+    min-height: 44px;
+    margin: 22px auto 0;
     padding: 0;
     border: 0;
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.94);
+    border-radius: 0;
+    background: transparent;
     color: #4370cb;
     font-family: "Archivo", sans-serif;
     font-size: 0.98rem;
     font-weight: 700;
-    box-shadow: var(--shadow-md);
+    line-height: 1;
+    white-space: nowrap;
+    box-shadow: none;
+    filter: drop-shadow(0 10px 14px rgba(67, 112, 203, 0.18));
 }
 
 .install-app-button[hidden] {
@@ -130,8 +133,8 @@ a {
 }
 
 .install-app-button__icon {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
     display: block;
 }

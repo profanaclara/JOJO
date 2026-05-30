@@ -150,7 +150,7 @@ function ensureInstallButton() {
     button.hidden = true;
     button.setAttribute("aria-label", "Baixar app JOJO");
     button.setAttribute("title", "Baixar app JOJO");
-    button.innerHTML = `<img class="install-app-button__icon" src="${iconUrl}" alt=""><span class="sr-only">Baixar app JOJO</span>`;
+    button.innerHTML = `<img class="install-app-button__icon" src="${iconUrl}" alt=""><span>Baixar App</span>`;
 
     return button;
 }
