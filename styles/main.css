@@ -125,7 +125,7 @@ a {
     line-height: 1;
     white-space: nowrap;
     box-shadow: none;
-    filter: drop-shadow(0 12px 18px rgba(38, 95, 176, 0.22));
+    filter: none;
 }
 
 .install-app-button[hidden] {

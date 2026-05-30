@@ -83,7 +83,7 @@ function ensureFloatingButtonStyles() {
             justify-content: center;
             gap: 8px;
             box-shadow: none;
-            filter: drop-shadow(0 12px 18px rgba(38, 95, 176, 0.22));
+            filter: none;
         }
 
         .install-app-button--floating[hidden] {
@@ -139,7 +139,7 @@ function ensureInstallButton() {
 
     let button = document.getElementById("installAppBtn");
     const rootUrl = getRootUrl();
-    const iconUrl = new URL("assets/JOJOdownload.svg", rootUrl);
+    const iconUrl = new URL("assets/JOJOdownloadsemfundo.svg", rootUrl);
 
     if (!button) {
         ensureFloatingButtonStyles();
