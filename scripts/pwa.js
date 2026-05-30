@@ -65,14 +65,13 @@ function ensureFloatingButtonStyles() {
     style.id = "pwaFloatingStyles";
     style.textContent = `
         .install-app-button--floating {
-            position: fixed;
-            left: 50%;
-            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
-            transform: translateX(-50%);
+            position: static;
+            transform: none;
             z-index: 999;
             width: auto;
             min-width: 0;
-            height: 52px;
+            min-height: 52px;
+            margin: auto auto 12px;
             padding: 0;
             border: 0;
             border-radius: 0;
@@ -91,8 +90,8 @@ function ensureFloatingButtonStyles() {
         }
 
         .install-app-button__icon {
-            width: 34px;
-            height: 34px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             display: block;
         }
@@ -110,20 +109,19 @@ function ensureFloatingButtonStyles() {
         }
 
         .install-app-button--floating:active {
-            transform: translateX(-50%) scale(0.98);
+            transform: scale(0.98);
         }
 
         @media (max-width: 680px) {
             .install-app-button--floating {
-                bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
                 width: auto;
-                height: 58px;
+                min-height: 56px;
                 border-radius: 0;
             }
 
             .install-app-button__icon {
-                width: 28px;
-                height: 28px;
+                width: 42px;
+                height: 42px;
             }
         }
     `;
