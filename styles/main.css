@@ -113,7 +113,7 @@ a {
     gap: 10px;
     width: auto;
     min-height: 44px;
-    margin: 22px auto 0;
+    margin: auto auto 0;
     padding: 0;
     border: 0;
     border-radius: 0;
@@ -125,7 +125,7 @@ a {
     line-height: 1;
     white-space: nowrap;
     box-shadow: none;
-    filter: drop-shadow(0 10px 14px rgba(67, 112, 203, 0.18));
+    filter: drop-shadow(0 12px 18px rgba(38, 95, 176, 0.22));
 }
 
 .install-app-button[hidden] {
@@ -419,9 +419,7 @@ a:focus-visible {
 @media (min-width: 768px) {
     .app-shell {
         min-height: 100vh;
-        box-shadow:
-            0 0 0 1px rgba(255, 255, 255, 0.4),
-            0 24px 70px rgba(65, 90, 150, 0.18);
+        box-shadow: 0 24px 70px rgba(65, 90, 150, 0.2);
     }
 
     .home-action:hover,
@@ -446,7 +444,7 @@ a:focus-visible {
         background:
             linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
             linear-gradient(180deg, var(--bg-top) 0%, #dce9ff 40%, var(--bg-bottom) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.56);
+        border: 0;
     }
 
     .app-screen {

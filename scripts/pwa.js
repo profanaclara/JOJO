@@ -66,20 +66,24 @@ function ensureFloatingButtonStyles() {
     style.textContent = `
         .install-app-button--floating {
             position: fixed;
-            top: calc(env(safe-area-inset-top, 0px) + 14px);
-            right: 14px;
+            left: 50%;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+            transform: translateX(-50%);
             z-index: 999;
-            width: 68px;
-            height: 68px;
+            width: auto;
+            min-width: 0;
+            height: 52px;
             padding: 0;
             border: 0;
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.96);
+            border-radius: 0;
+            background: transparent;
             color: #197bc0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 12px 30px rgba(15, 75, 121, 0.16);
+            gap: 8px;
+            box-shadow: none;
+            filter: drop-shadow(0 12px 18px rgba(38, 95, 176, 0.22));
         }
 
         .install-app-button--floating[hidden] {
@@ -106,16 +110,15 @@ function ensureFloatingButtonStyles() {
         }
 
         .install-app-button--floating:active {
-            transform: scale(0.98);
+            transform: translateX(-50%) scale(0.98);
         }
 
         @media (max-width: 680px) {
             .install-app-button--floating {
-                top: calc(env(safe-area-inset-top, 0px) + 10px);
-                right: 10px;
-                width: 58px;
+                bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+                width: auto;
                 height: 58px;
-                border-radius: 20px;
+                border-radius: 0;
             }
 
             .install-app-button__icon {
