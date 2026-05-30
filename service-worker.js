@@ -1,4 +1,4 @@
-const CACHE_VERSION = "jojo-static-v2026-05-29-2";
+const CACHE_VERSION = "jojo-static-v2026-05-30-1";
 const APP_SHELL = [
     "./",
     "./index.html",
@@ -7,7 +7,7 @@ const APP_SHELL = [
     "./styles/main.css?v=4",
     "./scripts/app.js",
     "./scripts/data.js",
-    "./scripts/pwa.js?v=10",
+    "./scripts/pwa.js?v=11",
     "./assets/jojo-eyes-logo.png",
     "./assets/jojo-horizontal.svg",
     "./assets/jojologo-fundo-branco.svg",

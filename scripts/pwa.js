@@ -1,7 +1,8 @@
 let deferredInstallPrompt = null;
+const pwaScriptUrl = document.currentScript?.src || window.location.href;
 
 function getRootUrl() {
-    const scriptUrl = new URL(document.currentScript.src, window.location.href);
+    const scriptUrl = new URL(pwaScriptUrl, window.location.href);
     return new URL("../", scriptUrl);
 }
 
@@ -146,11 +147,24 @@ function ensureInstallButton() {
     }
 
     ensureFloatingButtonStyles();
-    button.className = "install-app-button install-app-button--floating";
-    button.hidden = true;
-    button.setAttribute("aria-label", "Baixar app JOJO");
-    button.setAttribute("title", "Baixar app JOJO");
-    button.innerHTML = `<img class="install-app-button__icon" src="${iconUrl}" alt=""><span>Baixar App</span>`;
+    const buttonClassName = "install-app-button install-app-button--floating";
+    const buttonContent = `<img class="install-app-button__icon" src="${iconUrl}" alt=""><span>Baixar App</span>`;
+
+    if (button.className !== buttonClassName) {
+        button.className = buttonClassName;
+    }
+    if (!button.hidden) {
+        button.hidden = true;
+    }
+    if (button.getAttribute("aria-label") !== "Baixar app JOJO") {
+        button.setAttribute("aria-label", "Baixar app JOJO");
+    }
+    if (button.getAttribute("title") !== "Baixar app JOJO") {
+        button.setAttribute("title", "Baixar app JOJO");
+    }
+    if (button.innerHTML !== buttonContent) {
+        button.innerHTML = buttonContent;
+    }
 
     return button;
 }
