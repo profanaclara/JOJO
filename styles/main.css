@@ -176,21 +176,21 @@ a {
 }
 
 .home-action__icon {
-    width: 40px;
-    height: 40px;
+    width: 64px;
+    height: 64px;
     object-fit: contain;
     flex-shrink: 0;
     filter: drop-shadow(0 8px 12px rgba(67, 95, 150, 0.12));
 }
 
 .home-action__icon--controle {
-    width: 38px;
-    height: 38px;
+    width: 60px;
+    height: 60px;
 }
 
 .home-action__icon--cerebro {
-    width: 52px;
-    height: 52px;
+    width: 70px;
+    height: 70px;
 }
 
 .home-action__label {
@@ -492,25 +492,25 @@ a:focus-visible {
     }
 
     .home-action {
-        min-height: 112px;
+        min-height: 124px;
         border-radius: 30px;
         font-size: 1.06rem;
-        gap: 16px;
+        gap: 22px;
     }
 
     .home-action__icon {
-        width: 48px;
-        height: 48px;
+        width: 84px;
+        height: 84px;
     }
 
     .home-action__icon--controle {
-        width: 44px;
-        height: 44px;
+        width: 78px;
+        height: 78px;
     }
 
     .home-action__icon--cerebro {
-        width: 62px;
-        height: 62px;
+        width: 92px;
+        height: 92px;
     }
 
     .app-footer {
@@ -536,10 +536,10 @@ a:focus-visible {
     .app-sheet {
         position: fixed;
         left: 50%;
-        top: clamp(300px, 42vh, 380px);
+        top: clamp(160px, 24vh, 260px);
         bottom: auto;
-        width: min(100% - 120px, 860px);
-        max-height: min(54vh, 460px);
+        width: min(100% - 120px, 980px);
+        max-height: min(72vh, 620px);
         transform: translate(-50%, 24px) scale(0.98);
         padding: 18px 22px 22px;
         border-radius: 28px;
@@ -571,7 +571,7 @@ a:focus-visible {
 
     .sheet-content {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        max-height: calc(min(54vh, 460px) - 156px);
+        max-height: calc(min(72vh, 620px) - 156px);
         align-items: start;
         grid-auto-rows: min-content;
     }

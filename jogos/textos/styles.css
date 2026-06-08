@@ -43,6 +43,12 @@ body {
 
 body.modal-open,
 body.session-active {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body.textos-fullscreen,
+body.session-active.textos-fullscreen {
     overflow: hidden;
 }
 
