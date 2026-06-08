@@ -1094,10 +1094,11 @@ a {
 
 .fullscreen-timer {
     top: max(20px, env(safe-area-inset-top));
-    left: 50%;
-    transform: translateX(-50%);
-    min-width: 132px;
-    padding: 14px 22px;
+    right: max(138px, calc(env(safe-area-inset-right) + 120px));
+    left: auto;
+    transform: none;
+    min-width: 124px;
+    padding: 12px 18px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.95);
     text-align: center;
@@ -1624,23 +1625,74 @@ body.textos-fullscreen .stats-row {
     display: none;
 }
 
-body.textos-fullscreen .step-panel {
-    max-width: min(100%, 1100px);
+body.textos-fullscreen .step-panel,
+body.textos-fullscreen .surface-card.step-panel {
+    width: 100vw;
+    inline-size: 100vw;
+    max-width: none;
+    max-inline-size: none;
+    height: 100dvh;
+    min-height: 0;
+    margin: 0;
     background: transparent;
     border: 0;
     box-shadow: none;
-    padding: 16px 0 0;
+    padding: max(26px, env(safe-area-inset-top)) max(158px, calc(env(safe-area-inset-right) + 124px)) max(20px, env(safe-area-inset-bottom)) max(38px, env(safe-area-inset-left));
+    display: grid;
+    align-items: center;
+    justify-items: start;
+    overflow: hidden;
 }
 
 body.textos-fullscreen .text-stage {
-    min-height: calc(100vh - 150px);
-    padding: 40px 48px;
+    width: var(--stage-reading-width, min(calc(100vw - 320px), 1160px));
+    inline-size: var(--stage-reading-width, min(calc(100vw - 320px), 1160px));
+    max-width: none;
+    max-inline-size: none;
+    max-height: calc(100dvh - 54px);
+    height: calc(100dvh - 54px);
+    min-height: 0;
+    padding: var(--stage-reading-pad-y, clamp(22px, 2vw, 30px)) var(--stage-reading-pad-x, clamp(42px, 4.8vw, 72px));
     background: #f7fbff;
+    overflow: hidden;
+    justify-self: start;
 }
 
-body.textos-fullscreen .reading-text {
-    font-size: clamp(1.3rem, 1.9vw, 2rem);
-    line-height: 1.9;
+body.textos-fullscreen .text-stage[data-reading-preset="short"] {
+    align-self: center;
+}
+
+body.textos-fullscreen .text-stage[data-reading-preset="story"] {
+    align-self: center;
+}
+
+body.textos-fullscreen .text-stage[data-reading-preset="long"] {
+    align-self: center;
+}
+
+body.textos-fullscreen .text-stage[data-reading-preset="dense"] {
+    align-self: stretch;
+}
+
+body.textos-fullscreen .reading-text,
+body.textos-fullscreen .reading-text.is-long {
+    font-size: var(--reading-fit-size, clamp(1rem, 1.26vw, 1.55rem));
+    line-height: var(--reading-fit-leading, 1.48);
+    letter-spacing: 0.01em;
+}
+
+body.textos-fullscreen .reading-text.is-extra-long {
+    font-size: var(--reading-fit-size, clamp(1rem, 1.26vw, 1.55rem));
+    line-height: var(--reading-fit-leading, 1.48);
+}
+
+body.textos-fullscreen .reading-text p,
+body.textos-fullscreen .reading-text.is-long p {
+    margin-bottom: var(--reading-fit-gap, 0.45em);
+}
+
+body.textos-fullscreen .reading-text.is-extra-long p {
+    margin-bottom: var(--reading-fit-gap, 0.45em);
 }
 
 body.textos-fullscreen .control-dock {

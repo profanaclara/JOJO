@@ -12,10 +12,13 @@ const ui = {
     board: document.getElementById("popitBoard"),
     tray: document.getElementById("countTray"),
     countedValue: document.getElementById("countedValue"),
+    topAnswerValue: document.getElementById("topAnswerValue"),
     resultText: document.getElementById("resultText"),
     modeBtn: document.getElementById("modeBtn"),
+    shuffleBtn: document.getElementById("shuffleBtn"),
     resetBtn: document.getElementById("resetBtn"),
-    undoBtn: document.getElementById("undoBtn")
+    undoBtn: document.getElementById("undoBtn"),
+    fullscreenBtn: document.getElementById("fullscreenBtn")
 };
 
 const state = {
@@ -63,6 +66,7 @@ function updateModeUI() {
     ui.modeBtn.setAttribute("aria-label", automatic ? "Modo automático" : "Modo manual");
     ui.minuendInput.readOnly = automatic;
     ui.subtrahendInput.readOnly = automatic;
+    ui.shuffleBtn.disabled = !automatic;
 }
 
 function setMode(mode, silent = false) {
@@ -83,6 +87,22 @@ function setMode(mode, silent = false) {
 
 function toggleMode() {
     setMode(state.mode === "automatic" ? "manual" : "automatic");
+}
+
+function shuffleProblem() {
+    if (state.mode !== "automatic") {
+        return;
+    }
+
+    const previous = `${state.minuend}-${state.subtrahend}`;
+    let next = randomProblem();
+    for (let attempt = 0; attempt < 5 && `${next[0]}-${next[1]}` === previous; attempt += 1) {
+        next = randomProblem();
+    }
+    [state.minuend, state.subtrahend] = next;
+    syncInputs();
+    softPop(0.58);
+    resetState(true);
 }
 
 function resetState(keepProblem = true) {
@@ -214,6 +234,7 @@ function prepareLeftovers() {
     });
     state.tray = leftoverIndexes().map((index, order) => ({
         id: `${index}-${order}`,
+        group: "leftover",
         counted: false
     }));
     state.step = "count";
@@ -257,6 +278,7 @@ function render() {
     updateModeUI();
     ui.targetStart.textContent = formatTarget(state.minuend);
     ui.targetRemove.textContent = formatTarget(state.subtrahend);
+    ui.topAnswerValue.textContent = hasProblem() ? leftovers() : "?";
     renderSteps();
     renderBoard();
     renderTray();
@@ -291,7 +313,7 @@ function renderTray() {
         const delay = Math.min(index * 22, 220);
         return `
             <button
-                class="count-ball${ball.counted ? " is-counted" : ""}"
+                class="count-ball is-${ball.group}${ball.counted ? " is-counted" : ""}"
                 type="button"
                 data-tray-index="${index}"
                 style="animation-delay:${delay}ms"
@@ -396,6 +418,18 @@ function softPop(intensity = 0.6) {
     noise.stop(now + duration);
 }
 
+async function toggleFullscreen() {
+    try {
+        if (document.fullscreenElement) {
+            await document.exitFullscreen();
+        } else {
+            await document.documentElement.requestFullscreen();
+        }
+    } catch {
+        softPop(0.28);
+    }
+}
+
 ui.board.addEventListener("click", (event) => {
     const button = event.target.closest("[data-index]");
     if (!button) {
@@ -423,6 +457,8 @@ ui.soundBtn.addEventListener("click", () => {
 ui.undoBtn.addEventListener("click", undo);
 ui.resetBtn.addEventListener("click", () => resetState(true));
 ui.modeBtn.addEventListener("click", toggleMode);
+ui.shuffleBtn.addEventListener("click", shuffleProblem);
+ui.fullscreenBtn?.addEventListener("click", toggleFullscreen);
 ui.minuendInput.addEventListener("input", applyManualProblem);
 ui.subtrahendInput.addEventListener("input", applyManualProblem);
 ui.minuendInput.addEventListener("change", applyManualProblem);

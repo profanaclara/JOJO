@@ -51,24 +51,10 @@ window.JOJO_GAMES = {
                     status: "Praticar"
                 },
                 {
-                    title: "Cabo de guerra",
-                    description: "Operações em disputa para treinar cálculo.",
-                    href: "./cabo-de-guerra/index.html",
-                    art: "../assets/jojo-card-matematica.png",
-                    status: "Jogar"
-                },
-                {
-                    title: "Cabo de frações",
-                    description: "Frações no mesmo jogo que já estava no site.",
-                    href: "./cabo-de-guerra-fracoes/index.html",
-                    art: "../assets/jojo-card-matematica.png",
-                    status: "Jogar"
-                },
-                {
-                    title: "Operações e frações",
+                    title: "Cabo de Guerra",
                     description: "Versão completa do cabo de guerra matemático.",
                     href: "./cabo-de-guerra-operacoes-fracoes/index.html",
-                    art: "../assets/jojo-card-matematica.png",
+                    art: "../assets/jojo-card-cabo-guerra.png",
                     status: "Jogar"
                 }
             ]

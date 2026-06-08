@@ -12,10 +12,13 @@ const ui = {
     board: document.getElementById("popitBoard"),
     tray: document.getElementById("countTray"),
     countedValue: document.getElementById("countedValue"),
+    topAnswerValue: document.getElementById("topAnswerValue"),
     resultText: document.getElementById("resultText"),
     modeBtn: document.getElementById("modeBtn"),
+    shuffleBtn: document.getElementById("shuffleBtn"),
     resetBtn: document.getElementById("resetBtn"),
-    undoBtn: document.getElementById("undoBtn")
+    undoBtn: document.getElementById("undoBtn"),
+    fullscreenBtn: document.getElementById("fullscreenBtn")
 };
 
 const state = {
@@ -75,6 +78,7 @@ function updateModeUI() {
     ui.modeBtn.setAttribute("aria-label", automatic ? "Modo automático" : "Modo manual");
     ui.addendAInput.readOnly = automatic;
     ui.addendBInput.readOnly = automatic;
+    ui.shuffleBtn.disabled = !automatic;
 }
 
 function setMode(mode, silent = false) {
@@ -95,6 +99,22 @@ function setMode(mode, silent = false) {
 
 function toggleMode() {
     setMode(state.mode === "automatic" ? "manual" : "automatic");
+}
+
+function shuffleProblem() {
+    if (state.mode !== "automatic") {
+        return;
+    }
+
+    const previous = `${state.a}-${state.b}`;
+    let next = randomAddends();
+    for (let attempt = 0; attempt < 5 && `${next[0]}-${next[1]}` === previous; attempt += 1) {
+        next = randomAddends();
+    }
+    [state.a, state.b] = next;
+    syncInputs();
+    softPop(0.58);
+    resetState(true);
 }
 
 function applyManualProblem() {
@@ -181,8 +201,11 @@ function joinBubbles() {
     if (!isSelectionComplete() || state.tray.length) {
         return;
     }
-    state.tray = selectedBubbles().map((item, order) => ({
+    state.tray = selectedBubbles()
+        .sort((left, right) => left.group.localeCompare(right.group))
+        .map((item, order) => ({
         id: `${item.index}-${order}`,
+        group: item.group,
         counted: false
     }));
     softPop(0.48);
@@ -225,6 +248,7 @@ function render() {
     updateModeUI();
     ui.targetA.textContent = formatTarget(state.a);
     ui.targetB.textContent = formatTarget(state.b);
+    ui.topAnswerValue.textContent = hasProblem() ? totalTarget() : "?";
     renderGoals();
     renderBoard();
     renderTray();
@@ -261,7 +285,7 @@ function renderTray() {
         const delay = Math.min(index * 18, 220);
         return `
             <button
-                class="count-ball${ball.counted ? " is-counted" : ""}"
+                class="count-ball is-${ball.group}${ball.counted ? " is-counted" : ""}"
                 type="button"
                 data-tray-index="${index}"
                 style="animation-delay:${delay}ms"
@@ -374,6 +398,18 @@ function softPop(intensity = 0.6) {
     noise.stop(now + duration);
 }
 
+async function toggleFullscreen() {
+    try {
+        if (document.fullscreenElement) {
+            await document.exitFullscreen();
+        } else {
+            await document.documentElement.requestFullscreen();
+        }
+    } catch {
+        softPop(0.28);
+    }
+}
+
 ui.board.addEventListener("click", (event) => {
     const button = event.target.closest("[data-index]");
     if (!button) {
@@ -405,6 +441,8 @@ ui.soundBtn.addEventListener("click", () => {
 ui.undoBtn.addEventListener("click", undo);
 ui.resetBtn.addEventListener("click", () => resetState(true));
 ui.modeBtn.addEventListener("click", toggleMode);
+ui.shuffleBtn.addEventListener("click", shuffleProblem);
+ui.fullscreenBtn?.addEventListener("click", toggleFullscreen);
 ui.addendAInput.addEventListener("input", applyManualProblem);
 ui.addendBInput.addEventListener("input", applyManualProblem);
 ui.addendAInput.addEventListener("change", applyManualProblem);

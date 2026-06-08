@@ -51,23 +51,9 @@ window.JOJO_DATA = {
                             href: "./jogos/tabuada-pitagoras/"
                         },
                         {
-                            title: "Cabo de guerra matemático",
-                            description: "Disputa de operações para treinar cálculo.",
-                            art: "./assets/jojo-card-matematica.png",
-                            tag: "Clássico",
-                            href: "./jogos/cabo-de-guerra/"
-                        },
-                        {
-                            title: "Cabo de guerra: frações",
-                            description: "A versão de frações que já estava no site.",
-                            art: "./assets/jojo-card-matematica.png",
-                            tag: "Clássico",
-                            href: "./jogos/cabo-de-guerra-fracoes/"
-                        },
-                        {
-                            title: "Operações e frações",
+                            title: "Cabo de Guerra",
                             description: "Cabo de guerra com operações e frações.",
-                            art: "./assets/jojo-card-matematica.png",
+                            art: "./assets/jojo-card-cabo-guerra.png",
                             tag: "Clássico",
                             href: "./jogos/cabo-de-guerra-operacoes-fracoes/"
                         }

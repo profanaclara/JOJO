@@ -384,6 +384,7 @@ function updateBoldButton() {
 function syncTextWeight() {
     ui.readingText.classList.toggle("is-bold", state.textBoldEnabled);
     ui.textTitle.classList.toggle("is-bold", state.textBoldEnabled);
+    fitFullscreenText();
 }
 
 function syncQuestionsDrawer(force = false) {
@@ -595,6 +596,146 @@ function syncFullscreenState() {
     ui.fullscreenTimerDock.setAttribute("aria-hidden", String(!isFullscreen));
     ui.fullscreenErrorDock.setAttribute("aria-hidden", String(!isFullscreen));
     ui.toggleFullscreenBtn.classList.toggle("hidden", isFullscreen);
+    queueFullscreenTextFit();
+}
+
+let textFitFrame = null;
+
+function queueFullscreenTextFit() {
+    fitFullscreenText();
+    window.setTimeout(fitFullscreenText, 90);
+    window.setTimeout(fitFullscreenText, 260);
+}
+
+function resolveReadingPreset(plainText) {
+    const words = plainText.split(/\s+/).filter(Boolean);
+    const textLength = plainText.length;
+    const paragraphCount = Math.max(1, ui.readingText.querySelectorAll("p").length);
+
+    if (textLength <= 340 && paragraphCount <= 6) {
+        return {
+            name: "short",
+            width: "min(calc(100vw - 320px), 980px)",
+            paddingY: "clamp(24px, 2.2vw, 34px)",
+            paddingX: "clamp(44px, 5vw, 78px)",
+            lineHeight: 1.34,
+            gap: 0.42,
+            minSize: 30,
+            maxSize: 62
+        };
+    }
+
+    if (textLength <= 860) {
+        return {
+            name: "story",
+            width: "min(calc(100vw - 320px), 1160px)",
+            paddingY: "clamp(22px, 2vw, 30px)",
+            paddingX: "clamp(42px, 4.8vw, 72px)",
+            lineHeight: 1.42,
+            gap: 0.34,
+            minSize: 22,
+            maxSize: 40
+        };
+    }
+
+    if (textLength <= 1220 || words.length <= 190) {
+        return {
+            name: "long",
+            width: "min(calc(100vw - 280px), 1340px)",
+            paddingY: "clamp(18px, 1.8vw, 26px)",
+            paddingX: "clamp(34px, 4.2vw, 60px)",
+            lineHeight: 1.32,
+            gap: 0.24,
+            minSize: 17,
+            maxSize: 28
+        };
+    }
+
+    return {
+        name: "dense",
+        width: "min(calc(100vw - 260px), 1480px)",
+        paddingY: "clamp(16px, 1.5vw, 22px)",
+        paddingX: "clamp(28px, 3.8vw, 48px)",
+        lineHeight: 1.22,
+        gap: 0.16,
+        minSize: 14,
+        maxSize: 22
+    };
+}
+
+function fitFullscreenText() {
+    if (textFitFrame) {
+        window.cancelAnimationFrame(textFitFrame);
+    }
+
+    textFitFrame = window.requestAnimationFrame(() => {
+        textFitFrame = null;
+
+        const textStage = ui.textStep?.querySelector(".text-stage");
+        if (!ui.body.classList.contains("textos-fullscreen") || !textStage || !ui.readingText) {
+            if (textStage) {
+                delete textStage.dataset.readingPreset;
+                textStage.style.removeProperty("--stage-reading-width");
+                textStage.style.removeProperty("--stage-reading-pad-y");
+                textStage.style.removeProperty("--stage-reading-pad-x");
+            }
+            ui.readingText?.style.removeProperty("--reading-fit-size");
+            ui.readingText?.style.removeProperty("--reading-fit-leading");
+            ui.readingText?.style.removeProperty("--reading-fit-gap");
+            return;
+        }
+
+        const plainText = ui.readingText.textContent.replace(/\s+/g, " ").trim();
+        if (!plainText) {
+            return;
+        }
+
+        const preset = resolveReadingPreset(plainText);
+        const words = plainText.split(/\s+/).filter(Boolean);
+        const longestWord = words.reduce((max, word) => Math.max(max, word.length), 1);
+        const stageStyle = window.getComputedStyle(textStage);
+        textStage.dataset.readingPreset = preset.name;
+        textStage.style.setProperty("--stage-reading-width", preset.width);
+        textStage.style.setProperty("--stage-reading-pad-y", preset.paddingY);
+        textStage.style.setProperty("--stage-reading-pad-x", preset.paddingX);
+
+        const availableHeight = textStage.clientHeight
+            - Number.parseFloat(stageStyle.paddingTop)
+            - Number.parseFloat(stageStyle.paddingBottom)
+            - 6;
+        const availableWidth = textStage.clientWidth
+            - Number.parseFloat(stageStyle.paddingLeft)
+            - Number.parseFloat(stageStyle.paddingRight)
+            - 6;
+        const glyphWidthRatio = state.textBoldEnabled ? 0.64 : 0.58;
+        const longestWordLimit = availableWidth / Math.max(longestWord * glyphWidthRatio, 1);
+        const maxSize = Math.min(preset.maxSize, longestWordLimit);
+        const minSize = Math.min(preset.minSize, maxSize);
+
+        let low = minSize;
+        let high = maxSize;
+        let best = minSize;
+
+        ui.readingText.style.setProperty("--reading-fit-leading", String(preset.lineHeight));
+        ui.readingText.style.setProperty("--reading-fit-gap", `${preset.gap}em`);
+
+        for (let step = 0; step < 18; step += 1) {
+            const current = (low + high) / 2;
+            ui.readingText.style.setProperty("--reading-fit-size", `${current}px`);
+
+            const fits = ui.readingText.scrollHeight <= availableHeight
+                && ui.readingText.scrollWidth <= availableWidth;
+
+            if (fits) {
+                best = current;
+                low = current;
+            } else {
+                high = current;
+            }
+        }
+
+        ui.readingText.style.setProperty("--reading-fit-size", `${Math.floor(best * 10) / 10}px`);
+    });
 }
 
 function startTimer() {
@@ -783,6 +924,7 @@ function renderQuestions(testData) {
 
 function renderTextStep(testData) {
     ui.textTitle.textContent = "";
+    ui.readingText.classList.remove("is-long", "is-extra-long");
     ui.readingText.innerHTML = testData.text
         .split("\n")
         .map((line) => `<p>${escapeHtml(line)}</p>`)
@@ -793,6 +935,7 @@ function renderTextStep(testData) {
     renderQuestions(testData);
     ui.results.classList.add("hidden");
     ui.results.innerHTML = "";
+    queueFullscreenTextFit();
 }
 
 function renderStaticChipGrid(container, items, selectedIndexes = [], pseudo = false) {
@@ -1363,8 +1506,10 @@ resetTimerVisual();
 updateSoundButtons();
 updateBoldButton();
 syncTextWeight();
+document.fonts?.ready?.then(queueFullscreenTextFit).catch(() => {});
 window.addEventListener("resize", () => {
     syncQuestionsDrawer(false);
+    queueFullscreenTextFit();
 
     if (ui.selectionGrid.dataset.mode === "tests") {
         queueSelectionFocusSync();
