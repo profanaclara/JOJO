@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#f4f9ff">
+    <title>JOJO | Agenda</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/icon-192.png">
+    <style>
+        @font-face {
+            font-family: "Archivo";
+            src: url("../assets/fonts/archivo-latin.woff2") format("woff2");
+            font-weight: 500 800;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("../assets/fonts/inter-latin.woff2") format("woff2");
+            font-weight: 400 800;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
+    <link rel="stylesheet" href="../styles/menu.css?v=8">
+    <link rel="stylesheet" href="./styles.css?v=3">
+</head>
+<body class="agenda-page">
+    <div class="agenda-shell">
+        <header class="agenda-header">
+            <a class="agenda-back" href="../index.html" aria-label="Voltar ao início">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+            </a>
+            <img src="../assets/jojo-horizontal.svg" alt="JOJO">
+            <button id="drawerOpenBtn" class="agenda-menu-button" type="button" aria-label="Abrir alunos">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 7h11M8 12h11M8 17h11M4 7h.01M4 12h.01M4 17h.01"/></svg>
+            </button>
+        </header>
+
+        <main class="agenda-main">
+            <section class="agenda-title" aria-labelledby="agendaTitle">
+                <p>AGENDA</p>
+                <h1 id="agendaTitle">Registro do aluno</h1>
+            </section>
+
+            <form id="agendaForm" class="agenda-form">
+                <section class="agenda-section agenda-student">
+                    <label class="field-label" for="studentName">Aluno</label>
+                    <div class="student-row">
+                        <input id="studentName" name="studentName" type="text" autocomplete="off" placeholder="Joaquim">
+                        <input id="recordDate" name="recordDate" type="date" aria-label="Data">
+                    </div>
+                    <label class="field-label field-label--spaced" for="recorderName">Registrado por</label>
+                    <input id="recorderName" name="recorderName" type="text" autocomplete="off" placeholder="Professora Ana">
+                    <label class="field-label field-label--spaced" for="recipientEmail">Enviar para</label>
+                    <input id="recipientEmail" name="recipientEmail" type="email" autocomplete="off" placeholder="email@exemplo.com">
+                    <div class="period-tabs" role="group" aria-label="Período do relatório">
+                        <button class="choice-chip is-active" type="button" data-group="reportPeriod" data-value="daily">Diário</button>
+                        <button class="choice-chip" type="button" data-group="reportPeriod" data-value="weekly">Semanal</button>
+                        <button class="choice-chip" type="button" data-group="reportPeriod" data-value="monthly">Mensal</button>
+                    </div>
+                </section>
+
+                <details class="agenda-section agenda-details" open>
+                    <summary>Humor</summary>
+                    <div class="choice-grid" role="group" aria-label="Humor">
+                        <button class="choice-chip is-active" type="button" data-group="mood" data-value="Tranquilo">Tranquilo</button>
+                        <button class="choice-chip" type="button" data-group="mood" data-value="Feliz">Feliz</button>
+                        <button class="choice-chip" type="button" data-group="mood" data-value="Agitado">Agitado</button>
+                        <button class="choice-chip" type="button" data-group="mood" data-value="Irritado">Irritado</button>
+                        <button class="choice-chip" type="button" data-group="mood" data-value="Choroso">Choroso</button>
+                        <button class="choice-chip" type="button" data-group="mood" data-value="Sonolento">Sonolento</button>
+                        <button class="choice-chip" type="button" data-group="mood" data-value="Ansioso">Ansioso</button>
+                        <button class="choice-chip" type="button" data-group="mood" data-value="Sensível">Sensível</button>
+                    </div>
+                </details>
+
+                <details class="agenda-section agenda-details" open>
+                    <summary>Entrada e saída</summary>
+                    <div class="agenda-split">
+                    <div>
+                        <h2>Chegou</h2>
+                        <div class="choice-stack" role="group" aria-label="Como chegou">
+                            <button class="choice-chip is-active" type="button" data-group="arrival" data-value="Bem">Bem</button>
+                            <button class="choice-chip" type="button" data-group="arrival" data-value="Tranquilo">Tranquilo</button>
+                            <button class="choice-chip" type="button" data-group="arrival" data-value="Agitado">Agitado</button>
+                            <button class="choice-chip" type="button" data-group="arrival" data-value="Irritado">Irritado</button>
+                            <button class="choice-chip" type="button" data-group="arrival" data-value="Chorou">Chorou</button>
+                            <button class="choice-chip" type="button" data-group="arrival" data-value="Cansado">Cansado</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Foi embora</h2>
+                        <div class="choice-stack" role="group" aria-label="Como foi embora">
+                            <button class="choice-chip is-active" type="button" data-group="departure" data-value="Bem">Bem</button>
+                            <button class="choice-chip" type="button" data-group="departure" data-value="Tranquilo">Tranquilo</button>
+                            <button class="choice-chip" type="button" data-group="departure" data-value="Agitado">Agitado</button>
+                            <button class="choice-chip" type="button" data-group="departure" data-value="Cansado">Cansado</button>
+                            <button class="choice-chip" type="button" data-group="departure" data-value="Irritado">Irritado</button>
+                            <button class="choice-chip" type="button" data-group="departure" data-value="Chorando">Chorando</button>
+                        </div>
+                    </div>
+                    </div>
+                </details>
+
+                <details class="agenda-section agenda-details" open>
+                    <summary>Rotina</summary>
+                    <div class="flag-grid" role="group" aria-label="Registros do dia">
+                        <button class="flag-chip" type="button" data-flag="Comeu">Comeu</button>
+                        <button class="flag-chip" type="button" data-flag="Lanche">Lanche</button>
+                        <button class="flag-chip" type="button" data-flag="Almoço">Almoço</button>
+                        <button class="flag-chip" type="button" data-flag="Brincou">Brincou</button>
+                        <button class="flag-chip" type="button" data-flag="Socializou">Socializou</button>
+                        <button class="flag-chip" type="button" data-flag="Fez atividade">Fez atividade</button>
+                        <button class="flag-chip" type="button" data-flag="Descansou">Descansou</button>
+                        <button class="flag-chip" type="button" data-flag="Bebeu água">Bebeu água</button>
+                        <button class="flag-chip" type="button" data-flag="Banheiro">Banheiro</button>
+                        <button class="flag-chip" type="button" data-flag="Buscou ajuda">Buscou ajuda</button>
+                    </div>
+                </details>
+
+                <details class="agenda-section agenda-details">
+                    <summary>Atividades</summary>
+                    <h2>Atividades propostas</h2>
+                    <div class="choice-grid" role="group" aria-label="Atividades propostas">
+                        <button class="choice-chip is-active" type="button" data-group="activityStatus" data-value="Todas">Todas</button>
+                        <button class="choice-chip" type="button" data-group="activityStatus" data-value="Algumas">Algumas</button>
+                        <button class="choice-chip" type="button" data-group="activityStatus" data-value="Não fez">Não fez</button>
+                        <button class="choice-chip" type="button" data-group="activityStatus" data-value="Com ajuda">Com ajuda</button>
+                    </div>
+                    <h2 class="section-subtitle">Durante a atividade</h2>
+                    <div class="flag-grid" role="group" aria-label="Durante a atividade">
+                        <button class="flag-chip" type="button" data-flag="Desatenção">Desatenção</button>
+                        <button class="flag-chip" type="button" data-flag="Resistência">Resistência</button>
+                        <button class="flag-chip" type="button" data-flag="Esquiva">Esquiva</button>
+                        <button class="flag-chip" type="button" data-flag="Atendeu comandos">Atendeu comandos</button>
+                    </div>
+                </details>
+
+                <details class="agenda-section agenda-details">
+                    <summary>Comportamentos</summary>
+                    <div class="flag-grid" role="group" aria-label="Comportamentos">
+                        <button class="flag-chip" type="button" data-flag="Choro/manha">Choro/manha</button>
+                        <button class="flag-chip" type="button" data-flag="Agitação">Agitação</button>
+                        <button class="flag-chip" type="button" data-flag="Gritos">Gritos</button>
+                        <button class="flag-chip" type="button" data-flag="Mordida">Mordida</button>
+                        <button class="flag-chip flag-chip--alert" type="button" data-flag="Crise">Crise</button>
+                        <button class="flag-chip flag-chip--alert" type="button" data-flag="Agressividade">Agressividade</button>
+                        <button class="flag-chip" type="button" data-flag="Sensibilidade a som">Sensibilidade a som</button>
+                        <button class="flag-chip" type="button" data-flag="Sonolência">Sonolência</button>
+                    </div>
+                </details>
+
+                <details class="agenda-section agenda-details">
+                    <summary>Apetite e reforçador</summary>
+                    <h2>Apetite</h2>
+                    <div class="choice-grid" role="group" aria-label="Apetite">
+                        <button class="choice-chip is-active" type="button" data-group="appetite" data-value="Normal">Normal</button>
+                        <button class="choice-chip" type="button" data-group="appetite" data-value="Pouco">Pouco</button>
+                        <button class="choice-chip" type="button" data-group="appetite" data-value="Muito">Muito</button>
+                        <button class="choice-chip" type="button" data-group="appetite" data-value="Não comeu">Não comeu</button>
+                    </div>
+                    <h2 class="section-subtitle">Reforçador</h2>
+                    <div class="flag-grid" role="group" aria-label="Reforçador utilizado">
+                        <button class="flag-chip" type="button" data-flag="Sensorial">Sensorial</button>
+                        <button class="flag-chip" type="button" data-flag="Elogios">Elogios</button>
+                        <button class="flag-chip" type="button" data-flag="Brinquedos">Brinquedos</button>
+                        <button class="flag-chip" type="button" data-flag="Tablet">Tablet</button>
+                        <button class="flag-chip" type="button" data-flag="Música">Música</button>
+                        <button class="flag-chip" type="button" data-flag="Pausa">Pausa</button>
+                    </div>
+                </details>
+
+                <section class="agenda-section">
+                    <label class="field-label" for="notes">Anotações</label>
+                    <textarea id="notes" name="notes" rows="4" placeholder="Escreva só o essencial."></textarea>
+                </section>
+
+                <div class="agenda-actions">
+                    <button id="clearBtn" class="secondary-action" type="button">Limpar</button>
+                    <button class="primary-action" type="submit">Salvar registro</button>
+                </div>
+                <p id="saveStatus" class="save-status" aria-live="polite"></p>
+            </form>
+
+            <section id="recordView" class="record-view hidden" aria-live="polite"></section>
+        </main>
+
+        <div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
+        <aside id="studentDrawer" class="student-drawer" aria-hidden="true" aria-labelledby="drawerTitle">
+            <header class="drawer-header">
+                <div>
+                    <p>ALUNOS</p>
+                    <h2 id="drawerTitle">Agenda</h2>
+                </div>
+                <button id="drawerCloseBtn" class="drawer-close" type="button" aria-label="Fechar alunos">×</button>
+            </header>
+            <div class="drawer-add">
+                <input id="newStudentName" type="text" autocomplete="off" placeholder="Novo aluno">
+                <button id="addStudentBtn" type="button">Adicionar</button>
+            </div>
+            <div id="drawerStudents" class="drawer-students" aria-label="Lista de alunos"></div>
+            <section class="drawer-history" aria-labelledby="historyTitle">
+                <h3 id="historyTitle">Registros anteriores</h3>
+                <div id="drawerHistory"></div>
+            </section>
+        </aside>
+
+        <nav class="jojo-bottom-nav" aria-label="Navegação principal">
+            <a class="jojo-bottom-nav__item is-active" href="../index.html" data-nav="home" aria-label="Início" aria-current="page">
+                <img class="jojo-nav-icon" src="../assets/jojo-nav-home.png" alt="" aria-hidden="true">
+                <span class="sr-only">Início</span>
+            </a>
+            <a class="jojo-bottom-nav__item" href="../jogos/index.html" data-nav="jogos" aria-label="Jogos" aria-current="false">
+                <img class="jojo-nav-icon" src="../assets/jojo-nav-jogos.png" alt="" aria-hidden="true">
+                <span class="sr-only">Jogos</span>
+            </a>
+            <a class="jojo-bottom-nav__item" href="../jogos/timer/index.html" data-nav="ferramentas" aria-label="Ferramentas" aria-current="false">
+                <img class="jojo-nav-icon" src="../assets/jojo-nav-ferramentas.png" alt="" aria-hidden="true">
+                <span class="sr-only">Ferramentas</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="./app.js?v=3"></script>
+</body>
+</html>

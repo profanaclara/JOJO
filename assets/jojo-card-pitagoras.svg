@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 220" role="img" aria-label="Tabuada colorida">
+  <defs>
+    <linearGradient id="bg" x1="38" y1="24" x2="224" y2="194" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EAF8FF"/>
+      <stop offset=".54" stop-color="#F2ECFF"/>
+      <stop offset="1" stop-color="#FFF5C8"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="52" y1="42" x2="122" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#58D9FF"/>
+      <stop offset=".55" stop-color="#279AEF"/>
+      <stop offset="1" stop-color="#4B62EA"/>
+    </linearGradient>
+    <linearGradient id="pink" x1="126" y1="66" x2="222" y2="158" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFB658"/>
+      <stop offset=".48" stop-color="#FF6D7E"/>
+      <stop offset="1" stop-color="#EF4DCE"/>
+    </linearGradient>
+    <linearGradient id="yellow" x1="114" y1="88" x2="164" y2="136" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF889"/>
+      <stop offset=".58" stop-color="#FFE13F"/>
+      <stop offset="1" stop-color="#F3A500"/>
+    </linearGradient>
+    <filter id="shadow" x="17" y="17" width="230" height="190" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="15" stdDeviation="12" flood-color="#346096" flood-opacity=".22"/>
+    </filter>
+  </defs>
+  <rect x="28" y="22" width="204" height="176" rx="44" fill="url(#bg)" filter="url(#shadow)"/>
+  <g transform="translate(48 42)">
+    <rect x="0" y="0" width="164" height="136" rx="26" fill="#fff" fill-opacity=".72"/>
+    <g fill="#CFE3FA">
+      <rect x="18" y="18" width="20" height="20" rx="7"/>
+      <rect x="44" y="18" width="20" height="20" rx="7"/>
+      <rect x="70" y="18" width="20" height="20" rx="7"/>
+      <rect x="96" y="18" width="20" height="20" rx="7"/>
+      <rect x="122" y="18" width="20" height="20" rx="7"/>
+      <rect x="18" y="44" width="20" height="20" rx="7"/>
+      <rect x="44" y="44" width="20" height="20" rx="7"/>
+      <rect x="70" y="44" width="20" height="20" rx="7"/>
+      <rect x="96" y="44" width="20" height="20" rx="7"/>
+      <rect x="122" y="44" width="20" height="20" rx="7"/>
+      <rect x="18" y="70" width="20" height="20" rx="7"/>
+      <rect x="44" y="70" width="20" height="20" rx="7"/>
+      <rect x="70" y="70" width="20" height="20" rx="7"/>
+      <rect x="96" y="70" width="20" height="20" rx="7"/>
+      <rect x="122" y="70" width="20" height="20" rx="7"/>
+      <rect x="18" y="96" width="20" height="20" rx="7"/>
+      <rect x="44" y="96" width="20" height="20" rx="7"/>
+      <rect x="70" y="96" width="20" height="20" rx="7"/>
+      <rect x="96" y="96" width="20" height="20" rx="7"/>
+      <rect x="122" y="96" width="20" height="20" rx="7"/>
+    </g>
+    <rect x="15" y="44" width="132" height="22" rx="9" fill="url(#blue)" opacity=".9"/>
+    <rect x="70" y="15" width="22" height="106" rx="9" fill="url(#pink)" opacity=".88"/>
+    <rect x="68" y="42" width="26" height="26" rx="10" fill="url(#yellow)"/>
+    <path d="M74 55h14M81 48v14" stroke="#725100" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(22 129)">
+    <rect x="0" y="0" width="72" height="52" rx="20" fill="url(#blue)"/>
+    <circle cx="25" cy="26" r="13" fill="#fff" opacity=".92"/>
+    <circle cx="25" cy="26" r="7" fill="#17305F"/>
+    <path d="M50 19l-16 6 16 7" fill="none" stroke="#17305F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle cx="210" cy="58" r="14" fill="#FFDF4A"/>
+  <circle cx="219" cy="72" r="7" fill="#FF725C"/>
+  <circle cx="38" cy="57" r="8" fill="#74F4C7"/>
+</svg>

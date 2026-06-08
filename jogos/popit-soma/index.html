@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#dff5ff">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="JOJO">
+    <link rel="manifest" href="../../manifest.webmanifest">
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icon-192.png">
+    <link rel="apple-touch-icon" href="../../assets/icon-192.png">
+    <title>JOJO | Pop-it da soma</title>
+    <style>
+        @font-face {
+            font-family: "Archivo";
+            src: url("../../assets/fonts/archivo-latin.woff2") format("woff2");
+            font-weight: 500 800;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("../../assets/fonts/inter-latin.woff2") format("woff2");
+            font-weight: 400 800;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
+    <link rel="stylesheet" href="./styles.css?v=3">
+</head>
+<body class="popit-page">
+    <div class="popit-shell">
+        <header class="topbar">
+            <a class="back-button" href="../index.html?eixo=matematica" aria-label="Voltar aos jogos">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+            </a>
+            <img class="brand-logo" src="../../assets/jojo-horizontal.svg" alt="JOJO">
+            <button id="soundBtn" class="sound-button" type="button" aria-pressed="true" aria-label="Som ligado">
+                <img src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+            </button>
+        </header>
+
+        <main class="game" aria-live="polite">
+            <section class="problem-card" aria-labelledby="problemTitle">
+                <div>
+                    <p class="eyebrow">Pop-it da soma</p>
+                    <div id="problemTitle" class="problem-equation" aria-label="Conta da soma">
+                        <label class="sr-only" for="addendAInput">Primeiro algarismo</label>
+                        <input id="addendAInput" class="number-input" type="number" inputmode="numeric" min="0" max="9" placeholder="?" value="">
+                        <span aria-hidden="true">+</span>
+                        <label class="sr-only" for="addendBInput">Segundo algarismo</label>
+                        <input id="addendBInput" class="number-input" type="number" inputmode="numeric" min="0" max="9" placeholder="?" value="">
+                    </div>
+                </div>
+                <button id="modeBtn" class="soft-button" type="button" aria-label="Modo automático">Automático</button>
+            </section>
+
+            <section class="color-goals" aria-label="Cores da conta">
+                <button class="goal-chip is-active" type="button" data-group="a" aria-pressed="true">
+                    <span class="goal-dot goal-dot--a"></span>
+                    <strong><span id="countA">0</span>/<span id="targetA">4</span></strong>
+                </button>
+                <button class="goal-chip" type="button" data-group="b" aria-pressed="false">
+                    <span class="goal-dot goal-dot--b"></span>
+                    <strong><span id="countB">0</span>/<span id="targetB">2</span></strong>
+                </button>
+            </section>
+
+            <section class="play-zone" aria-label="Pop-it virtual">
+                <div class="popit-board" id="popitBoard"></div>
+            </section>
+
+            <section class="count-zone" aria-labelledby="countTitle">
+                <div class="count-zone__header">
+                    <div>
+                        <p class="eyebrow">Juntar</p>
+                        <h2 id="countTitle">Conte tudo junto</h2>
+                    </div>
+                    <output id="countedValue" aria-label="Bolinhas contadas">0</output>
+                </div>
+                <div id="countTray" class="count-tray" aria-label="Campo de contagem"></div>
+            </section>
+
+            <footer class="game-actions">
+                <button id="undoBtn" class="soft-button" type="button">Desfazer</button>
+                <button id="resetBtn" class="soft-button" type="button">Recomeçar</button>
+                <p id="resultText" class="result-text">Aperte as bolinhas da primeira cor.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="./app.js?v=3"></script>
+</body>
+</html>
