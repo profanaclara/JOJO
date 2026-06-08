@@ -20,7 +20,7 @@ function isPlatformHome() {
     const isProjectHome = /\/JOJO\/?$/.test(path) || /\/JOJO\/index\.html$/.test(path);
     const hasPlatformHomeMarkup = Boolean(
         document.getElementById("installAppBtn")
-        && document.querySelector(".app-screen .bento")
+        && document.querySelector(".app-screen .home-actions")
     );
 
     return isRootHome || isProjectHome || hasPlatformHomeMarkup;
@@ -44,7 +44,9 @@ function isVisibleMathSetupFirstStep() {
 function shouldShowInstallButtonForCurrentView() {
     return isPlatformHome()
         && !document.body.classList.contains("panel-open")
-        && !document.querySelector(".info-panel.is-open");
+        && !document.body.classList.contains("sheet-open")
+        && !document.querySelector(".info-panel.is-open")
+        && !document.querySelector(".app-sheet.is-open");
 }
 
 function removeInstallButtonOutsidePlatform() {
@@ -154,7 +156,7 @@ function ensureInstallButton() {
     const buttonClassName = button.closest(".home-footer")
         ? "install-app-button"
         : "install-app-button install-app-button--floating";
-    const buttonContent = `<img class="install-app-button__icon" src="${iconUrl}" alt=""><span>Baixar</span>`;
+    const buttonContent = `<img class="install-app-button__icon" src="${iconUrl}" alt=""><span>Baixar App</span>`;
 
     if (button.className !== buttonClassName) {
         button.className = buttonClassName;

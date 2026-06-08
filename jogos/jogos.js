@@ -64,6 +64,10 @@ function setActiveNav(name) {
 }
 
 function closePanel() {
+    if (!ui.panel || !ui.panelBackdrop) {
+        return;
+    }
+
     ui.panelBackdrop.classList.remove("is-visible");
     ui.panel.classList.remove("is-open");
     ui.panel.setAttribute("aria-hidden", "true");
@@ -80,11 +84,11 @@ ui.tabs.forEach((tab) => {
     tab.addEventListener("click", () => renderEixo(tab.dataset.eixo));
 });
 
-ui.panelCloseBtn.addEventListener("click", closePanel);
-ui.panelBackdrop.addEventListener("click", closePanel);
+ui.panelCloseBtn?.addEventListener("click", closePanel);
+ui.panelBackdrop?.addEventListener("click", closePanel);
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && ui.panel.classList.contains("is-open")) {
+    if (event.key === "Escape" && ui.panel?.classList.contains("is-open")) {
         closePanel();
     }
 });
