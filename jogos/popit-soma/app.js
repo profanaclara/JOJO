@@ -13,7 +13,7 @@ const ui = {
     tray: document.getElementById("countTray"),
     countedValue: document.getElementById("countedValue"),
     topAnswerValue: document.getElementById("topAnswerValue"),
-    resultText: document.getElementById("resultText"),
+    resultBtn: document.getElementById("resultBtn"),
     modeBtn: document.getElementById("modeBtn"),
     shuffleBtn: document.getElementById("shuffleBtn"),
     resetBtn: document.getElementById("resetBtn"),
@@ -30,7 +30,8 @@ const state = {
     activeGroup: "a",
     bubbles: [],
     tray: [],
-    history: []
+    history: [],
+    revealed: false
 };
 
 function randomAddends() {
@@ -51,6 +52,7 @@ function resetState(keepProblem = true) {
     state.bubbles = Array.from({ length: TOTAL_BUBBLES }, () => null);
     state.tray = [];
     state.history = [];
+    state.revealed = false;
     if (!keepProblem && state.mode === "automatic") {
         [state.a, state.b] = randomAddends();
         syncInputs();
@@ -133,6 +135,22 @@ function countGroup(group) {
 
 function totalTarget() {
     return (state.a || 0) + (state.b || 0);
+}
+
+function shouldRevealAnswer() {
+    const counted = state.tray.filter((ball) => ball.counted).length;
+    return state.revealed && hasProblem() && (
+        (totalTarget() === 0 && state.a !== null && state.b !== null) ||
+        (state.tray.length > 0 && counted === totalTarget())
+    );
+}
+
+function canRevealAnswer() {
+    const counted = state.tray.filter((ball) => ball.counted).length;
+    return hasProblem() && (
+        (totalTarget() === 0 && state.a !== null && state.b !== null) ||
+        (state.tray.length > 0 && counted === totalTarget())
+    );
 }
 
 function remainingFor(group) {
@@ -248,7 +266,7 @@ function render() {
     updateModeUI();
     ui.targetA.textContent = formatTarget(state.a);
     ui.targetB.textContent = formatTarget(state.b);
-    ui.topAnswerValue.textContent = hasProblem() ? totalTarget() : "?";
+    ui.topAnswerValue.textContent = shouldRevealAnswer() ? totalTarget() : "?";
     renderGoals();
     renderBoard();
     renderTray();
@@ -297,44 +315,20 @@ function renderTray() {
 }
 
 function renderStatus() {
-    const aCount = countGroup("a");
-    const bCount = countGroup("b");
-    const counted = state.tray.filter((ball) => ball.counted).length;
-    ui.resultText.classList.remove("is-success");
+    const canReveal = canRevealAnswer();
+    ui.resultBtn.disabled = !canReveal;
+    ui.resultBtn.classList.toggle("is-ready", canReveal);
+    ui.resultBtn.classList.toggle("is-revealed", canReveal && state.revealed);
+}
 
-    if (!hasProblem()) {
-        ui.resultText.textContent = "Digite a conta.";
+function revealResult() {
+    if (!canRevealAnswer()) {
+        softPop(0.28);
         return;
     }
-
-    if (totalTarget() === 0) {
-        ui.resultText.textContent = "Resultado: 0";
-        ui.resultText.classList.add("is-success");
-        return;
-    }
-
-    if (counted === totalTarget() && state.tray.length) {
-        ui.resultText.textContent = `Resultado: ${totalTarget()}`;
-        ui.resultText.classList.add("is-success");
-        return;
-    }
-
-    if (state.tray.length) {
-        ui.resultText.textContent = `Conte: ${counted}/${totalTarget()}`;
-        return;
-    }
-
-    if (aCount < state.a) {
-        ui.resultText.textContent = `Faltam ${state.a - aCount}`;
-        return;
-    }
-
-    if (bCount < state.b) {
-        ui.resultText.textContent = `Faltam ${state.b - bCount}`;
-        return;
-    }
-
-    ui.resultText.textContent = "Juntando";
+    state.revealed = true;
+    softPop(0.62);
+    render();
 }
 
 function ensureAudio() {
@@ -440,6 +434,7 @@ ui.soundBtn.addEventListener("click", () => {
 
 ui.undoBtn.addEventListener("click", undo);
 ui.resetBtn.addEventListener("click", () => resetState(true));
+ui.resultBtn.addEventListener("click", revealResult);
 ui.modeBtn.addEventListener("click", toggleMode);
 ui.shuffleBtn.addEventListener("click", shuffleProblem);
 ui.fullscreenBtn?.addEventListener("click", toggleFullscreen);

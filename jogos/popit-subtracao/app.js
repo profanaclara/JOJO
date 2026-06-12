@@ -13,7 +13,7 @@ const ui = {
     tray: document.getElementById("countTray"),
     countedValue: document.getElementById("countedValue"),
     topAnswerValue: document.getElementById("topAnswerValue"),
-    resultText: document.getElementById("resultText"),
+    resultBtn: document.getElementById("resultBtn"),
     modeBtn: document.getElementById("modeBtn"),
     shuffleBtn: document.getElementById("shuffleBtn"),
     resetBtn: document.getElementById("resetBtn"),
@@ -30,7 +30,8 @@ const state = {
     step: "start",
     bubbles: [],
     tray: [],
-    history: []
+    history: [],
+    revealed: false
 };
 
 function randomProblem() {
@@ -114,6 +115,7 @@ function resetState(keepProblem = true) {
     state.bubbles = Array.from({ length: TOTAL_BUBBLES }, () => null);
     state.tray = [];
     state.history = [];
+    state.revealed = false;
     render();
 }
 
@@ -144,6 +146,22 @@ function leftovers() {
         return 0;
     }
     return state.minuend - state.subtrahend;
+}
+
+function shouldRevealAnswer() {
+    const counted = state.tray.filter((ball) => ball.counted).length;
+    return state.revealed && hasProblem() && (
+        (leftovers() === 0 && isInitialComplete() && isRemovalComplete()) ||
+        (state.tray.length > 0 && counted === leftovers())
+    );
+}
+
+function canRevealAnswer() {
+    const counted = state.tray.filter((ball) => ball.counted).length;
+    return hasProblem() && (
+        (leftovers() === 0 && isInitialComplete() && isRemovalComplete()) ||
+        (state.tray.length > 0 && counted === leftovers())
+    );
 }
 
 function isInitialComplete() {
@@ -278,7 +296,7 @@ function render() {
     updateModeUI();
     ui.targetStart.textContent = formatTarget(state.minuend);
     ui.targetRemove.textContent = formatTarget(state.subtrahend);
-    ui.topAnswerValue.textContent = hasProblem() ? leftovers() : "?";
+    ui.topAnswerValue.textContent = shouldRevealAnswer() ? leftovers() : "?";
     renderSteps();
     renderBoard();
     renderTray();
@@ -325,36 +343,20 @@ function renderTray() {
 }
 
 function renderStatus() {
-    const counted = state.tray.filter((ball) => ball.counted).length;
-    ui.resultText.classList.remove("is-success");
+    const canReveal = canRevealAnswer();
+    ui.resultBtn.disabled = !canReveal;
+    ui.resultBtn.classList.toggle("is-ready", canReveal);
+    ui.resultBtn.classList.toggle("is-revealed", canReveal && state.revealed);
+}
 
-    if (!hasProblem()) {
-        ui.resultText.textContent = "Digite a conta.";
+function revealResult() {
+    if (!canRevealAnswer()) {
+        softPop(0.28);
         return;
     }
-
-    if (state.tray.length && counted === leftovers()) {
-        ui.resultText.textContent = `Sobrou ${leftovers()}`;
-        ui.resultText.classList.add("is-success");
-        return;
-    }
-
-    if (state.tray.length) {
-        ui.resultText.textContent = `Conte: ${counted}/${leftovers()}`;
-        return;
-    }
-
-    if (!isInitialComplete()) {
-        ui.resultText.textContent = `Inicial: ${state.minuend - countStart()}`;
-        return;
-    }
-
-    if (!isRemovalComplete()) {
-        ui.resultText.textContent = `Retire: ${state.subtrahend - countRemoved()}`;
-        return;
-    }
-
-    ui.resultText.textContent = "Juntando";
+    state.revealed = true;
+    softPop(0.62);
+    render();
 }
 
 function ensureAudio() {
@@ -456,6 +458,7 @@ ui.soundBtn.addEventListener("click", () => {
 
 ui.undoBtn.addEventListener("click", undo);
 ui.resetBtn.addEventListener("click", () => resetState(true));
+ui.resultBtn.addEventListener("click", revealResult);
 ui.modeBtn.addEventListener("click", toggleMode);
 ui.shuffleBtn.addEventListener("click", shuffleProblem);
 ui.fullscreenBtn?.addEventListener("click", toggleFullscreen);
