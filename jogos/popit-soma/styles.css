@@ -135,7 +135,7 @@ button {
 .game {
     min-height: 0;
     display: grid;
-    grid-template-rows: 82px 56px minmax(250px, 1fr) 164px 48px;
+    grid-template-rows: 82px 56px 56px minmax(220px, 1fr) 164px 48px;
     gap: 8px;
 }
 
@@ -293,12 +293,12 @@ button {
 }
 
 .color-goals {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    display: block;
+    min-height: 0;
 }
 
 .goal-chip {
+    width: 100%;
     min-width: 0;
     min-height: 54px;
     padding: 7px 10px;
@@ -579,7 +579,7 @@ button {
     }
 
     .game {
-        grid-template-rows: 72px 50px minmax(212px, 1fr) 146px 44px;
+        grid-template-rows: 72px 50px 50px minmax(192px, 1fr) 138px 44px;
         gap: 7px;
     }
 
@@ -611,6 +611,139 @@ button {
     }
 }
 
+@media (max-width: 480px) {
+    .popit-shell {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .topbar {
+        grid-template-columns: 42px 1fr 42px 42px;
+        gap: 6px;
+    }
+
+    .brand-logo {
+        width: 106px;
+    }
+
+    .back-button,
+    .sound-button,
+    .fullscreen-button,
+    .soft-button {
+        min-width: 40px;
+        min-height: 40px;
+        border-radius: 14px;
+    }
+
+    .game {
+        grid-template-rows: auto 50px 50px minmax(188px, 1fr) 136px 42px;
+        gap: 6px;
+    }
+
+    .problem-card {
+        padding: 10px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .problem-card > div:first-child {
+        min-width: 0;
+    }
+
+    .problem-equation {
+        font-size: 1.9rem;
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+
+    .number-input,
+    .equation-answer {
+        width: 50px;
+        height: 42px;
+        border-radius: 15px;
+        font-size: 1.55rem;
+        flex: 0 0 auto;
+    }
+
+    .equation-answer {
+        font-size: 1.35rem;
+    }
+
+    .problem-actions {
+        width: 100%;
+        justify-content: flex-end;
+        gap: 6px;
+    }
+
+    .soft-button {
+        padding: 0 10px;
+        font-size: 0.72rem;
+    }
+
+    .icon-soft-button {
+        width: 40px;
+        min-width: 40px;
+        padding: 0;
+    }
+
+    .goal-chip {
+        min-height: 50px;
+        padding: 7px 10px;
+    }
+
+    .goal-dot {
+        width: 30px;
+        height: 30px;
+    }
+
+    .goal-chip strong {
+        font-size: 1.06rem;
+    }
+
+    .popit-board {
+        width: min(100%, 300px);
+        min-height: 188px;
+        height: min(100%, 224px);
+        padding: 14px;
+        border-radius: 30px;
+        gap: 8px;
+    }
+
+    .count-zone {
+        padding: 8px;
+        grid-template-rows: 38px minmax(0, 1fr);
+        gap: 6px;
+    }
+
+    .count-zone h2 {
+        font-size: 0.92rem;
+    }
+
+    #countedValue {
+        min-width: 46px;
+        min-height: 34px;
+        font-size: 1.15rem;
+    }
+
+    .count-tray {
+        padding: 8px;
+        gap: 5px;
+        grid-auto-rows: minmax(22px, 1fr);
+    }
+
+    .game-actions {
+        grid-template-columns: 1fr 1fr 1.1fr;
+        gap: 6px;
+    }
+
+    .result-button {
+        min-height: 34px;
+        font-size: 0.64rem;
+        border-radius: 13px;
+    }
+}
+
 @media (max-width: 360px) {
     .popit-board {
         gap: 8px;
@@ -628,6 +761,17 @@ button {
     .soft-button {
         padding: 0 10px;
         font-size: 0.7rem;
+    }
+
+    .problem-equation {
+        font-size: 1.72rem;
+    }
+
+    .number-input,
+    .equation-answer {
+        width: 46px;
+        height: 40px;
+        font-size: 1.38rem;
     }
 }
 

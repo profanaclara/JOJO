@@ -508,6 +508,112 @@ button {
 
 }
 
+@media (max-width: 480px) {
+    .pitagoras-shell {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .topbar {
+        grid-template-columns: 42px 1fr 42px 42px;
+        gap: 6px;
+    }
+
+    .brand-logo {
+        width: 106px;
+    }
+
+    .back-button,
+    .sound-button,
+    .fullscreen-button,
+    .soft-button {
+        min-width: 40px;
+        min-height: 40px;
+        border-radius: 14px;
+    }
+
+    .game {
+        grid-template-rows: auto minmax(0, 1fr) 42px;
+        gap: 6px;
+    }
+
+    .problem-card {
+        padding: 10px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .problem-card > div:first-child {
+        min-width: 0;
+    }
+
+    .problem-equation {
+        font-size: 1.9rem;
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+
+    .number-input,
+    .equation-answer {
+        width: 50px;
+        height: 42px;
+        border-radius: 15px;
+        font-size: 1.55rem;
+        flex: 0 0 auto;
+    }
+
+    .equation-answer {
+        font-size: 1.3rem;
+    }
+
+    .problem-actions {
+        width: 100%;
+        justify-content: flex-end;
+        gap: 6px;
+    }
+
+    .soft-button {
+        padding: 0 10px;
+        font-size: 0.72rem;
+    }
+
+    .icon-soft-button {
+        width: 40px;
+        min-width: 40px;
+        padding: 0;
+    }
+
+    .table-panel {
+        padding: 12px 8px 10px;
+        border-radius: 24px;
+    }
+
+    .pitagoras-grid {
+        width: min(100%, 316px);
+        gap: 2px;
+        padding: 5px;
+        border-radius: 18px;
+    }
+
+    .grid-cell {
+        border-radius: 7px;
+        font-size: 0.62rem;
+    }
+
+    .game-actions {
+        grid-template-columns: 1fr 1fr 1.15fr;
+        gap: 6px;
+    }
+
+    .result-text {
+        min-height: 34px;
+        font-size: 0.63rem;
+        border-radius: 13px;
+        padding: 0 6px;
+    }
+}
+
 @media (max-width: 370px) {
     .pitagoras-shell {
         padding-left: 8px;
@@ -527,6 +633,21 @@ button {
     .grid-cell {
         border-radius: 8px;
         font-size: 0.66rem;
+    }
+
+    .problem-equation {
+        font-size: 1.72rem;
+    }
+
+    .number-input,
+    .equation-answer {
+        width: 46px;
+        height: 40px;
+        font-size: 1.38rem;
+    }
+
+    .equation-answer {
+        font-size: 1.18rem;
     }
 }
 
