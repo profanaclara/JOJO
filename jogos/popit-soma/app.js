@@ -23,7 +23,7 @@ const ui = {
 
 const state = {
     sound: true,
-    audio: null,
+    popAudio: null,
     mode: "automatic",
     a: null,
     b: null,
@@ -331,37 +331,22 @@ function revealResult() {
     render();
 }
 
-function ensureAudio() {
-    if (!state.audio) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) {
-            return null;
-        }
-        state.audio = new AudioContext();
+function ensurePopAudio() {
+    if (!state.popAudio) {
+        state.popAudio = new Audio("../../assets/sounds/dragon-studio-pop-402324.mp3");
+        state.popAudio.preload = "auto";
+        state.popAudio.volume = 0.62;
+        state.popAudio.playsInline = true;
     }
-    if (state.audio.state === "suspended") {
-        state.audio.resume();
-    }
-    return state.audio;
+    return state.popAudio;
 }
 
 function primeAudio() {
-    const audio = ensureAudio();
+    const audio = ensurePopAudio();
     if (!audio) {
         return;
     }
-
-    const now = audio.currentTime;
-    const silentGain = audio.createGain();
-    silentGain.gain.setValueAtTime(0.00001, now);
-    silentGain.connect(audio.destination);
-
-    const osc = audio.createOscillator();
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(180, now);
-    osc.connect(silentGain);
-    osc.start(now);
-    osc.stop(now + 0.01);
+    audio.load();
 }
 
 function softPop(intensity = 0.6) {
@@ -369,61 +354,16 @@ function softPop(intensity = 0.6) {
         return;
     }
 
-    const audio = ensureAudio();
-    if (!audio) {
+    const source = ensurePopAudio();
+    if (!source) {
         return;
     }
 
-    const duration = 0.12;
-    const now = audio.currentTime;
-    const popGain = audio.createGain();
-    popGain.gain.setValueAtTime(0.0001, now);
-    popGain.gain.exponentialRampToValueAtTime(0.18 * intensity, now + 0.01);
-    popGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-    popGain.connect(audio.destination);
-
-    const popOsc = audio.createOscillator();
-    popOsc.type = "triangle";
-    popOsc.frequency.setValueAtTime(240 + intensity * 95, now);
-    popOsc.frequency.exponentialRampToValueAtTime(95 + intensity * 30, now + duration);
-    popOsc.connect(popGain);
-    popOsc.start(now);
-    popOsc.stop(now + duration);
-
-    const clickGain = audio.createGain();
-    clickGain.gain.setValueAtTime(0.0001, now);
-    clickGain.gain.exponentialRampToValueAtTime(0.055 * intensity, now + 0.005);
-    clickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
-    clickGain.connect(audio.destination);
-
-    const clickOsc = audio.createOscillator();
-    clickOsc.type = "square";
-    clickOsc.frequency.setValueAtTime(620 + intensity * 140, now);
-    clickOsc.frequency.exponentialRampToValueAtTime(210, now + 0.045);
-    clickOsc.connect(clickGain);
-    clickOsc.start(now);
-    clickOsc.stop(now + 0.05);
-
-    const noiseBuffer = audio.createBuffer(1, audio.sampleRate * duration, audio.sampleRate);
-    const channel = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < channel.length; i += 1) {
-        channel[i] = (Math.random() * 2 - 1) * (1 - i / channel.length);
-    }
-    const noise = audio.createBufferSource();
-    const filter = audio.createBiquadFilter();
-    const noiseGain = audio.createGain();
-    filter.type = "lowpass";
-    filter.frequency.setValueAtTime(1350, now);
-    filter.frequency.exponentialRampToValueAtTime(420, now + duration);
-    filter.Q.setValueAtTime(0.8, now);
-    noiseGain.gain.setValueAtTime(0.028 * intensity, now);
-    noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-    noise.buffer = noiseBuffer;
-    noise.connect(filter);
-    filter.connect(noiseGain);
-    noiseGain.connect(audio.destination);
-    noise.start(now);
-    noise.stop(now + duration);
+    const clip = source.cloneNode();
+    clip.volume = Math.max(0.18, Math.min(0.92, 0.55 + intensity * 0.18));
+    clip.currentTime = 0;
+    clip.playsInline = true;
+    clip.play().catch(() => {});
 }
 
 async function toggleFullscreen() {
