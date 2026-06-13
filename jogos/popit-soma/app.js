@@ -345,6 +345,25 @@ function ensureAudio() {
     return state.audio;
 }
 
+function primeAudio() {
+    const audio = ensureAudio();
+    if (!audio) {
+        return;
+    }
+
+    const now = audio.currentTime;
+    const silentGain = audio.createGain();
+    silentGain.gain.setValueAtTime(0.00001, now);
+    silentGain.connect(audio.destination);
+
+    const osc = audio.createOscillator();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(180, now);
+    osc.connect(silentGain);
+    osc.start(now);
+    osc.stop(now + 0.01);
+}
+
 function softPop(intensity = 0.6) {
     if (!state.sound) {
         return;
@@ -355,21 +374,35 @@ function softPop(intensity = 0.6) {
         return;
     }
 
-    const duration = 0.095;
+    const duration = 0.12;
     const now = audio.currentTime;
-    const gain = audio.createGain();
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.12 * intensity, now + 0.012);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-    gain.connect(audio.destination);
+    const popGain = audio.createGain();
+    popGain.gain.setValueAtTime(0.0001, now);
+    popGain.gain.exponentialRampToValueAtTime(0.18 * intensity, now + 0.01);
+    popGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+    popGain.connect(audio.destination);
 
-    const osc = audio.createOscillator();
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(150 + intensity * 80, now);
-    osc.frequency.exponentialRampToValueAtTime(54 + intensity * 18, now + duration);
-    osc.connect(gain);
-    osc.start(now);
-    osc.stop(now + duration);
+    const popOsc = audio.createOscillator();
+    popOsc.type = "triangle";
+    popOsc.frequency.setValueAtTime(240 + intensity * 95, now);
+    popOsc.frequency.exponentialRampToValueAtTime(95 + intensity * 30, now + duration);
+    popOsc.connect(popGain);
+    popOsc.start(now);
+    popOsc.stop(now + duration);
+
+    const clickGain = audio.createGain();
+    clickGain.gain.setValueAtTime(0.0001, now);
+    clickGain.gain.exponentialRampToValueAtTime(0.055 * intensity, now + 0.005);
+    clickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
+    clickGain.connect(audio.destination);
+
+    const clickOsc = audio.createOscillator();
+    clickOsc.type = "square";
+    clickOsc.frequency.setValueAtTime(620 + intensity * 140, now);
+    clickOsc.frequency.exponentialRampToValueAtTime(210, now + 0.045);
+    clickOsc.connect(clickGain);
+    clickOsc.start(now);
+    clickOsc.stop(now + 0.05);
 
     const noiseBuffer = audio.createBuffer(1, audio.sampleRate * duration, audio.sampleRate);
     const channel = noiseBuffer.getChannelData(0);
@@ -379,10 +412,11 @@ function softPop(intensity = 0.6) {
     const noise = audio.createBufferSource();
     const filter = audio.createBiquadFilter();
     const noiseGain = audio.createGain();
-    filter.type = "bandpass";
-    filter.frequency.setValueAtTime(520, now);
-    filter.Q.setValueAtTime(1.3, now);
-    noiseGain.gain.setValueAtTime(0.035 * intensity, now);
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(1350, now);
+    filter.frequency.exponentialRampToValueAtTime(420, now + duration);
+    filter.Q.setValueAtTime(0.8, now);
+    noiseGain.gain.setValueAtTime(0.028 * intensity, now);
     noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
     noise.buffer = noiseBuffer;
     noise.connect(filter);
@@ -423,6 +457,8 @@ ui.tray.addEventListener("click", (event) => {
 ui.goals.forEach((button) => {
     button.addEventListener("click", () => chooseGroup(button.dataset.group));
 });
+
+window.addEventListener("pointerdown", primeAudio, { once: true, passive: true });
 
 ui.soundBtn.addEventListener("click", () => {
     state.sound = !state.sound;
