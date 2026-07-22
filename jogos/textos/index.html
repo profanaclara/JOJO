@@ -11,31 +11,16 @@
     <link rel="manifest" href="../../manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icon-192.png">
     <link rel="apple-touch-icon" href="../../assets/icon-192.png">
-    <style>
-        @font-face {
-            font-family: "Archivo";
-            src: url("../../assets/fonts/archivo-latin.woff2") format("woff2");
-            font-weight: 500 800;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: "Inter";
-            src: url("../../assets/fonts/inter-latin.woff2") format("woff2");
-            font-weight: 400 800;
-            font-style: normal;
-            font-display: swap;
-        }
-    </style>
-    <link rel="stylesheet" href="./styles.css?v=9">
-    <link rel="stylesheet" href="../../styles/menu.css?v=8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css?v=11">
 </head>
-<body class="menu-page menu-page--textos">
+<body>
     <div class="app-shell">
         <div id="homeScreen" class="screen screen--home">
             <div class="screen-topbar">
-                <a class="brand-link" href="../../index.html" aria-label="Voltar à JOJO">
+                <a class="brand-link" href="../../" aria-label="Voltar à JOJO">
                     <img src="../../assets/jojo-horizontal.svg" alt="JOJO" class="brand-link__logo">
                 </a>
                 <div class="home-top-actions">
@@ -44,7 +29,7 @@
                         <span class="sr-only">Abrir ajuda</span>
                     </button>
                     <button id="toggleSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <img class="sound-sticker" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                        <span aria-hidden="true">🔊</span>
                         <span class="sr-only">Som ligado</span>
                     </button>
                 </div>
@@ -61,26 +46,26 @@
             <section class="mode-section">
                 <div class="year-grid">
                     <button class="year-card year-card--one" type="button" data-year="1">
-                        <span class="year-card__icon year-card__icon--one"></span>
+                        <span class="year-card__icon">🌱</span>
                         <strong>1º Ano</strong>
                     </button>
                     <button class="year-card year-card--two" type="button" data-year="2">
-                        <span class="year-card__icon year-card__icon--two"></span>
+                        <span class="year-card__icon">🌿</span>
                         <strong>2º Ano</strong>
                     </button>
                     <button class="year-card year-card--three" type="button" data-year="3">
-                        <span class="year-card__icon year-card__icon--three"></span>
+                        <span class="year-card__icon">🌳</span>
                         <strong>3º Ano</strong>
                     </button>
                     <button class="year-card year-card--four" type="button" data-year="4">
-                        <span class="year-card__icon year-card__icon--four"></span>
+                        <span class="year-card__icon">🌟</span>
                         <strong>4º e 5º Ano</strong>
                     </button>
                 </div>
             </section>
 
             <div class="credits-strip">
-                <img src="../../assets/logo-profanapixelart-small.webp" alt="Logo Prof Ana Clara">
+                <img src="../../assets/logo-profanapixelart.png" alt="Logo Prof Ana Clara">
                 <p>Idealizado por Ana Clara Silva de Lima</p>
             </div>
         </div>
@@ -96,7 +81,7 @@
                         <span class="sr-only">Abrir ajuda</span>
                     </button>
                     <button id="selectionSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <img class="sound-sticker" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                        <span aria-hidden="true">🔊</span>
                         <span class="sr-only">Som ligado</span>
                     </button>
                 </div>
@@ -109,7 +94,7 @@
             </section>
 
             <div class="credits-strip credits-strip--selection">
-                <img src="../../assets/logo-profanapixelart-small.webp" alt="Logo Prof Ana Clara">
+                <img src="../../assets/logo-profanapixelart.png" alt="Logo Prof Ana Clara">
                 <p>Idealizado por Ana Clara Silva de Lima</p>
             </div>
         </div>
@@ -123,22 +108,9 @@
                     <div id="sessionHeading" class="session-heading"></div>
                 </div>
 
-                <div class="session-compact-stats" aria-label="Resumo do teste">
-                    <article class="stat-card stat-card--compact">
-                        <span>Tempo</span>
-                        <strong id="timer">00:00</strong>
-                        <small id="timeLimitLabel"></small>
-                    </article>
-                    <article class="stat-card stat-card--compact stat-card--danger">
-                        <span>Erros</span>
-                        <strong id="errorCount">0</strong>
-                        <small id="maxErrorsLabel"></small>
-                    </article>
-                </div>
-
                 <div class="session-tools">
                     <button id="sessionSoundBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <img class="sound-sticker" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                        <span aria-hidden="true">🔊</span>
                         <span class="sr-only">Som ligado</span>
                     </button>
                     <button id="toggleBoldBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-pressed="false" aria-label="Ativar texto em negrito">
@@ -146,7 +118,7 @@
                         <span class="sr-only">Ativar texto em negrito</span>
                     </button>
                     <button id="toggleFullscreenBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-label="Entrar em tela cheia" title="Tela cheia">
-                        <span class="control-glyph control-glyph--fullscreen" aria-hidden="true"></span>
+                        <span aria-hidden="true">⛶</span>
                         <span class="sr-only">Entrar em tela cheia</span>
                     </button>
                     <button id="rotateScreenBtn" class="ghost-button ghost-button--small ghost-button--light orientation-button utility-button utility-button--light" type="button" aria-label="Girar para horizontal">
@@ -161,15 +133,28 @@
                     <div id="stepNavigation" class="step-nav"></div>
                     <button id="backToSelectionBtn" class="text-link-button" type="button">Voltar aos testes</button>
                 </div>
+
+                <div class="stats-row">
+                    <article class="stat-card">
+                        <strong id="timer">00:00</strong>
+                        <span>Tempo</span>
+                        <small id="timeLimitLabel"></small>
+                    </article>
+                    <article class="stat-card stat-card--danger">
+                        <strong id="errorCount">0</strong>
+                        <span>Erros</span>
+                        <small id="maxErrorsLabel"></small>
+                    </article>
+                </div>
             </section>
 
             <div class="control-dock">
                 <button id="startBtn" class="control-button control-button--start" type="button" aria-label="Iniciar" title="Iniciar">
-                    <span class="control-glyph control-glyph--play" aria-hidden="true"></span>
+                    <span aria-hidden="true">▶</span>
                     <span class="sr-only">Iniciar</span>
                 </button>
                 <button id="stopBtn" class="control-button control-button--stop" type="button" disabled aria-label="Parar" title="Parar">
-                    <span class="control-glyph control-glyph--pause" aria-hidden="true"></span>
+                    <span aria-hidden="true">⏸</span>
                     <span class="sr-only">Parar</span>
                 </button>
                 <button id="errorBtn" class="control-button control-button--warn" type="button" aria-label="Marcar erro" title="Marcar erro">
@@ -233,7 +218,7 @@
                         </div>
                         <div class="auto-panel__actions">
                             <button id="startAutoWords" class="primary-button auto-action-button" type="button" aria-label="Iniciar palavras" title="Iniciar palavras">
-                                <span class="control-glyph control-glyph--play" aria-hidden="true"></span>
+                                <span aria-hidden="true">▶</span>
                                 <span class="sr-only">Iniciar palavras</span>
                             </button>
                             <button id="markNotRead" class="secondary-button auto-action-button" type="button" disabled aria-label="Marcar como não lida" title="Marcar como não lida">
@@ -264,7 +249,7 @@
                         </div>
                         <div class="auto-panel__actions">
                             <button id="startAutoPseudos" class="primary-button auto-action-button" type="button" aria-label="Iniciar pseudopalavras" title="Iniciar pseudopalavras">
-                                <span class="control-glyph control-glyph--play" aria-hidden="true"></span>
+                                <span aria-hidden="true">▶</span>
                                 <span class="sr-only">Iniciar pseudopalavras</span>
                             </button>
                             <button id="markPseudoNotRead" class="secondary-button auto-action-button" type="button" disabled aria-label="Marcar como não lida" title="Marcar como não lida">
@@ -307,24 +292,10 @@
                 </div>
             </div>
         </div>
-
-        <nav class="jojo-bottom-nav" aria-label="Navegação principal">
-            <a class="jojo-bottom-nav__item" href="../../index.html" data-nav="home" aria-current="false">
-                <img class="jojo-nav-icon" src="../../assets/jojo-nav-home.png" alt="" aria-hidden="true">
-                <span class="sr-only">Início</span>
-            </a>
-            <a class="jojo-bottom-nav__item is-active" href="../index.html?eixo=alfabetizacao" data-nav="jogos" aria-current="page">
-                <img class="jojo-nav-icon" src="../../assets/jojo-nav-jogos.png" alt="" aria-hidden="true">
-                <span class="sr-only">Jogos</span>
-            </a>
-            <a class="jojo-bottom-nav__item" href="../timer/index.html" data-nav="ferramentas" aria-current="false">
-                <img class="jojo-nav-icon" src="../../assets/jojo-nav-ferramentas.png" alt="" aria-hidden="true">
-                <span class="sr-only">Ferramentas</span>
-            </a>
-        </nav>
     </div>
 
     <script src="./data.js?v=2"></script>
-    <script src="./app.js?v=7"></script>
+    <script src="./app.js?v=10"></script>
+    <script src="../../scripts/pwa.js?v=10"></script>
 </body>
 </html>

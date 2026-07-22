@@ -13,14 +13,12 @@ const ui = {
     tray: document.getElementById("countTray"),
     countedValue: document.getElementById("countedValue"),
     topAnswerValue: document.getElementById("topAnswerValue"),
-    countResult: document.getElementById("countResult"),
-    resultEquation: document.getElementById("resultEquation"),
-    resultValue: document.getElementById("resultValue"),
-    resultHint: document.getElementById("resultHint"),
     resultBtn: document.getElementById("resultBtn"),
     modeBtn: document.getElementById("modeBtn"),
+    shuffleBtn: document.getElementById("shuffleBtn"),
     resetBtn: document.getElementById("resetBtn"),
-    undoBtn: document.getElementById("undoBtn")
+    undoBtn: document.getElementById("undoBtn"),
+    fullscreenBtn: document.getElementById("fullscreenBtn")
 };
 
 const state = {
@@ -69,6 +67,7 @@ function updateModeUI() {
     ui.modeBtn.setAttribute("aria-label", automatic ? "Modo automático" : "Modo manual");
     ui.minuendInput.readOnly = automatic;
     ui.subtrahendInput.readOnly = automatic;
+    ui.shuffleBtn.disabled = !automatic;
 }
 
 function setMode(mode, silent = false) {
@@ -89,6 +88,22 @@ function setMode(mode, silent = false) {
 
 function toggleMode() {
     setMode(state.mode === "automatic" ? "manual" : "automatic");
+}
+
+function shuffleProblem() {
+    if (state.mode !== "automatic") {
+        return;
+    }
+
+    const previous = `${state.minuend}-${state.subtrahend}`;
+    let next = randomProblem();
+    for (let attempt = 0; attempt < 5 && `${next[0]}-${next[1]}` === previous; attempt += 1) {
+        next = randomProblem();
+    }
+    [state.minuend, state.subtrahend] = next;
+    syncInputs();
+    softPop(0.58);
+    resetState(true);
 }
 
 function resetState(keepProblem = true) {
@@ -133,11 +148,12 @@ function leftovers() {
     return state.minuend - state.subtrahend;
 }
 
-function equationPreview(revealed = false) {
-    const minuend = formatTarget(state.minuend);
-    const subtrahend = formatTarget(state.subtrahend);
-    const result = revealed && hasProblem() ? leftovers() : "?";
-    return `${minuend} - ${subtrahend} = ${result}`;
+function shouldRevealAnswer() {
+    const counted = state.tray.filter((ball) => ball.counted).length;
+    return state.revealed && hasProblem() && (
+        (leftovers() === 0 && isInitialComplete() && isRemovalComplete()) ||
+        (state.tray.length > 0 && counted === leftovers())
+    );
 }
 
 function canRevealAnswer() {
@@ -236,6 +252,7 @@ function prepareLeftovers() {
     });
     state.tray = leftoverIndexes().map((index, order) => ({
         id: `${index}-${order}`,
+        group: "leftover",
         counted: false
     }));
     state.step = "count";
@@ -279,6 +296,7 @@ function render() {
     updateModeUI();
     ui.targetStart.textContent = formatTarget(state.minuend);
     ui.targetRemove.textContent = formatTarget(state.subtrahend);
+    ui.topAnswerValue.textContent = shouldRevealAnswer() ? leftovers() : "?";
     renderSteps();
     renderBoard();
     renderTray();
@@ -313,7 +331,7 @@ function renderTray() {
         const delay = Math.min(index * 22, 220);
         return `
             <button
-                class="count-ball${ball.counted ? " is-counted" : ""}"
+                class="count-ball is-${ball.group}${ball.counted ? " is-counted" : ""}"
                 type="button"
                 data-tray-index="${index}"
                 style="animation-delay:${delay}ms"
@@ -326,39 +344,12 @@ function renderTray() {
 
 function renderStatus() {
     const canReveal = canRevealAnswer();
-    const revealed = canReveal && state.revealed;
-    const counted = state.tray.filter((ball) => ball.counted).length;
-    ui.topAnswerValue.textContent = revealed ? leftovers() : "?";
-    ui.topAnswerValue.classList.toggle("is-revealed", revealed);
-    ui.countedValue.textContent = revealed ? "OK" : counted;
-    ui.countedValue.setAttribute("aria-label", revealed ? "Contagem concluída" : `Bolinhas contadas: ${counted}`);
-    ui.countedValue.classList.toggle("is-complete", canReveal && !revealed);
-    ui.countedValue.classList.toggle("is-confirmed", revealed);
-    ui.countResult.classList.toggle("is-ready", canReveal);
-    ui.countResult.classList.toggle("is-revealed", revealed);
-    ui.resultEquation.textContent = equationPreview(revealed);
-    ui.resultValue.textContent = revealed ? leftovers() : "?";
-    ui.resultHint.textContent = revealed
-        ? "Muito bem! Essa é a quantidade que sobrou."
-        : "Conte as bolinhas que sobraram.";
     ui.resultBtn.disabled = !canReveal;
     ui.resultBtn.classList.toggle("is-ready", canReveal);
-    ui.resultBtn.classList.toggle("is-revealed", revealed);
-    ui.resultBtn.textContent = revealed
-        ? state.mode === "automatic" ? "Próxima conta" : "Nova rodada"
-        : canReveal ? "Mostrar resultado" : "Resultado";
+    ui.resultBtn.classList.toggle("is-revealed", canReveal && state.revealed);
 }
 
 function revealResult() {
-    if (state.revealed) {
-        if (state.mode === "automatic") {
-            [state.minuend, state.subtrahend] = randomProblem();
-            syncInputs();
-        }
-        resetState(true);
-        softPop(0.72);
-        return;
-    }
     if (!canRevealAnswer()) {
         softPop(0.28);
         return;
@@ -403,6 +394,18 @@ function softPop(intensity = 0.6) {
     clip.play().catch(() => {});
 }
 
+async function toggleFullscreen() {
+    try {
+        if (document.fullscreenElement) {
+            await document.exitFullscreen();
+        } else {
+            await document.documentElement.requestFullscreen();
+        }
+    } catch {
+        softPop(0.28);
+    }
+}
+
 ui.board.addEventListener("click", (event) => {
     const button = event.target.closest("[data-index]");
     if (!button) {
@@ -433,6 +436,8 @@ ui.undoBtn.addEventListener("click", undo);
 ui.resetBtn.addEventListener("click", () => resetState(true));
 ui.resultBtn.addEventListener("click", revealResult);
 ui.modeBtn.addEventListener("click", toggleMode);
+ui.shuffleBtn.addEventListener("click", shuffleProblem);
+ui.fullscreenBtn?.addEventListener("click", toggleFullscreen);
 ui.minuendInput.addEventListener("input", applyManualProblem);
 ui.subtrahendInput.addEventListener("input", applyManualProblem);
 ui.minuendInput.addEventListener("change", applyManualProblem);

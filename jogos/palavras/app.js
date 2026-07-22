@@ -118,11 +118,10 @@ function getLetterLabel() {
 }
 
 function updateSoundButtons() {
+    const icon = state.soundEnabled ? "🔊" : "🔇";
     const label = state.soundEnabled ? "Som ligado" : "Som desligado";
-    const soundClass = state.soundEnabled ? "sound-sticker" : "sound-sticker sound-sticker--off";
-    const imageMarkup = `<img class="${soundClass}" src="../../assets/jojo-som.png" alt="" aria-hidden="true"><span class="sr-only">${label}</span>`;
-    ui.toggleSoundBtn.innerHTML = imageMarkup;
-    ui.sessionSoundBtn.innerHTML = imageMarkup;
+    ui.toggleSoundBtn.innerHTML = `<span aria-hidden="true">${icon}</span><span class="sr-only">${label}</span>`;
+    ui.sessionSoundBtn.innerHTML = `<span aria-hidden="true">${icon}</span><span class="sr-only">${label}</span>`;
     ui.toggleSoundBtn.setAttribute("aria-label", label);
     ui.sessionSoundBtn.setAttribute("aria-label", label);
     ui.toggleSoundBtn.setAttribute("aria-pressed", String(state.soundEnabled));
@@ -226,54 +225,18 @@ function switchScreen(nextScreen) {
     ui.resultScreen.classList.toggle("hidden", nextScreen !== "result");
     ui.body.classList.toggle("session-active", nextScreen === "session");
     ui.body.classList.toggle("result-active", nextScreen === "result");
-
-    if (nextScreen === "session") {
-        enterNativeFullscreenLandscape();
-    } else {
-        exitNativeFullscreen();
-    }
-
     syncFullscreenState();
 }
 
 function syncFullscreenState() {
-    const isFullscreen = Boolean(document.fullscreenElement) || ui.body.classList.contains("is-fullscreen-native");
+    const isFullscreen = Boolean(document.fullscreenElement);
     const sessionVisible = state.screen === "session";
-    if (!isFullscreen) {
-        unlockLandscapeOrientation();
-    }
     ui.body.classList.toggle("is-fullscreen", isFullscreen);
     ui.fullscreenBtn.classList.toggle("hidden", isFullscreen || !sessionVisible);
     ui.exitFullscreenBtn.classList.toggle("hidden", !isFullscreen || !sessionVisible);
 }
 
-function unlockLandscapeOrientation() {
-    if (window.JojoAndroid?.exitFullscreen) {
-        return;
-    }
-    try {
-        screen.orientation?.unlock?.();
-    } catch (error) {
-        console.warn("Nao foi possivel liberar a orientacao.", error);
-    }
-}
-
-function enterNativeFullscreenLandscape() {
-    if (window.JojoAndroid?.enterFullscreenLandscape) {
-        ui.body.classList.add("is-fullscreen-native");
-        window.JojoAndroid.enterFullscreenLandscape();
-    }
-}
-
-function exitNativeFullscreen() {
-    if (window.JojoAndroid?.exitFullscreen) {
-        ui.body.classList.remove("is-fullscreen-native");
-        window.JojoAndroid.exitFullscreen();
-    }
-}
-
 async function enterFullscreen() {
-    enterNativeFullscreenLandscape();
     const target = ui.appShell || document.documentElement;
     try {
         if (target.requestFullscreen) {
@@ -287,8 +250,6 @@ async function enterFullscreen() {
 }
 
 async function exitFullscreen() {
-    unlockLandscapeOrientation();
-    exitNativeFullscreen();
     try {
         if (document.fullscreenElement && document.exitFullscreen) {
             await document.exitFullscreen();
@@ -342,7 +303,6 @@ function startSession(mode, letter) {
     ui.timerCaption.textContent = mode === "timed" ? "Tempo restante" : "Tempo de leitura";
     ui.wordDisplay.textContent = state.letter === "cursive" ? "clique em próxima para começar" : "CLIQUE EM PRÓXIMA PARA COMEÇAR";
     ui.wordDisplay.classList.toggle("is-cursive", state.letter === "cursive");
-    ui.wordDisplay.classList.add("is-prompt");
     ui.helperText.textContent = "Espaço avança • X marca dificuldade • Enter encerra";
 
     renderSessionStats();
@@ -421,7 +381,6 @@ function showNextWord() {
     state.session.shownCount = state.session.index;
     ui.wordDisplay.textContent = state.session.currentWord;
     ui.wordDisplay.classList.toggle("is-cursive", state.letter === "cursive");
-    ui.wordDisplay.classList.remove("is-prompt");
     ui.helperText.textContent = state.mode === "timed" ? "Espaço avança • X marca dificuldade" : "Espaço avança • X marca dificuldade • Enter encerra";
     renderSessionStats();
 }
@@ -521,8 +480,6 @@ async function requestLandscapeOrientation() {
     if (state.soundEnabled) {
         playToggleSound();
     }
-
-    enterNativeFullscreenLandscape();
 
     try {
         if (document.fullscreenElement == null && document.documentElement.requestFullscreen) {
@@ -631,10 +588,5 @@ document.addEventListener("keydown", (event) => {
 renderBenchmarks();
 updateSoundButtons();
 renderHomeSelections();
-document.addEventListener("fullscreenchange", () => {
-    if (!document.fullscreenElement && ui.body.classList.contains("is-fullscreen-native")) {
-        exitNativeFullscreen();
-    }
-    syncFullscreenState();
-});
+document.addEventListener("fullscreenchange", syncFullscreenState);
 syncFullscreenState();

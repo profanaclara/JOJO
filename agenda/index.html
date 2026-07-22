@@ -24,8 +24,7 @@
         }
     </style>
     <link rel="stylesheet" href="../styles/menu.css?v=8">
-    <link rel="stylesheet" href="./styles.css?v=9">
-    <link rel="stylesheet" href="../styles/tablet-agenda-final.css?v=3">
+    <link rel="stylesheet" href="./styles.css?v=3">
 </head>
 <body class="agenda-page">
     <div class="agenda-shell">
@@ -34,8 +33,8 @@
                 <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
             </a>
             <img src="../assets/jojo-horizontal.svg" alt="JOJO">
-            <button id="drawerOpenBtn" class="agenda-menu-button" type="button" aria-label="Abrir alunos e registros">
-                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 7c.5-3 2.2-4.5 5-4.5s4.5 1.5 5 4.5M16 6h4m-4 4h4m-3 4h3m-3 4h3"/></svg>
+            <button id="drawerOpenBtn" class="agenda-menu-button" type="button" aria-label="Abrir alunos">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 7h11M8 12h11M8 17h11M4 7h.01M4 12h.01M4 17h.01"/></svg>
             </button>
         </header>
 
@@ -47,22 +46,23 @@
 
             <form id="agendaForm" class="agenda-form">
                 <section class="agenda-section agenda-student">
+                    <label class="field-label" for="studentName">Aluno</label>
                     <div class="student-row">
-                        <label class="student-field" for="studentName">
-                            <span class="field-label">Aluno</span>
-                            <input id="studentName" name="studentName" type="text" autocomplete="off" placeholder="Joaquim">
-                        </label>
-                        <label class="student-field student-field--date" for="recordDate">
-                            <span class="field-label">Data</span>
-                            <input id="recordDate" name="recordDate" type="date">
-                        </label>
+                        <input id="studentName" name="studentName" type="text" autocomplete="off" placeholder="Joaquim">
+                        <input id="recordDate" name="recordDate" type="date" aria-label="Data">
                     </div>
                     <label class="field-label field-label--spaced" for="recorderName">Registrado por</label>
                     <input id="recorderName" name="recorderName" type="text" autocomplete="off" placeholder="Professora Ana">
-                    <p class="daily-record-hint"><strong>Registro diário</strong><span id="dailyRecordDate">Hoje</span><small>Os dias ficam acumulados para montar relatórios depois.</small></p>
+                    <label class="field-label field-label--spaced" for="recipientEmail">Enviar para</label>
+                    <input id="recipientEmail" name="recipientEmail" type="email" autocomplete="off" placeholder="email@exemplo.com">
+                    <div class="period-tabs" role="group" aria-label="Período do relatório">
+                        <button class="choice-chip is-active" type="button" data-group="reportPeriod" data-value="daily">Diário</button>
+                        <button class="choice-chip" type="button" data-group="reportPeriod" data-value="weekly">Semanal</button>
+                        <button class="choice-chip" type="button" data-group="reportPeriod" data-value="monthly">Mensal</button>
+                    </div>
                 </section>
 
-                <details class="agenda-section agenda-details agenda-details--mood" open>
+                <details class="agenda-section agenda-details" open>
                     <summary>Humor</summary>
                     <div class="choice-grid" role="group" aria-label="Humor">
                         <button class="choice-chip is-active" type="button" data-group="mood" data-value="Tranquilo">Tranquilo</button>
@@ -76,7 +76,7 @@
                     </div>
                 </details>
 
-                <details class="agenda-section agenda-details agenda-details--arrival">
+                <details class="agenda-section agenda-details" open>
                     <summary>Entrada e saída</summary>
                     <div class="agenda-split">
                     <div>
@@ -104,7 +104,7 @@
                     </div>
                 </details>
 
-                <details class="agenda-section agenda-details agenda-details--routine">
+                <details class="agenda-section agenda-details" open>
                     <summary>Rotina</summary>
                     <div class="flag-grid" role="group" aria-label="Registros do dia">
                         <button class="flag-chip" type="button" data-flag="Comeu">Comeu</button>
@@ -120,7 +120,7 @@
                     </div>
                 </details>
 
-                <details class="agenda-section agenda-details agenda-details--activities">
+                <details class="agenda-section agenda-details">
                     <summary>Atividades</summary>
                     <h2>Atividades propostas</h2>
                     <div class="choice-grid" role="group" aria-label="Atividades propostas">
@@ -138,7 +138,7 @@
                     </div>
                 </details>
 
-                <details class="agenda-section agenda-details agenda-details--behavior">
+                <details class="agenda-section agenda-details">
                     <summary>Comportamentos</summary>
                     <div class="flag-grid" role="group" aria-label="Comportamentos">
                         <button class="flag-chip" type="button" data-flag="Choro/manha">Choro/manha</button>
@@ -152,7 +152,7 @@
                     </div>
                 </details>
 
-                <details class="agenda-section agenda-details agenda-details--appetite">
+                <details class="agenda-section agenda-details">
                     <summary>Apetite e reforçador</summary>
                     <h2>Apetite</h2>
                     <div class="choice-grid" role="group" aria-label="Apetite">
@@ -172,16 +172,10 @@
                     </div>
                 </details>
 
-                <section id="notesSection" class="agenda-section">
+                <section class="agenda-section">
                     <label class="field-label" for="notes">Anotações</label>
                     <textarea id="notes" name="notes" rows="4" placeholder="Escreva só o essencial."></textarea>
                 </section>
-
-                <div id="agendaStepNav" class="agenda-step-nav" aria-label="Etapas do registro">
-                    <button id="agendaPreviousStep" class="secondary-action" type="button">Anterior</button>
-                    <span id="agendaStepLabel" aria-live="polite"></span>
-                    <button id="agendaNextStep" class="primary-action" type="button">Próxima</button>
-                </div>
 
                 <div class="agenda-actions">
                     <button id="clearBtn" class="secondary-action" type="button">Limpar</button>
@@ -198,7 +192,7 @@
             <header class="drawer-header">
                 <div>
                     <p>ALUNOS</p>
-                <h2 id="drawerTitle">Alunos e registros</h2>
+                    <h2 id="drawerTitle">Agenda</h2>
                 </div>
                 <button id="drawerCloseBtn" class="drawer-close" type="button" aria-label="Fechar alunos">×</button>
             </header>
@@ -229,6 +223,6 @@
         </nav>
     </div>
 
-    <script src="./app.js?v=8"></script>
+    <script src="./app.js?v=3"></script>
 </body>
 </html>

@@ -11,35 +11,20 @@
     <link rel="manifest" href="../../manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icon-192.png">
     <link rel="apple-touch-icon" href="../../assets/icon-192.png">
-    <style>
-        @font-face {
-            font-family: "Archivo";
-            src: url("../../assets/fonts/archivo-latin.woff2") format("woff2");
-            font-weight: 500 800;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: "Inter";
-            src: url("../../assets/fonts/inter-latin.woff2") format("woff2");
-            font-weight: 400 800;
-            font-style: normal;
-            font-display: swap;
-        }
-    </style>
-    <link rel="stylesheet" href="../../styles/menu.css?v=8">
-    <link rel="stylesheet" href="./styles.css?v=22">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css?v=3">
 </head>
-<body class="menu-page menu-page--timer">
+<body>
     <div class="app-shell">
         <div class="utility-dock" aria-label="Controles rápidos">
             <button id="soundToggleBtn" class="ghost-button ghost-button--pill sound-toggle utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                <img class="sound-sticker" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                <span aria-hidden="true">🔊</span>
                 <span class="sr-only">Som ligado</span>
             </button>
             <button id="fullscreenBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Entrar em tela cheia">
-                <span class="control-glyph control-glyph--fullscreen" aria-hidden="true"></span>
+                <span aria-hidden="true">⛶</span>
                 <span class="sr-only">Entrar em tela cheia</span>
             </button>
             <button id="exitFullscreenBtn" class="ghost-button ghost-button--pill utility-button hidden" type="button" aria-label="Sair da tela cheia">
@@ -50,7 +35,7 @@
 
         <div id="homeScreen" class="screen screen--home">
             <div class="top-actions top-actions--home">
-                <a class="brand-link" href="../../index.html" aria-label="Voltar à JOJO">
+                <a class="brand-link" href="../../" aria-label="Voltar à JOJO">
                     <img src="../../assets/jojo-horizontal.svg" alt="JOJO">
                 </a>
                 <div class="top-actions__group">
@@ -62,43 +47,20 @@
             </div>
 
             <header class="home-hero">
-                <div class="home-hero__copy">
-                    <img class="home-hero__icon" src="../../assets/jojo-card-timer.png" alt="" aria-hidden="true">
-                    <h1>TIMER</h1>
-                </div>
+                <h1>TIMER</h1>
             </header>
 
             <div class="home-workspace">
                 <section class="choice-section">
-                    <div class="section-heading">
-                        <h2>Escolha um tipo</h2>
-                    </div>
                     <div class="mode-grid">
-                        <button class="mode-card mode-card--lanche mode-card--clean" type="button" data-mode="lanche">
-                            <span class="mode-card__visual mode-card__visual--asset" aria-hidden="true">
-                                <img src="../../assets/jojo-timer-lanche.png" alt="">
-                            </span>
-                            <div class="mode-card__copy">
-                                <strong>Lanche</strong>
-                            </div>
+                        <button class="mode-card mode-card--lanche" type="button" data-mode="lanche">
+                            <img class="mode-card__icon mode-card__icon--food" src="./assets/comida.svg" alt="" aria-hidden="true">
+                            <strong>Lanche</strong>
                         </button>
 
-                        <button class="mode-card mode-card--casa mode-card--clean" type="button" data-mode="casa">
-                            <span class="mode-card__visual mode-card__visual--asset" aria-hidden="true">
-                                <img src="../../assets/jojo-timer-casa.png" alt="">
-                            </span>
-                            <div class="mode-card__copy">
-                                <strong>Casa</strong>
-                            </div>
-                        </button>
-
-                        <button class="mode-card mode-card--livre mode-card--clean" type="button" data-mode="livre">
-                            <span class="mode-card__visual mode-card__visual--asset" aria-hidden="true">
-                                <img src="../../assets/jojo-timer-cronometro.png" alt="">
-                            </span>
-                            <div class="mode-card__copy">
-                                <strong>Cronômetro</strong>
-                            </div>
+                        <button class="mode-card mode-card--casa" type="button" data-mode="casa">
+                            <img class="mode-card__icon mode-card__icon--home" src="./assets/casa.gif" alt="" aria-hidden="true">
+                            <strong>Casa</strong>
                         </button>
                     </div>
                 </section>
@@ -113,14 +75,6 @@
                         <button id="changeModeBtn" class="text-link-button" type="button">Trocar tipo</button>
                     </div>
 
-                    <div id="durationGuidance" class="duration-guidance hidden" aria-live="polite">
-                        <div class="duration-guidance__copy">
-                            <span id="durationGuidanceLabel" class="duration-guidance__label"></span>
-                            <strong id="durationGuidanceValue" class="duration-guidance__value"></strong>
-                        </div>
-                        <p id="durationGuidanceHint" class="duration-guidance__hint"></p>
-                    </div>
-
                     <div class="input-grid">
                         <label class="time-field" for="hoursInput">
                             <span>Horas</span>
@@ -133,17 +87,9 @@
                         </label>
                     </div>
 
-                    <div id="presetRow" class="preset-row hidden" aria-label="Atalhos de tempo">
-                        <button class="preset-chip" type="button" data-preset-minutes="5">5 min</button>
-                        <button class="preset-chip" type="button" data-preset-minutes="10">10 min</button>
-                        <button class="preset-chip" type="button" data-preset-minutes="15">15 min</button>
-                        <button class="preset-chip" type="button" data-preset-minutes="20">20 min</button>
-                        <button class="preset-chip" type="button" data-preset-minutes="30">30 min</button>
-                    </div>
-
                     <div class="preview-panel">
                         <div class="preview-panel__time">
-                            <span id="timePreviewLabel" class="preview-panel__label">Tempo digitado</span>
+                            <span class="preview-panel__label">Tempo digitado</span>
                             <strong id="timePreview">00:15:00</strong>
                         </div>
                         <p id="validationMessage" class="preview-panel__hint"></p>
@@ -156,7 +102,7 @@
             <footer class="home-footer" aria-label="Créditos do timer">
                 <img
                     class="home-footer__logo"
-                    src="../../assets/logo-profanapixelart-small.webp"
+                    src="../../assets/logo-profanapixelart.png"
                     alt="Logo Ana Clara Silva de Lima"
                 >
                 <p>Idealizado por Ana Clara Silva de Lima</p>
@@ -165,7 +111,7 @@
 
         <div id="timerScreen" class="screen screen--timer hidden">
             <div class="top-actions top-actions--timer">
-                <a class="brand-link brand-link--timer" href="../../index.html" aria-label="Voltar à JOJO">
+                <a class="brand-link brand-link--timer" href="../../" aria-label="Voltar à JOJO">
                     <img src="../../assets/jojo-horizontal.svg" alt="JOJO">
                 </a>
                 <button id="backHomeBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Voltar ao timer">
@@ -194,24 +140,12 @@
                         <div id="journeyBasePath" class="journey-path"></div>
                         <div id="journeyProgress" class="journey-path journey-path--progress"></div>
                         <div id="studentMarker" class="student-marker">
-                            <img src="./assets/crianca.webp" alt="Estudante caminhando">
+                            <img src="./assets/crianca.gif" alt="Estudante caminhando">
                         </div>
                         <div class="destination-marker">
                             <img id="destinationAsset" src="" alt="">
                             <span id="destinationLabel"></span>
                         </div>
-                    </div>
-                </div>
-
-                <div id="freeTimerPanel" class="free-timer-panel hidden" aria-live="polite">
-                    <div class="hourglass-visual" aria-hidden="true">
-                        <div class="hourglass-wrapper">
-                            <canvas id="hourglassCanvas" class="hourglass-canvas" width="200" height="400"></canvas>
-                        </div>
-                    </div>
-                    <div class="free-timer-panel__copy">
-                        <span class="mini-label">Cronômetro livre</span>
-                        <p>A ampulheta acompanha o tempo em movimento.</p>
                     </div>
                 </div>
 
@@ -227,25 +161,24 @@
             </section>
 
             <div class="controls">
-                <button id="pauseBtn" class="control-button control-button--pause" type="button"><span class="control-glyph control-glyph--pause" aria-hidden="true"></span>Pausar</button>
-                <button id="resumeBtn" class="control-button control-button--resume" type="button" disabled><span class="control-glyph control-glyph--play" aria-hidden="true"></span>Continuar</button>
-                <button id="resetBtn" class="control-button control-button--reset" type="button"><span class="control-glyph control-glyph--reset" aria-hidden="true"></span>Recomeçar</button>
-                <button id="newTimerBtn" class="control-button control-button--back" type="button"><span class="control-glyph control-glyph--new" aria-hidden="true"></span>Novo timer</button>
+                <button id="pauseBtn" class="control-button control-button--pause" type="button">⏸️ Pausar</button>
+                <button id="resumeBtn" class="control-button control-button--resume" type="button" disabled>▶️ Continuar</button>
+                <button id="resetBtn" class="control-button control-button--reset" type="button">🔄 Recomeçar</button>
+                <button id="newTimerBtn" class="control-button control-button--back" type="button">✨ Novo timer</button>
             </div>
         </div>
 
         <div id="finishScreen" class="screen screen--finish hidden">
             <div class="finish-card">
                 <p class="eyebrow">CHEGOU A HORA</p>
-                <div id="finishCelebration" class="finish-card__celebration" aria-hidden="true"></div>
                 <div id="finishEmoji" class="finish-card__emoji"></div>
                 <div id="finishVisuals" class="finish-card__visuals hidden"></div>
                 <h2 id="finishTitle"></h2>
                 <p id="finishText" class="finish-card__text"></p>
                 <span id="finishBadge" class="finish-card__badge"></span>
                 <div class="finish-card__actions">
-                    <button id="finishNewTimerBtn" class="primary-button" type="button"><span class="control-glyph control-glyph--new" aria-hidden="true"></span>Criar novo timer</button>
-                    <button id="finishSameModeBtn" class="ghost-button" type="button"><span class="control-glyph control-glyph--reset" aria-hidden="true"></span>Usar o mesmo tipo</button>
+                    <button id="finishNewTimerBtn" class="primary-button" type="button">✨ Criar novo timer</button>
+                    <button id="finishSameModeBtn" class="ghost-button" type="button">🔁 Usar o mesmo tipo</button>
                 </div>
             </div>
         </div>
@@ -268,24 +201,10 @@
                 </div>
             </div>
         </div>
-
-        <nav class="jojo-bottom-nav" aria-label="Navegação principal">
-            <a class="jojo-bottom-nav__item" href="../../index.html" data-nav="home" aria-current="false">
-                <img class="jojo-nav-icon" src="../../assets/jojo-nav-home.png" alt="" aria-hidden="true">
-                <span class="sr-only">Início</span>
-            </a>
-            <a class="jojo-bottom-nav__item" href="../index.html?eixo=alfabetizacao" data-nav="jogos" aria-current="false">
-                <img class="jojo-nav-icon" src="../../assets/jojo-nav-jogos.png" alt="" aria-hidden="true">
-                <span class="sr-only">Jogos</span>
-            </a>
-            <a class="jojo-bottom-nav__item is-active" href="./index.html" data-nav="ferramentas" aria-current="page">
-                <img class="jojo-nav-icon" src="../../assets/jojo-nav-ferramentas.png" alt="" aria-hidden="true">
-                <span class="sr-only">Ferramentas</span>
-            </a>
-        </nav>
     </div>
 
-    <script src="./data.js?v=3"></script>
-    <script src="./app.js?v=18"></script>
+    <script src="./data.js"></script>
+    <script src="./app.js?v=2"></script>
+    <script src="../../scripts/pwa.js?v=10"></script>
 </body>
 </html>

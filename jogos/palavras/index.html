@@ -11,31 +11,16 @@
     <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icon-192.png">
     <link rel="apple-touch-icon" href="../../assets/icon-192.png">
     <title>JOJO | Fluência Leitora - Palavras</title>
-    <style>
-        @font-face {
-            font-family: "Archivo";
-            src: url("../../assets/fonts/archivo-latin.woff2") format("woff2");
-            font-weight: 500 800;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: "Inter";
-            src: url("../../assets/fonts/inter-latin.woff2") format("woff2");
-            font-weight: 400 800;
-            font-style: normal;
-            font-display: swap;
-        }
-    </style>
-    <link rel="stylesheet" href="./styles.css?v=16">
-    <link rel="stylesheet" href="../../styles/menu.css?v=8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
 </head>
-<body class="menu-page menu-page--palavras">
+<body>
     <div class="app-shell">
         <div id="homeScreen" class="screen screen--home">
             <div class="home-top-actions">
-                <a class="brand-link" href="../../index.html" aria-label="Voltar à JOJO">
+                <a class="brand-link" href="../../" aria-label="Voltar à JOJO">
                     <img src="../../assets/jojo-horizontal.svg" alt="JOJO">
                 </a>
                 <div class="home-top-actions__group">
@@ -44,16 +29,16 @@
                         <span class="sr-only">Abrir ajuda</span>
                     </button>
                     <button id="toggleSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <img class="sound-sticker" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                        <span aria-hidden="true">🔊</span>
                         <span class="sr-only">Som ligado</span>
                     </button>
                 </div>
             </div>
 
             <div class="home-decor" aria-hidden="true">
-                <span class="home-decor__shape home-decor__shape--left"></span>
-                <span class="home-decor__shape home-decor__shape--right"></span>
-                <span class="home-decor__shape home-decor__shape--bottom"></span>
+                <span class="home-decor__emoji home-decor__emoji--left">⭐</span>
+                <span class="home-decor__emoji home-decor__emoji--right">✨</span>
+                <span class="home-decor__emoji home-decor__emoji--bottom">📚</span>
                 <span class="home-decor__dot home-decor__dot--yellow"></span>
                 <span class="home-decor__dot home-decor__dot--pink"></span>
                 <span class="home-decor__dot home-decor__dot--blue"></span>
@@ -91,12 +76,12 @@
                     <span class="setup-group__label">Tempo</span>
                     <div class="setup-options setup-options--mode">
                         <button class="option-card option-card--mode is-selected" type="button" data-mode-option="timed" aria-pressed="true">
-                            <span class="option-card__icon control-glyph control-glyph--timer"></span>
-                            <span class="option-card__label">Cronometrado</span>
+                            <span class="option-card__icon">⏱</span>
+                            <span class="option-card__label">Com cronômetro</span>
                         </button>
                         <button class="option-card option-card--mode" type="button" data-mode-option="free" aria-pressed="false">
                             <span class="option-card__icon">∞</span>
-                            <span class="option-card__label">Livre</span>
+                            <span class="option-card__label">Sem cronômetro</span>
                         </button>
                     </div>
                 </div>
@@ -105,7 +90,7 @@
             </section>
 
             <footer class="home-footer" aria-label="Créditos do jogo">
-                <img class="home-footer__logo" src="../../assets/logo-profanapixelart-small.webp" alt="Logo Ana Clara Silva de Lima">
+                <img class="home-footer__logo" src="../../assets/logo-profanapixelart.png" alt="Logo Ana Clara Silva de Lima">
                 <p>Idealizado por Ana Clara Silva de Lima</p>
             </footer>
         </div>
@@ -124,11 +109,11 @@
                 <div class="session-side">
                     <div class="session-tool-stack">
                         <button id="sessionSoundBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-pressed="true" aria-label="Som ligado">
-                            <img class="sound-sticker" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                            <span aria-hidden="true">🔊</span>
                             <span class="sr-only">Som ligado</span>
                         </button>
                         <button id="fullscreenBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-label="Entrar em tela cheia">
-                            <span class="control-glyph control-glyph--fullscreen" aria-hidden="true"></span>
+                            <span aria-hidden="true">⛶</span>
                             <span class="sr-only">Entrar em tela cheia</span>
                         </button>
                         <button id="exitFullscreenBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light hidden" type="button" aria-label="Sair da tela cheia">
@@ -152,7 +137,7 @@
 
             <section class="word-stage">
                 <div id="wordDisplay" class="word-display">Clique em próxima para começar</div>
-                <p id="helperText" class="helper-text">Espaço avança • X marca • Enter encerra</p>
+                <p id="helperText" class="helper-text">␣ avança • ✕ marca • ↵ encerra</p>
             </section>
 
             <div class="session-actions">
@@ -161,7 +146,7 @@
                 <div class="session-actions__right">
                     <button id="skipBtn" class="floating-button floating-button--skip" type="button" aria-label="Não conseguiu ler">✕</button>
                     <button id="nextBtn" class="floating-button floating-button--next" type="button">
-                        <span class="floating-button__icon control-glyph control-glyph--play" aria-hidden="true"></span>
+                        <span class="floating-button__icon">▶</span>
                         <span>Próxima</span>
                     </button>
                 </div>
@@ -217,24 +202,10 @@
                 </div>
             </div>
         </div>
-
-        <nav class="jojo-bottom-nav" aria-label="Navegação principal">
-            <a class="jojo-bottom-nav__item" href="../../index.html" data-nav="home" aria-current="false">
-                <img class="jojo-nav-icon" src="../../assets/jojo-nav-home.png" alt="" aria-hidden="true">
-                <span class="sr-only">Início</span>
-            </a>
-            <a class="jojo-bottom-nav__item is-active" href="../index.html?eixo=alfabetizacao" data-nav="jogos" aria-current="page">
-                <img class="jojo-nav-icon" src="../../assets/jojo-nav-jogos.png" alt="" aria-hidden="true">
-                <span class="sr-only">Jogos</span>
-            </a>
-            <a class="jojo-bottom-nav__item" href="../timer/index.html" data-nav="ferramentas" aria-current="false">
-                <img class="jojo-nav-icon" src="../../assets/jojo-nav-ferramentas.png" alt="" aria-hidden="true">
-                <span class="sr-only">Ferramentas</span>
-            </a>
-        </nav>
     </div>
 
     <script src="./data.js"></script>
-    <script src="./app.js?v=5"></script>
+    <script src="./app.js"></script>
+    <script src="../../scripts/pwa.js?v=10"></script>
 </body>
 </html>

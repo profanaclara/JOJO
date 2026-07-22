@@ -7,14 +7,14 @@ window.JOJO_TIMER_DATA = {
             subtitle: "",
             cardDescription: "",
             accentClass: "is-lanche",
-            emoji: "lanche",
+            emoji: "🍎",
             destinationAssets: [
-                { src: "./assets/legumes.webp", label: "Legumes" },
-                { src: "./assets/frutas.webp", label: "Frutas" },
-                { src: "./assets/pizza.webp", label: "Pizza" },
-                { src: "./assets/hamburguer.webp", label: "Hambúrguer" },
-                { src: "./assets/tacos.webp", label: "Tacos" },
-                { src: "./assets/carnes.webp", label: "Carnes" }
+                { src: "./assets/legumes.gif", label: "Legumes" },
+                { src: "./assets/frutas.gif", label: "Frutas" },
+                { src: "./assets/pizza.gif", label: "Pizza" },
+                { src: "./assets/hamburguer.gif", label: "Hambúrguer" },
+                { src: "./assets/tacos.gif", label: "Tacos" },
+                { src: "./assets/carnes.gif", label: "Carnes" }
             ],
             progressTitle: "",
             progressMessages: [
@@ -26,10 +26,10 @@ window.JOJO_TIMER_DATA = {
             ],
             finishTitle: "HORA DO LANCHINHO!",
             finishText: "O TEMPO ACABOU. AGORA É HORA DO LANCHINHO.",
-            finishEmoji: "",
+            finishEmoji: "🍎✨",
             finishBadge: "PRONTO PARA O LANCHE",
             finishAssets: [
-                { src: "./assets/coracao-com-fome.webp", label: "Coração com fome" }
+                { src: "./assets/coracao-com-fome.gif", label: "Coração com fome" }
             ]
         },
         casa: {
@@ -39,9 +39,9 @@ window.JOJO_TIMER_DATA = {
             subtitle: "",
             cardDescription: "",
             accentClass: "is-casa",
-            emoji: "casa",
+            emoji: "🏠",
             destinationLabel: "CHEGADA EM CASA",
-            destinationAsset: "./assets/casa.webp",
+            destinationAsset: "./assets/casa.gif",
             progressTitle: "",
             progressMessages: [
                 "",
@@ -52,34 +52,12 @@ window.JOJO_TIMER_DATA = {
             ],
             finishTitle: "HORA DE IR PARA CASA!",
             finishText: "O TEMPO ACABOU. AGORA É HORA DE IR EMBORA.",
-            finishEmoji: "",
+            finishEmoji: "🏠🎉",
             finishBadge: "PRONTO PARA A SAÍDA",
             finishAssets: [
-                { src: "./assets/coracao-feliz.webp", label: "Coração feliz" },
-                { src: "./assets/casa.webp", label: "Casa" }
+                { src: "./assets/coracao-feliz.gif", label: "Coração feliz" },
+                { src: "./assets/casa.gif", label: "Casa" }
             ]
-        },
-        livre: {
-            id: "livre",
-            eyebrow: "",
-            title: "CRONÔMETRO",
-            subtitle: "Defina o tempo e acompanhe a contagem pela ampulheta.",
-            cardDescription: "",
-            accentClass: "is-livre",
-            emoji: "livre",
-            progressTitle: "Ampulheta em movimento",
-            progressMessages: [
-                "A ampulheta acabou de começar.",
-                "A areia está descendo.",
-                "A contagem segue pela ampulheta.",
-                "Falta pouco para terminar.",
-                "Últimos instantes!"
-            ],
-            finishTitle: "TEMPO FINALIZADO!",
-            finishText: "A AMPULHETA TERMINOU A CONTAGEM.",
-            finishEmoji: "⌛",
-            finishBadge: "CRONÔMETRO CONCLUÍDO",
-            finishAssets: []
         }
     },
     about: {
