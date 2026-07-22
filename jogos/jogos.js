@@ -64,8 +64,9 @@ function setActiveNav(name) {
 }
 
 function closePanel() {
-    if (!ui.panel || !ui.panelBackdrop) {
-        return;
+    if (panelCloseTimer) {
+        window.clearTimeout(panelCloseTimer);
+        panelCloseTimer = null;
     }
 
     ui.panelBackdrop.classList.remove("is-visible");
@@ -76,6 +77,7 @@ function closePanel() {
 
     panelCloseTimer = window.setTimeout(() => {
         ui.panelBackdrop.classList.add("hidden");
+        ui.panel.classList.add("hidden");
         panelCloseTimer = null;
     }, 180);
 }
@@ -84,11 +86,11 @@ ui.tabs.forEach((tab) => {
     tab.addEventListener("click", () => renderEixo(tab.dataset.eixo));
 });
 
-ui.panelCloseBtn?.addEventListener("click", closePanel);
-ui.panelBackdrop?.addEventListener("click", closePanel);
+ui.panelCloseBtn.addEventListener("click", closePanel);
+ui.panelBackdrop.addEventListener("click", closePanel);
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && ui.panel?.classList.contains("is-open")) {
+    if (event.key === "Escape" && ui.panel.classList.contains("is-open")) {
         closePanel();
     }
 });

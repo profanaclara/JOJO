@@ -1,0 +1,2926 @@
+html.jojo-tablet,
+body.jojo-tablet {
+    width: 100%;
+    min-height: 100%;
+}
+
+body.jojo-tablet {
+    overflow: hidden;
+}
+
+body.jojo-tablet .jojo-bottom-nav {
+    width: min(calc(100% - 32px), 860px);
+    bottom: 12px;
+    padding: 10px 16px calc(env(safe-area-inset-bottom, 0px) + 10px);
+    gap: 8px;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+}
+
+body.jojo-tablet .jojo-bottom-nav__item {
+    min-height: 60px;
+    border-radius: 20px;
+}
+
+body.jojo-tablet .jojo-nav-icon {
+    width: 40px;
+    height: 40px;
+}
+
+body.jojo-tablet .app-shell {
+    width: 100%;
+    max-width: none;
+    min-height: 100dvh;
+}
+
+body.jojo-tablet .app-screen {
+    min-height: 100dvh;
+    padding:
+        calc(env(safe-area-inset-top, 0px) + 22px)
+        24px
+        calc(env(safe-area-inset-bottom, 0px) + 96px);
+    grid-template-columns: minmax(290px, 0.92fr) minmax(450px, 1.08fr);
+    grid-template-rows: 64px 132px minmax(0, 1fr) 72px;
+    gap: 18px 20px;
+}
+
+body.jojo-tablet .topbar {
+    grid-column: 1 / -1;
+}
+
+body.jojo-tablet .brand-lockup__logo {
+    width: 180px;
+    max-width: none;
+}
+
+body.jojo-tablet .hello-pill {
+    padding: 10px 18px;
+    font-size: 0.92rem;
+}
+
+body.jojo-tablet .hero {
+    grid-column: 1;
+    grid-row: 2 / 4;
+    align-items: flex-start;
+    padding-inline: 6px 14px;
+}
+
+body.jojo-tablet .hero__copy {
+    padding-top: 18px;
+}
+
+body.jojo-tablet .hero h1 {
+    font-size: clamp(2.4rem, 4vw, 3.3rem);
+}
+
+body.jojo-tablet .hero p {
+    max-width: 26ch;
+    font-size: 1rem;
+    line-height: 1.42;
+}
+
+body.jojo-tablet .bento {
+    grid-column: 2;
+    grid-row: 2 / 4;
+    grid-template-rows: minmax(0, 1fr) 170px;
+    gap: 14px;
+}
+
+body.jojo-tablet .primary-grid,
+body.jojo-tablet .small-grid {
+    gap: 14px;
+}
+
+body.jojo-tablet .main-card,
+body.jojo-tablet .mini-card {
+    border-radius: 28px;
+}
+
+body.jojo-tablet .main-card {
+    padding: 18px;
+}
+
+body.jojo-tablet .main-card__art {
+    max-width: 170px;
+    margin: 0 0 10px;
+}
+
+body.jojo-tablet .main-card strong {
+    font-size: 1.42rem;
+}
+
+body.jojo-tablet .main-card > span:not(.card-action) {
+    font-size: 0.92rem;
+    line-height: 1.34;
+}
+
+body.jojo-tablet .mini-card {
+    padding: 16px 14px;
+}
+
+body.jojo-tablet .mini-card__art {
+    width: 72px;
+    height: 72px;
+}
+
+body.jojo-tablet .mini-card strong {
+    font-size: 1.04rem;
+}
+
+body.jojo-tablet .mini-card > span {
+    font-size: 0.82rem;
+    line-height: 1.3;
+}
+
+body.jojo-tablet .credit-card {
+    grid-column: 1 / -1;
+    justify-self: center;
+    align-self: end;
+    width: min(100%, 600px);
+    margin-bottom: 6px;
+}
+
+body.jojo-tablet .panel-backdrop {
+    backdrop-filter: blur(4px);
+}
+
+body.jojo-tablet .info-panel {
+    left: 50%;
+    right: auto;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 106px);
+    width: min(calc(100% - 48px), 720px);
+    border-radius: 30px;
+    max-height: min(60vh, 560px);
+    overflow: auto;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, calc(100% + 32px));
+}
+
+body.jojo-tablet .info-panel.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+}
+
+body.jojo-tablet.jogos-hub-page {
+    overflow: hidden;
+}
+
+body.jojo-tablet .jogos-shell {
+    width: min(100%, 1180px);
+    height: 100dvh;
+    min-height: 100dvh;
+    padding:
+        calc(env(safe-area-inset-top, 0px) + 22px)
+        24px
+        calc(env(safe-area-inset-bottom, 0px) + 96px);
+}
+
+body.jojo-tablet .jogos-header {
+    height: 60px;
+    grid-template-columns: 52px 1fr 52px;
+    gap: 12px;
+}
+
+body.jojo-tablet .jogos-header img {
+    width: 170px;
+}
+
+body.jojo-tablet .jogos-back {
+    width: 48px;
+    height: 48px;
+    border-radius: 18px;
+}
+
+body.jojo-tablet .jogos-main {
+    height: calc(100% - 60px);
+    grid-template-rows: 90px 78px minmax(0, 1fr);
+    gap: 16px;
+}
+
+body.jojo-tablet .jogos-intro {
+    padding-inline: 6px;
+}
+
+body.jojo-tablet .jogos-intro h1 {
+    font-size: 2.45rem;
+}
+
+body.jojo-tablet .jogos-intro p {
+    font-size: 1rem;
+}
+
+body.jojo-tablet .eixos-tabs {
+    max-width: 760px;
+    margin: 0 auto;
+    gap: 12px;
+    padding: 12px;
+}
+
+body.jojo-tablet .eixo-tab {
+    min-height: 56px;
+    border-radius: 20px;
+}
+
+body.jojo-tablet .eixo-tab img {
+    width: 56px;
+    height: 56px;
+}
+
+body.jojo-tablet .jogos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(220px, 1fr);
+    gap: 16px;
+}
+
+body.jojo-tablet .game-card {
+    padding: 18px;
+    border-radius: 28px;
+}
+
+body.jojo-tablet .game-card img {
+    width: min(100%, 142px);
+    margin-bottom: 10px;
+}
+
+body.jojo-tablet .game-card strong {
+    font-size: 1.3rem;
+}
+
+body.jojo-tablet .game-card span {
+    font-size: 0.9rem;
+    line-height: 1.32;
+}
+
+body.jojo-tablet .game-card small {
+    min-height: 34px;
+    padding: 9px 14px;
+    font-size: 0.82rem;
+}
+
+body.jojo-tablet .agenda-shell {
+    width: min(100%, 1180px);
+    min-height: 100dvh;
+    padding:
+        calc(env(safe-area-inset-top, 0px) + 22px)
+        24px
+        calc(env(safe-area-inset-bottom, 0px) + 96px);
+}
+
+body.jojo-tablet .agenda-header {
+    min-height: 60px;
+    grid-template-columns: 52px 1fr 52px;
+    gap: 12px;
+}
+
+body.jojo-tablet .agenda-header img {
+    width: 170px;
+}
+
+body.jojo-tablet .agenda-back,
+body.jojo-tablet .agenda-menu-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 18px;
+}
+
+body.jojo-tablet .agenda-main {
+    grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+    align-items: start;
+    gap: 16px;
+}
+
+body.jojo-tablet .agenda-title,
+body.jojo-tablet #agendaForm {
+    grid-column: 1;
+}
+
+body.jojo-tablet .agenda-title h1 {
+    font-size: 2rem;
+}
+
+body.jojo-tablet #recordView {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: 24px;
+}
+
+body.jojo-tablet .student-row {
+    grid-template-columns: minmax(0, 1fr) 180px;
+}
+
+body.jojo-tablet .drawer-backdrop {
+    backdrop-filter: blur(4px);
+}
+
+body.jojo-tablet .student-drawer {
+    width: min(420px, 42vw);
+}
+
+body.jojo-tablet.menu-page:not(.session-active):not(.result-active):not(.is-timer-running-screen):not(.is-timer-finish-screen) .app-shell {
+    width: min(100%, 1180px);
+    max-width: none;
+    min-height: 100dvh;
+    height: 100dvh;
+    padding:
+        calc(env(safe-area-inset-top, 0px) + 22px)
+        24px
+        calc(env(safe-area-inset-bottom, 0px) + 96px);
+}
+
+body.jojo-tablet.menu-page .brand-link,
+body.jojo-tablet.menu-page .brand-link__logo {
+    width: auto;
+    max-width: none;
+}
+
+body.jojo-tablet.menu-page .brand-link img,
+body.jojo-tablet.menu-page .brand-link__logo {
+    width: 150px;
+    max-width: none;
+}
+
+body.jojo-tablet.menu-page .utility-button {
+    width: 46px;
+    min-width: 46px;
+    min-height: 46px;
+}
+
+body.jojo-tablet.menu-page--palavras .screen--home {
+    grid-template-columns: minmax(280px, 0.88fr) minmax(470px, 1.12fr);
+    grid-template-rows: 58px minmax(0, 1fr) 42px;
+    gap: 16px 18px;
+}
+
+body.jojo-tablet.menu-page--palavras .home-top-actions {
+    grid-column: 1 / -1;
+}
+
+body.jojo-tablet.menu-page--palavras .hero {
+    grid-column: 1;
+    grid-row: 2;
+    padding-top: 10px;
+}
+
+body.jojo-tablet.menu-page--palavras .setup-panel {
+    grid-column: 2;
+    grid-row: 2;
+    padding: 18px;
+    gap: 12px;
+    border-radius: 28px;
+}
+
+body.jojo-tablet.menu-page--palavras .setup-group__label {
+    font-size: 0.78rem;
+}
+
+body.jojo-tablet.menu-page--palavras .option-card {
+    min-height: 82px;
+    gap: 8px;
+}
+
+body.jojo-tablet.menu-page--palavras .option-card__icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+}
+
+body.jojo-tablet.menu-page--palavras .option-card__label {
+    font-size: 0.84rem;
+}
+
+body.jojo-tablet.menu-page--palavras .start-session-button {
+    width: min(100%, 240px);
+    min-height: 48px;
+    font-size: 1rem;
+}
+
+body.jojo-tablet.menu-page--palavras .home-footer {
+    grid-column: 1 / -1;
+}
+
+body.jojo-tablet.menu-page--textos .screen--home {
+    grid-template-columns: minmax(310px, 0.84fr) minmax(470px, 1.16fr);
+    grid-template-rows: 56px minmax(0, 1fr) 42px;
+    gap: 16px 18px;
+}
+
+body.jojo-tablet.menu-page--textos .screen--selection {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 52px minmax(0, 1fr) 42px;
+    gap: 12px;
+}
+
+body.jojo-tablet.menu-page--textos .home-top-actions,
+body.jojo-tablet.menu-page--textos .screen-topbar {
+    grid-column: 1 / -1;
+}
+
+body.jojo-tablet.menu-page--textos .hero {
+    grid-column: 1;
+    grid-row: 2;
+    padding: 22px;
+}
+
+body.jojo-tablet.menu-page--textos .mode-section,
+body.jojo-tablet.menu-page--textos .selection-panel {
+    grid-column: 2;
+    grid-row: 2;
+    padding: 18px;
+}
+
+body.jojo-tablet.menu-page--textos .credits-strip {
+    grid-column: 1 / -1;
+}
+
+body.jojo-tablet.menu-page--timer .app-shell {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 96px);
+}
+
+body.jojo-tablet .popit-shell,
+body.jojo-tablet .pitagoras-shell {
+    width: min(100%, 1180px);
+    max-width: none;
+    min-height: 100dvh;
+    height: 100dvh;
+    padding:
+        calc(env(safe-area-inset-top, 0px) + 22px)
+        24px
+        calc(env(safe-area-inset-bottom, 0px) + 22px);
+}
+
+body.jojo-tablet .popit-shell .topbar,
+body.jojo-tablet .pitagoras-shell .topbar {
+    grid-template-columns: 52px 1fr 52px;
+    gap: 12px;
+}
+
+body.jojo-tablet .popit-shell .brand-logo,
+body.jojo-tablet .pitagoras-shell .brand-logo {
+    width: 160px;
+}
+
+body.jojo-tablet .popit-shell .game {
+    grid-template-columns: minmax(390px, 0.95fr) minmax(400px, 1.05fr);
+    grid-template-rows: 90px 78px minmax(0, 1fr) 58px;
+    gap: 14px 16px;
+}
+
+body.jojo-tablet .popit-shell .color-goals {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    align-self: start;
+}
+
+body.jojo-tablet .popit-shell .goal-chip {
+    min-height: 72px;
+    grid-template-columns: 44px minmax(0, 1fr);
+}
+
+body.jojo-tablet .popit-shell .goal-dot {
+    width: 40px;
+    height: 40px;
+}
+
+body.jojo-tablet .popit-shell .goal-chip strong {
+    font-size: 1.6rem;
+}
+
+body.jojo-tablet .popit-shell .problem-card {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+body.jojo-tablet .popit-shell .play-zone {
+    grid-column: 1;
+    grid-row: 3 / span 2;
+}
+
+body.jojo-tablet .popit-shell .count-zone {
+    grid-column: 2;
+    grid-row: 2 / 4;
+}
+
+body.jojo-tablet .popit-shell .game-actions {
+    grid-column: 2;
+    grid-row: 4;
+    grid-template-columns: 118px 140px minmax(0, 1fr);
+    gap: 10px;
+}
+
+body.jojo-tablet .popit-shell .popit-board {
+    width: min(100%, 500px);
+    height: min(100%, 400px);
+    min-height: 320px;
+}
+
+body.jojo-tablet .popit-shell .count-zone {
+    padding: 14px;
+}
+
+body.jojo-tablet .popit-shell .count-tray {
+    grid-auto-rows: minmax(38px, 1fr);
+}
+
+body.jojo-tablet .popit-shell .count-result__equation {
+    font-size: 1.9rem;
+}
+
+body.jojo-tablet .popit-shell .count-result__value {
+    font-size: 2.5rem;
+}
+
+body.jojo-tablet .popit-shell .count-result.is-revealed .count-result__equation {
+    font-size: 2.2rem;
+}
+
+body.jojo-tablet .popit-shell .count-result.is-revealed .count-result__value {
+    font-size: 3.4rem;
+}
+
+body.jojo-tablet .pitagoras-shell .game {
+    grid-template-columns: minmax(470px, 1.06fr) minmax(360px, 0.94fr);
+    grid-template-rows: 90px 58px minmax(0, 1fr);
+    gap: 14px 16px;
+}
+
+body.jojo-tablet .pitagoras-shell .table-panel {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    padding: 22px 18px 16px;
+}
+
+body.jojo-tablet .pitagoras-shell .problem-card {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+body.jojo-tablet .pitagoras-shell .game-actions {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    grid-template-columns: 120px 132px;
+    gap: 10px;
+}
+
+body.jojo-tablet .pitagoras-shell .result-panel {
+    grid-column: 2;
+    grid-row: 3;
+    min-height: 0;
+    align-self: stretch;
+    padding: 20px 22px;
+    gap: 10px;
+}
+
+body.jojo-tablet .pitagoras-shell .result-panel__equation {
+    font-size: 2.4rem;
+}
+
+body.jojo-tablet .pitagoras-shell .result-panel__value {
+    font-size: 5.6rem;
+}
+
+body.jojo-tablet .pitagoras-shell .result-text {
+    min-height: 72px;
+    font-size: 1rem;
+}
+
+body.jojo-tablet .pitagoras-shell .pitagoras-grid {
+    max-width: 560px;
+    gap: 5px;
+    padding: 10px;
+}
+
+body.jojo-tablet .pitagoras-shell .grid-cell {
+    border-radius: 14px;
+    font-size: 1rem;
+}
+
+@media (orientation: portrait) {
+    body.jojo-tablet,
+    body.jojo-tablet.jogos-hub-page,
+    body.jojo-tablet.menu-page:not(.session-active):not(.result-active):not(.is-timer-running-screen):not(.is-timer-finish-screen) {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    body.jojo-tablet .app-shell,
+    body.jojo-tablet .jogos-shell,
+    body.jojo-tablet.menu-page:not(.session-active):not(.result-active):not(.is-timer-running-screen):not(.is-timer-finish-screen) .app-shell,
+    body.jojo-tablet .popit-shell,
+    body.jojo-tablet .pitagoras-shell {
+        width: min(100%, 920px);
+        height: auto;
+        min-height: 100dvh;
+        padding:
+            calc(env(safe-area-inset-top, 0px) + 22px)
+            20px
+            calc(env(safe-area-inset-bottom, 0px) + 112px);
+        overflow: visible;
+    }
+
+    body.jojo-tablet .app-screen {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        gap: 20px;
+        align-content: start;
+    }
+
+    body.jojo-tablet .topbar,
+    body.jojo-tablet .hero,
+    body.jojo-tablet .bento,
+    body.jojo-tablet .credit-card {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    body.jojo-tablet .hero {
+        padding-inline: 4px;
+    }
+
+    body.jojo-tablet .hero__copy {
+        padding-top: 0;
+    }
+
+    body.jojo-tablet .hero h1 {
+        font-size: clamp(3rem, 7.2vw, 4.4rem);
+    }
+
+    body.jojo-tablet .hero p {
+        max-width: none;
+        font-size: 1.04rem;
+        line-height: 1.48;
+    }
+
+    body.jojo-tablet .bento {
+        grid-template-rows: auto auto;
+        gap: 16px;
+    }
+
+    body.jojo-tablet .primary-grid,
+    body.jojo-tablet .small-grid {
+        gap: 16px;
+    }
+
+    body.jojo-tablet .small-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.jojo-tablet .small-grid .mini-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    body.jojo-tablet .main-card,
+    body.jojo-tablet .mini-card {
+        min-height: 0;
+        padding: 18px;
+        border-radius: 30px;
+    }
+
+    body.jojo-tablet .main-card__art {
+        max-width: 188px;
+    }
+
+    body.jojo-tablet .main-card strong {
+        font-size: 1.58rem;
+    }
+
+    body.jojo-tablet .main-card > span:not(.card-action) {
+        font-size: 0.98rem;
+        line-height: 1.4;
+    }
+
+    body.jojo-tablet .mini-card {
+        padding: 18px 16px;
+    }
+
+    body.jojo-tablet .mini-card__art {
+        width: 56px;
+        height: 56px;
+    }
+
+    body.jojo-tablet .mini-card strong {
+        font-size: 1rem;
+    }
+
+    body.jojo-tablet .mini-card > span {
+        font-size: 0.82rem;
+        line-height: 1.35;
+    }
+
+    body.jojo-tablet .credit-card {
+        width: min(100%, 700px);
+        margin: 0 auto;
+    }
+
+    body.jojo-tablet .info-panel {
+        width: min(calc(100% - 40px), 760px);
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 116px);
+    }
+
+    body.jojo-tablet .jogos-shell {
+        height: auto;
+    }
+
+    body.jojo-tablet .jogos-main {
+        height: auto;
+        grid-template-rows: auto auto auto;
+        gap: 18px;
+    }
+
+    body.jojo-tablet .jogos-intro {
+        padding-inline: 6px;
+    }
+
+    body.jojo-tablet .jogos-intro h1 {
+        font-size: clamp(2.8rem, 7vw, 4rem);
+    }
+
+    body.jojo-tablet .jogos-intro p {
+        font-size: 1rem;
+    }
+
+    body.jojo-tablet .eixos-tabs {
+        max-width: none;
+        width: 100%;
+        gap: 14px;
+        padding: 14px;
+    }
+
+    body.jojo-tablet .eixo-tab {
+        min-height: 72px;
+        border-radius: 24px;
+    }
+
+    body.jojo-tablet .eixo-tab img {
+        width: 62px;
+        height: 62px;
+    }
+
+    body.jojo-tablet .jogos-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        gap: 16px;
+        overflow: visible;
+    }
+
+    body.jojo-tablet .game-card,
+    body.jojo-tablet .game-card:nth-child(3):last-child,
+    body.jojo-tablet .game-card:nth-child(3):last-child:not(.is-disabled) {
+        grid-column: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        min-height: 0;
+        padding: 18px;
+        border-radius: 30px;
+    }
+
+    body.jojo-tablet .game-card img,
+    body.jojo-tablet .game-card:nth-child(3):last-child img,
+    body.jojo-tablet .game-card:nth-child(3):last-child:not(.is-disabled) img {
+        width: min(100%, 156px);
+        margin: 0 auto 12px;
+    }
+
+    body.jojo-tablet .game-card strong {
+        font-size: 1.42rem;
+    }
+
+    body.jojo-tablet .game-card span {
+        font-size: 0.9rem;
+        line-height: 1.36;
+    }
+
+    body.jojo-tablet.menu-page:not(.session-active):not(.result-active):not(.is-timer-running-screen):not(.is-timer-finish-screen) .screen--home,
+    body.jojo-tablet.menu-page:not(.session-active) .screen--selection {
+        height: auto;
+        overflow: visible;
+    }
+
+    body.jojo-tablet.menu-page--palavras .screen--home,
+    body.jojo-tablet.menu-page--textos .screen--home,
+    body.jojo-tablet.menu-page--textos .screen--selection,
+    body.jojo-tablet.menu-page--timer .screen--home {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 18px;
+    }
+
+    body.jojo-tablet.menu-page--palavras .hero,
+    body.jojo-tablet.menu-page--palavras .setup-panel,
+    body.jojo-tablet.menu-page--palavras .home-footer,
+    body.jojo-tablet.menu-page--textos .hero,
+    body.jojo-tablet.menu-page--textos .mode-section,
+    body.jojo-tablet.menu-page--textos .selection-panel,
+    body.jojo-tablet.menu-page--textos .credits-strip {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    body.jojo-tablet.menu-page--palavras .hero,
+    body.jojo-tablet.menu-page--textos .hero {
+        padding: 24px;
+    }
+
+    body.jojo-tablet.menu-page--palavras .setup-panel,
+    body.jojo-tablet.menu-page--textos .mode-section,
+    body.jojo-tablet.menu-page--textos .selection-panel {
+        padding: 22px;
+        border-radius: 30px;
+    }
+
+    body.jojo-tablet.menu-page--textos .selection-card-grid {
+        max-height: none;
+        overflow: visible;
+    }
+
+    body.jojo-tablet.menu-page--timer .home-workspace {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    body.jojo-tablet .popit-shell .game,
+    body.jojo-tablet .pitagoras-shell .game {
+        height: auto;
+    }
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-header {
+        min-height: 94px !important;
+        grid-template-columns: 44px minmax(0, 1fr) 152px !important;
+        gap: 12px !important;
+        padding:
+            max(14px, calc(env(safe-area-inset-top, 0px) + 6px))
+            max(18px, env(safe-area-inset-right, 0px))
+            12px
+            max(18px, env(safe-area-inset-left, 0px)) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-center {
+        gap: 4px !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-timer {
+        margin-top: 2px !important;
+        font-size: clamp(1.65rem, 3.1vw, 2.25rem) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard {
+        padding-top: 4px !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-stage {
+        padding-top: calc(env(safe-area-inset-top, 0px) + 112px) !important;
+    }
+}
+
+/* Tablet Pop-it: let both activity columns occupy the central workspace. */
+@media (orientation: landscape) {
+    body.jojo-tablet .popit-shell .game {
+        height: 100% !important;
+        grid-template-rows: 72px minmax(0, 1fr) 48px !important;
+    }
+
+    body.jojo-tablet .popit-shell .play-zone,
+    body.jojo-tablet .popit-shell .count-zone {
+        height: 100% !important;
+        min-height: 0 !important;
+        align-self: stretch !important;
+    }
+
+    body.jojo-tablet .popit-shell .popit-board {
+        width: min(100%, 460px) !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        max-height: none !important;
+    }
+
+    body.jojo-tablet .popit-shell .count-stack {
+        height: 100% !important;
+        min-height: 0 !important;
+    }
+}
+
+/* Tablet agenda wizard: one clear form step at a time, no accordions or
+   page-length grid gaps. */
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details,
+body.jojo-tablet.agenda-page #agendaForm > #notesSection,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-actions,
+body.jojo-tablet.agenda-page #agendaForm > .save-status {
+    display: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .is-wizard-active {
+    display: grid !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active {
+    min-height: min(48dvh, 430px);
+    align-content: center;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active summary {
+    pointer-events: none;
+    min-height: 38px;
+    cursor: default;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active summary::after {
+    display: none;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-step-nav {
+    display: grid !important;
+    grid-template-columns: 132px minmax(0, 1fr) 132px;
+    align-items: center;
+    gap: 12px;
+    grid-column: 1 / -1 !important;
+}
+
+body.jojo-tablet.agenda-page .agenda-step-nav span {
+    color: #536070;
+    font-family: "Archivo", sans-serif;
+    font-size: 0.86rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* Tablet landscape polish: compact home cards, balanced agenda form and reading stage. */
+@media (orientation: landscape) {
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card {
+        display: grid;
+        grid-template-columns: minmax(130px, 0.62fr) minmax(0, 1fr);
+        grid-template-rows: auto auto 1fr;
+        align-items: center;
+        column-gap: 18px;
+        min-height: 206px;
+        padding: 18px 22px;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card__art {
+        grid-column: 1;
+        grid-row: 1 / span 3;
+        width: 100%;
+        max-width: 154px;
+        margin: 0;
+        justify-self: center;
+        align-self: center;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card strong,
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card > span:not(.card-action),
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card .card-action {
+        grid-column: 2;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card strong {
+        align-self: end;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card .card-action {
+        align-self: start;
+        margin-top: 12px;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .credit-card {
+        width: min(100%, 520px);
+        justify-self: center;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--mood {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--arrival {
+        grid-column: 2;
+        grid-row: 2 / span 2;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--routine {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--behavior {
+        grid-column: 1;
+        grid-row: 4;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--activities {
+        grid-column: 2;
+        grid-row: 4;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--appetite {
+        grid-column: 1;
+        grid-row: 5;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-section:last-of-type {
+        grid-column: 2;
+        grid-row: 5;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-actions {
+        grid-column: 1 / -1;
+        grid-row: 6;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .save-status {
+        grid-column: 1 / -1;
+        grid-row: 7;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session #backHomeBtn {
+        position: absolute !important;
+        left: 28px !important;
+        top: 50% !important;
+        z-index: 4 !important;
+        margin: 0 !important;
+        transform: translateY(-50%) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-display {
+        max-width: 12ch !important;
+        font-size: clamp(6.4rem, 11vw, 9rem) !important;
+        line-height: 0.9 !important;
+        transform: translateY(-4px) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-display.is-prompt {
+        max-width: 16ch !important;
+        font-size: clamp(4rem, 7vw, 5.8rem) !important;
+        line-height: 0.98 !important;
+    }
+}
+
+/* Absolute final tablet agenda override. Keep the wizard order stable even
+   after older landscape rules that positioned individual sections by hand. */
+body.jojo-tablet.agenda-page #agendaForm {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto auto auto !important;
+    grid-auto-flow: row !important;
+    gap: 12px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details,
+body.jojo-tablet.agenda-page #agendaForm > #notesSection,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-actions,
+body.jojo-tablet.agenda-page #agendaForm > .save-status {
+    display: none !important;
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    justify-self: stretch !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student.is-wizard-active,
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active {
+    display: grid !important;
+    grid-row: 1 !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active {
+    display: block !important;
+    grid-row: 1 !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student.is-wizard-active,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active,
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active {
+    min-height: min(42dvh, 320px) !important;
+    padding: 18px !important;
+    border-radius: 26px !important;
+    align-content: center !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-step-nav {
+    display: grid !important;
+    grid-row: 2 !important;
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-actions.is-wizard-active {
+    display: grid !important;
+    grid-row: 3 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .save-status.is-wizard-active {
+    display: block !important;
+    grid-row: 4 !important;
+    min-height: 18px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active summary {
+    min-height: 34px !important;
+    margin: 0 0 14px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .agenda-split {
+    width: 100% !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active textarea {
+    min-height: 150px !important;
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-grid,
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .flag-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .agenda-split {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (orientation: portrait) {
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-grid,
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .flag-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Final agenda stepper pass for tablet. The form is now a single focused
+   panel per step, so old two-column accordion placement cannot leak through. */
+body.jojo-tablet.agenda-page .agenda-main {
+    grid-template-columns: minmax(0, 1fr) !important;
+    justify-items: center !important;
+    gap: 12px !important;
+}
+
+body.jojo-tablet.agenda-page .agenda-title,
+body.jojo-tablet.agenda-page #agendaForm,
+body.jojo-tablet.agenda-page #recordView {
+    width: min(100%, 1030px) !important;
+    max-width: 1030px !important;
+    grid-column: 1 / -1 !important;
+}
+
+body.jojo-tablet.agenda-page .agenda-title {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: end !important;
+    gap: 10px 18px !important;
+}
+
+body.jojo-tablet.agenda-page .agenda-title p {
+    margin: 0 !important;
+}
+
+body.jojo-tablet.agenda-page .agenda-title h1 {
+    justify-self: end !important;
+    text-align: right !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-auto-rows: auto !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details,
+body.jojo-tablet.agenda-page #agendaForm > #notesSection,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-actions,
+body.jojo-tablet.agenda-page #agendaForm > .save-status {
+    display: none !important;
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    width: 100% !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student.is-wizard-active,
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-actions.is-wizard-active {
+    display: grid !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active {
+    display: block !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .save-status.is-wizard-active {
+    display: block !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .is-wizard-active {
+    min-height: min(46dvh, 360px) !important;
+    padding: 18px !important;
+    border-radius: 26px !important;
+    align-content: center !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student.is-wizard-active {
+    min-height: 250px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active {
+    min-height: 270px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active textarea {
+    min-height: 170px !important;
+    resize: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active summary {
+    min-height: 34px !important;
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+    font-size: 1.08rem !important;
+    pointer-events: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active summary::after {
+    display: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-grid,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .flag-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-stack {
+    gap: 9px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .agenda-split {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-chip,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .flag-chip {
+    min-height: 44px !important;
+    font-size: 0.82rem !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-step-nav {
+    display: grid !important;
+    grid-template-columns: 138px minmax(0, 1fr) 138px !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+}
+
+body.jojo-tablet.agenda-page #agendaStepLabel {
+    min-height: 46px !important;
+    border-radius: 18px !important;
+    background: rgba(255, 255, 255, 0.78) !important;
+    box-shadow: inset 0 0 0 1px rgba(203, 219, 237, 0.9) !important;
+    display: grid !important;
+    place-items: center !important;
+    color: #2d5879 !important;
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet.agenda-page .agenda-shell {
+        padding-top: calc(env(safe-area-inset-top, 0px) + 18px) !important;
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 96px) !important;
+    }
+
+    body.jojo-tablet.agenda-page .agenda-header {
+        min-height: 54px !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .is-wizard-active {
+        min-height: 300px !important;
+    }
+}
+
+@media (orientation: portrait) {
+    body.jojo-tablet.agenda-page .agenda-title {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    body.jojo-tablet.agenda-page .agenda-title h1 {
+        justify-self: start !important;
+        text-align: left !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-grid,
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .flag-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (orientation: landscape) {
+    /* Align the board with the count block, not the action row below it. */
+    body.jojo-tablet .popit-shell .play-zone {
+        grid-row: 2 !important;
+        align-self: start !important;
+        padding-top: 0 !important;
+    }
+
+    body.jojo-tablet .popit-shell .popit-board { align-self: start !important; }
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details { grid-column: 1 / -1 !important; }
+}
+
+@media (orientation: portrait) {
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details { grid-column: 1 / -1 !important; }
+}
+
+/* Final tablet agenda layout: a single accordion lane prevents the old
+   hand-positioned two-column cards from leaving accidental blank areas. */
+@media (orientation: landscape), (orientation: portrait) {
+    body.jojo-tablet.agenda-page #agendaForm {
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-auto-flow: row !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-student,
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details,
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-section:last-of-type,
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-actions,
+    body.jojo-tablet.agenda-page #agendaForm > .save-status {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+    }
+}
+
+/* Final reading-game header guard: score and tools always stay inside the
+   right side of the tablet landscape header. */
+@media (orientation: landscape) {
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-header {
+        position: fixed !important;
+        inset: 0 0 auto 0 !important;
+        height: 88px !important;
+        min-height: 88px !important;
+        display: grid !important;
+        grid-template-columns: 56px minmax(0, 1fr) 220px !important;
+        align-items: center !important;
+        padding: max(12px, calc(env(safe-area-inset-top, 0px) + 4px)) 22px 12px !important;
+        overflow: hidden !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session #backHomeBtn {
+        position: static !important;
+        grid-column: 1 !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-center {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        width: min(340px, 42vw) !important;
+        transform: translate(-50%, -50%) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-side {
+        position: static !important;
+        grid-column: 3 !important;
+        width: 220px !important;
+        min-width: 0 !important;
+        justify-self: end !important;
+        align-self: center !important;
+        justify-items: end !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-tool-stack {
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        width: 100% !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard {
+        display: block !important;
+        width: 100% !important;
+        text-align: right !important;
+        white-space: nowrap !important;
+    }
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet .app-screen {
+        grid-template-columns: minmax(238px, 0.58fr) minmax(0, 1.42fr);
+        grid-template-rows: 56px minmax(0, 1fr) 56px;
+        gap: 14px 16px;
+    }
+
+    body.jojo-tablet .topbar,
+    body.jojo-tablet .hero,
+    body.jojo-tablet .bento,
+    body.jojo-tablet .credit-card {
+        grid-row: auto;
+    }
+
+    body.jojo-tablet .hero {
+        grid-column: 1;
+        grid-row: 2;
+        align-items: center;
+        padding-inline: 2px 10px;
+    }
+
+    body.jojo-tablet .hero__copy {
+        padding-top: 0;
+        display: grid;
+        gap: 8px;
+    }
+
+    body.jojo-tablet .hero h1 {
+        font-size: clamp(2rem, 3vw, 2.7rem);
+        line-height: 0.98;
+    }
+
+    body.jojo-tablet .hero p {
+        max-width: 23ch;
+        font-size: 0.92rem;
+        line-height: 1.36;
+    }
+
+    body.jojo-tablet .bento {
+        grid-column: 2;
+        grid-row: 2;
+        grid-template-rows: minmax(0, 1fr) 142px;
+        gap: 12px;
+    }
+
+    body.jojo-tablet .primary-grid,
+    body.jojo-tablet .small-grid {
+        gap: 12px;
+    }
+
+    body.jojo-tablet .main-card {
+        padding: 16px;
+    }
+
+    body.jojo-tablet .main-card__art {
+        max-width: 146px;
+        margin-bottom: 8px;
+    }
+
+    body.jojo-tablet .main-card strong {
+        font-size: 1.28rem;
+    }
+
+    body.jojo-tablet .main-card > span:not(.card-action) {
+        font-size: 0.84rem;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+
+    body.jojo-tablet .mini-card {
+        padding: 14px 12px;
+    }
+
+    body.jojo-tablet .mini-card__art {
+        width: 64px;
+        height: 64px;
+    }
+
+    body.jojo-tablet .mini-card strong {
+        font-size: 0.96rem;
+    }
+
+    body.jojo-tablet .mini-card > span {
+        font-size: 0.76rem;
+        line-height: 1.28;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    body.jojo-tablet .credit-card {
+        width: min(100%, 560px);
+        padding: 8px 14px;
+        margin-bottom: 0;
+    }
+
+    body.jojo-tablet .jogos-shell {
+        display: grid;
+        grid-template-rows: 56px minmax(0, 1fr);
+        gap: 12px;
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 90px);
+    }
+
+    body.jojo-tablet .jogos-header {
+        height: 56px;
+    }
+
+    body.jojo-tablet .jogos-main {
+        height: auto;
+        min-height: 0;
+        grid-template-columns: minmax(210px, 0.38fr) minmax(0, 0.62fr);
+        grid-template-rows: 72px minmax(0, 1fr);
+        gap: 14px 16px;
+    }
+
+    body.jojo-tablet .jogos-intro {
+        grid-column: 1;
+        grid-row: 1;
+        padding-inline: 4px;
+        align-content: center;
+    }
+
+    body.jojo-tablet .jogos-intro h1 {
+        font-size: 2.1rem;
+    }
+
+    body.jojo-tablet .eixos-tabs {
+        grid-column: 2;
+        grid-row: 1;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        align-self: center;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    body.jojo-tablet .jogos-grid {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-auto-rows: minmax(0, 1fr);
+        gap: 14px;
+        align-content: stretch;
+    }
+
+    body.jojo-tablet .game-card,
+    body.jojo-tablet .game-card:nth-child(3):last-child,
+    body.jojo-tablet .game-card:nth-child(3):last-child:not(.is-disabled) {
+        grid-column: auto !important;
+        min-height: 0;
+        padding: 16px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        align-items: start;
+        gap: 0;
+    }
+
+    body.jojo-tablet .game-card img,
+    body.jojo-tablet .game-card:nth-child(3):last-child img,
+    body.jojo-tablet .game-card:nth-child(3):last-child:not(.is-disabled) img {
+        width: min(100%, 120px);
+        margin: 0 auto 8px;
+    }
+
+    body.jojo-tablet .game-card strong {
+        font-size: 1.08rem;
+    }
+
+    body.jojo-tablet .game-card span {
+        font-size: 0.8rem;
+        line-height: 1.28;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    body.jojo-tablet .game-card small {
+        min-height: 30px;
+        margin-top: 10px;
+        padding: 8px 12px;
+        font-size: 0.76rem;
+    }
+
+    body.jojo-tablet .agenda-shell {
+        display: grid;
+        grid-template-rows: 56px minmax(0, 1fr);
+        gap: 12px;
+        height: 100dvh;
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 90px);
+        overflow: hidden;
+    }
+
+    body.jojo-tablet .agenda-main {
+        min-height: 0;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: 12px 14px;
+    }
+
+    body.jojo-tablet .agenda-title {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    body.jojo-tablet .agenda-title h1 {
+        font-size: 1.8rem;
+    }
+
+    body.jojo-tablet #agendaForm {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 14px;
+        align-content: start;
+        min-height: 0;
+    }
+
+    body.jojo-tablet .agenda-section,
+    body.jojo-tablet .agenda-details {
+        padding: 10px 12px;
+        border-radius: 20px;
+    }
+
+    body.jojo-tablet .agenda-details summary {
+        min-height: 42px;
+        font-size: 0.88rem;
+    }
+
+    body.jojo-tablet .student-row {
+        grid-template-columns: minmax(0, 1fr) 150px;
+        gap: 10px;
+    }
+
+    body.jojo-tablet input {
+        min-height: 40px;
+    }
+
+    body.jojo-tablet textarea {
+        min-height: 84px;
+    }
+
+    body.jojo-tablet .choice-grid,
+    body.jojo-tablet .flag-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    body.jojo-tablet .choice-chip,
+    body.jojo-tablet .flag-chip,
+    body.jojo-tablet .student-chip {
+        min-height: 36px;
+        font-size: 0.75rem;
+    }
+
+    body.jojo-tablet .choice-chip,
+    body.jojo-tablet .flag-chip {
+        padding-inline: 7px;
+    }
+
+    body.jojo-tablet #agendaForm > .agenda-section:last-of-type {
+        grid-column: 2;
+    }
+
+    body.jojo-tablet .agenda-actions {
+        grid-column: 2;
+        grid-template-columns: 104px minmax(0, 1fr);
+        align-self: end;
+    }
+
+    body.jojo-tablet .save-status {
+        grid-column: 1 / -1;
+    }
+
+    body.jojo-tablet #recordView {
+        position: static;
+        grid-column: 2;
+        grid-row: auto;
+        min-height: 0;
+        max-height: 100%;
+        overflow: auto;
+    }
+
+    body.jojo-tablet .popit-shell {
+        padding:
+            calc(env(safe-area-inset-top, 0px) + 18px)
+            20px
+            calc(env(safe-area-inset-bottom, 0px) + 18px);
+        gap: 10px;
+    }
+
+    body.jojo-tablet .popit-shell .topbar,
+    body.jojo-tablet .pitagoras-shell .topbar {
+        min-height: 48px;
+    }
+
+    body.jojo-tablet .popit-shell .game {
+        grid-template-columns: minmax(320px, 0.88fr) minmax(340px, 1.12fr);
+        grid-template-rows: 72px minmax(0, 1fr) 48px;
+        gap: 12px 14px;
+    }
+
+    body.jojo-tablet .popit-shell .color-goals {
+        grid-row: 1;
+        grid-column: 1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    body.jojo-tablet .popit-shell .goal-chip {
+        min-height: 58px;
+    }
+
+    body.jojo-tablet .popit-shell .goal-chip strong {
+        font-size: 1.36rem;
+    }
+
+    body.jojo-tablet .popit-shell .problem-card {
+        padding: 10px 12px;
+    }
+
+    body.jojo-tablet .popit-shell .problem-equation {
+        font-size: 2.1rem;
+        gap: 6px;
+    }
+
+    body.jojo-tablet .popit-shell .number-input,
+    body.jojo-tablet .popit-shell .equation-answer {
+        width: 54px;
+        height: 44px;
+        border-radius: 15px;
+        font-size: 1.65rem;
+    }
+
+    body.jojo-tablet .popit-shell .play-zone {
+        grid-column: 1;
+        grid-row: 2 / span 2;
+    }
+
+    body.jojo-tablet .popit-shell .count-zone {
+        grid-column: 2;
+        grid-row: 2;
+        padding: 12px;
+        gap: 6px;
+    }
+
+    body.jojo-tablet .popit-shell .count-zone h2 {
+        font-size: 0.92rem;
+    }
+
+    body.jojo-tablet .popit-shell #countedValue {
+        min-width: 50px;
+        min-height: 36px;
+        font-size: 1.2rem;
+    }
+
+    body.jojo-tablet .popit-shell .count-tray {
+        padding: 8px;
+        grid-auto-rows: minmax(28px, 1fr);
+        gap: 6px;
+    }
+
+    body.jojo-tablet .popit-shell .count-result {
+        padding: 10px 12px;
+        gap: 2px;
+    }
+
+    body.jojo-tablet .popit-shell .count-result__equation {
+        font-size: 1.46rem;
+    }
+
+    body.jojo-tablet .popit-shell .count-result__value {
+        font-size: 1.8rem;
+    }
+
+    body.jojo-tablet .popit-shell .count-result.is-revealed .count-result__equation {
+        font-size: 1.66rem;
+    }
+
+    body.jojo-tablet .popit-shell .count-result.is-revealed .count-result__value {
+        font-size: 2.1rem;
+    }
+
+    body.jojo-tablet .popit-shell .popit-board {
+        width: min(100%, 420px);
+        height: min(100%, 320px);
+        min-height: 260px;
+        padding: 16px;
+        gap: 10px;
+        border-radius: 36px;
+    }
+
+    body.jojo-tablet .popit-shell .game-actions {
+        grid-column: 2;
+        grid-row: 3;
+        grid-template-columns: 92px 112px minmax(0, 1fr);
+        gap: 8px;
+    }
+
+    body.jojo-tablet .popit-shell .soft-button,
+    body.jojo-tablet .popit-shell .result-button {
+        min-height: 40px;
+        font-size: 0.74rem;
+    }
+
+    body.jojo-tablet .pitagoras-shell .game {
+        grid-template-columns: minmax(320px, 0.88fr) minmax(340px, 1.12fr);
+        grid-template-rows: 72px 48px minmax(0, 1fr);
+        gap: 12px 14px;
+    }
+
+    body.jojo-tablet .pitagoras-shell .table-panel {
+        grid-column: 1;
+        grid-row: 1 / span 3;
+        padding: 18px 14px 14px;
+    }
+
+    body.jojo-tablet .pitagoras-shell .problem-card {
+        grid-column: 2;
+        grid-row: 1;
+        padding: 10px 12px;
+    }
+
+    body.jojo-tablet .pitagoras-shell .game-actions {
+        grid-column: 2;
+        grid-row: 2;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    body.jojo-tablet .pitagoras-shell .result-panel {
+        grid-column: 2;
+        grid-row: 3;
+        padding: 14px 16px;
+        gap: 8px;
+    }
+
+    body.jojo-tablet .pitagoras-shell .result-panel__equation {
+        font-size: 1.7rem;
+    }
+
+    body.jojo-tablet .pitagoras-shell .result-panel__value {
+        font-size: 3.9rem;
+    }
+
+    body.jojo-tablet .pitagoras-shell .result-text {
+        min-height: 58px;
+        font-size: 0.88rem;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-header {
+        position: fixed !important;
+        inset: 0 0 auto 0 !important;
+        min-height: 88px !important;
+        grid-template-columns: 56px minmax(0, 1fr) 208px !important;
+        align-items: center !important;
+        gap: 14px !important;
+        padding:
+            max(12px, calc(env(safe-area-inset-top, 0px) + 4px))
+            max(22px, env(safe-area-inset-right, 0px))
+            12px
+            max(22px, env(safe-area-inset-left, 0px)) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session #backHomeBtn {
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: 18px !important;
+        justify-self: start !important;
+        align-self: center !important;
+        font-size: 1.35rem !important;
+        box-shadow: 0 12px 28px rgba(47, 78, 132, 0.16) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-center {
+        align-self: center !important;
+        gap: 2px !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-pill {
+        padding: 4px 14px !important;
+        font-size: 0.62rem !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-timer {
+        margin: 0 !important;
+        font-size: clamp(1.78rem, 3vw, 2.34rem) !important;
+        line-height: 1 !important;
+        letter-spacing: 0.02em !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-caption {
+        font-size: 0.82rem !important;
+        opacity: 0.94 !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-letter-label {
+        display: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-side {
+        align-self: center !important;
+        justify-items: end !important;
+        gap: 8px !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-tool-stack {
+        grid-auto-columns: 42px !important;
+        gap: 8px !important;
+        align-self: center !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-tool-stack .utility-button {
+        width: 42px !important;
+        height: 42px !important;
+        min-width: 42px !important;
+        min-height: 42px !important;
+        border-radius: 14px !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard {
+        align-self: center !important;
+        padding-top: 0 !important;
+        text-align: right !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard__value {
+        font-size: clamp(1.68rem, 3.2vw, 2.28rem) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard__label,
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard__line {
+        font-size: 0.82rem !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-stage {
+        padding-top: calc(env(safe-area-inset-top, 0px) + 104px) !important;
+    }
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session {
+        min-height: 100dvh !important;
+        overflow: hidden !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-header {
+        position: relative !important;
+        inset: auto !important;
+        width: 100% !important;
+        min-height: 78px !important;
+        height: auto !important;
+        grid-template-columns: 52px minmax(0, 1fr) 188px !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding:
+            max(10px, calc(env(safe-area-inset-top, 0px) + 2px))
+            18px
+            10px
+            18px !important;
+        overflow: hidden !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session #backHomeBtn {
+        width: 42px !important;
+        height: 42px !important;
+        min-width: 42px !important;
+        min-height: 42px !important;
+        align-self: center !important;
+        justify-self: start !important;
+        border-radius: 14px !important;
+        font-size: 1.15rem !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-center {
+        gap: 1px !important;
+        align-self: center !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-pill {
+        padding: 3px 12px !important;
+        font-size: 0.58rem !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-timer {
+        font-size: clamp(1.6rem, 2.6vw, 2.1rem) !important;
+        margin: 0 !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-caption {
+        font-size: 0.78rem !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-side {
+        gap: 6px !important;
+        align-self: center !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-tool-stack {
+        grid-auto-columns: 38px !important;
+        gap: 6px !important;
+        align-self: center !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-tool-stack .utility-button {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        border-radius: 12px !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard {
+        padding-top: 0 !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard__value {
+        font-size: clamp(1.5rem, 2.7vw, 2rem) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard__label,
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard__line {
+        font-size: 0.76rem !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-stage {
+        padding-top: 24px !important;
+    }
+}
+
+body.jojo-tablet.agenda-page {
+    overflow-x: hidden;
+}
+
+@media (orientation: portrait) {
+    body.jojo-tablet .agenda-shell {
+        width: min(100%, 860px);
+        height: auto;
+        min-height: 100dvh;
+        padding:
+            calc(env(safe-area-inset-top, 0px) + 26px)
+            22px
+            calc(env(safe-area-inset-bottom, 0px) + 126px);
+        overflow: visible;
+    }
+
+    body.jojo-tablet .agenda-header {
+        min-height: 58px;
+        gap: 12px;
+    }
+
+    body.jojo-tablet .agenda-header img {
+        width: 154px;
+    }
+
+    body.jojo-tablet .agenda-main {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    body.jojo-tablet .agenda-title,
+    body.jojo-tablet #agendaForm,
+    body.jojo-tablet #recordView {
+        grid-column: 1 / -1;
+    }
+
+    body.jojo-tablet .agenda-title {
+        margin-top: 6px;
+    }
+
+    body.jojo-tablet .agenda-title h1 {
+        font-size: 2.2rem;
+    }
+
+    body.jojo-tablet #agendaForm {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 16px;
+    }
+
+    body.jojo-tablet #agendaForm > .agenda-student,
+    body.jojo-tablet #agendaForm > .agenda-section:last-of-type,
+    body.jojo-tablet #agendaForm > .agenda-actions,
+    body.jojo-tablet #agendaForm > .save-status {
+        grid-column: 1 / -1;
+    }
+
+    body.jojo-tablet .agenda-section,
+    body.jojo-tablet .agenda-details {
+        padding: 14px;
+        border-radius: 24px;
+    }
+
+    body.jojo-tablet .choice-grid,
+    body.jojo-tablet .flag-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    body.jojo-tablet .choice-chip,
+    body.jojo-tablet .flag-chip {
+        min-height: 42px;
+        font-size: 0.82rem;
+    }
+
+    body.jojo-tablet .student-row {
+        grid-template-columns: minmax(0, 1fr) 180px;
+        gap: 10px;
+    }
+
+    body.jojo-tablet .agenda-actions {
+        grid-template-columns: 132px minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    body.jojo-tablet .app-shell {
+        width: min(100%, 780px);
+        padding:
+            calc(env(safe-area-inset-top, 0px) + 30px)
+            22px
+            calc(env(safe-area-inset-bottom, 0px) + 120px);
+    }
+
+    body.jojo-tablet .app-screen {
+        gap: 26px;
+    }
+
+    body.jojo-tablet .brand-lockup__logo {
+        width: 188px;
+    }
+
+    body.jojo-tablet .topbar {
+        align-items: center;
+    }
+
+    body.jojo-tablet .hero {
+        padding-inline: 8px;
+    }
+
+    body.jojo-tablet .hero__copy {
+        padding-top: 8px;
+    }
+
+    body.jojo-tablet .hero h1 {
+        font-size: clamp(3.2rem, 7vw, 4.6rem);
+    }
+
+    body.jojo-tablet .hero p {
+        font-size: 1.08rem;
+        line-height: 1.5;
+    }
+
+    body.jojo-tablet .bento {
+        gap: 18px;
+    }
+
+    body.jojo-tablet .main-card,
+    body.jojo-tablet .mini-card {
+        padding: 20px;
+    }
+
+    body.jojo-tablet .credit-card {
+        margin-top: 4px;
+    }
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet.agenda-page {
+        overflow-y: auto;
+    }
+
+    body.jojo-tablet .agenda-shell {
+        height: auto;
+        min-height: 100dvh;
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 108px);
+        overflow: visible;
+    }
+
+    body.jojo-tablet .agenda-main {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto auto;
+        gap: 14px 16px;
+        align-items: start;
+    }
+
+    body.jojo-tablet .agenda-title,
+    body.jojo-tablet #agendaForm {
+        grid-column: 1 / -1;
+    }
+
+    body.jojo-tablet .agenda-title {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    body.jojo-tablet #agendaForm {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 14px;
+        min-height: 0;
+    }
+
+    body.jojo-tablet #agendaForm > .agenda-student,
+    body.jojo-tablet #agendaForm > .agenda-section:last-of-type,
+    body.jojo-tablet #agendaForm > .agenda-actions,
+    body.jojo-tablet #agendaForm > .save-status {
+        grid-column: 1 / -1;
+    }
+
+    body.jojo-tablet .agenda-section,
+    body.jojo-tablet .agenda-details {
+        padding: 11px 12px;
+    }
+
+    body.jojo-tablet .agenda-details summary {
+        min-height: 40px;
+    }
+
+    body.jojo-tablet .choice-grid,
+    body.jojo-tablet .flag-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    body.jojo-tablet .choice-chip,
+    body.jojo-tablet .flag-chip {
+        min-height: 36px;
+        font-size: 0.74rem;
+    }
+
+    body.jojo-tablet .agenda-actions {
+        grid-template-columns: 112px minmax(0, 1fr);
+    }
+}
+
+body.jojo-tablet.agenda-page .agenda-main,
+body.jojo-tablet.agenda-page #agendaForm {
+    align-items: start;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > * {
+    align-self: start;
+}
+
+body.jojo-tablet.agenda-page .agenda-details,
+body.jojo-tablet.agenda-page .agenda-section {
+    height: auto;
+}
+
+body.jojo-tablet.agenda-page .agenda-details h2 {
+    margin: 8px 0 8px;
+}
+
+body.jojo-tablet.agenda-page .agenda-details > .choice-grid,
+body.jojo-tablet.agenda-page .agenda-details > .flag-grid,
+body.jojo-tablet.agenda-page .agenda-details > .agenda-split,
+body.jojo-tablet.agenda-page .agenda-details > .choice-stack,
+body.jojo-tablet.agenda-page .agenda-details > .section-subtitle {
+    margin-top: 6px;
+}
+
+body.jojo-tablet.agenda-page.agenda-record-only .agenda-main {
+    grid-template-columns: 1fr;
+}
+
+body.jojo-tablet.agenda-page.agenda-record-only .agenda-title,
+body.jojo-tablet.agenda-page.agenda-record-only #recordView {
+    grid-column: 1 / -1;
+}
+
+body.jojo-tablet.agenda-page.agenda-record-only #recordView {
+    position: static;
+    width: min(100%, 1120px);
+    max-width: 1120px;
+    justify-self: center;
+    overflow: visible;
+    max-height: none;
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet.agenda-page.agenda-record-only #recordView {
+        grid-template-columns: minmax(300px, 0.85fr) minmax(420px, 1.15fr);
+        align-items: start;
+        gap: 14px 16px;
+    }
+
+    body.jojo-tablet.agenda-page.agenda-record-only .record-view-card {
+        grid-column: 1;
+        grid-row: 1 / span 3;
+    }
+
+    body.jojo-tablet.agenda-page.agenda-record-only .report-builder,
+    body.jojo-tablet.agenda-page.agenda-record-only .record-view-actions,
+    body.jojo-tablet.agenda-page.agenda-record-only #reportStatus {
+        grid-column: 2;
+    }
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .app-screen {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px auto minmax(0, 1fr) 64px;
+        gap: 14px;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .topbar,
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .hero,
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .bento,
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .credit-card {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .brand-lockup__logo {
+        width: 154px;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .hello-pill {
+        padding: 9px 16px;
+        font-size: 0.82rem;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .hero {
+        min-height: 0;
+        align-items: flex-start;
+        padding: 0 6px;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .hero__copy {
+        padding-top: 0;
+        max-width: 560px;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .hero h1 {
+        font-size: clamp(2rem, 2.9vw, 2.5rem);
+        line-height: 1;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .hero p {
+        max-width: 48ch;
+        margin-top: 6px;
+        font-size: 0.92rem;
+        line-height: 1.4;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .bento {
+        grid-template-rows: auto auto;
+        gap: 14px;
+        align-content: start;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card {
+        min-height: 0;
+        padding: 16px 18px;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card__art {
+        max-width: 138px;
+        margin-bottom: 8px;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card strong {
+        font-size: 1.22rem;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card > span:not(.card-action) {
+        font-size: 0.84rem;
+        line-height: 1.3;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .mini-card {
+        min-height: 0;
+        padding: 14px;
+    }
+
+body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .credit-card {
+    width: min(100%, 520px);
+    justify-self: start;
+}
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet.menu-page--palavras #homeScreen.screen--home {
+        grid-template-columns: minmax(312px, 0.78fr) minmax(448px, 1.22fr);
+        grid-template-rows: 58px minmax(0, 1fr) auto;
+        gap: 16px 18px;
+        align-content: start;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .home-top-actions,
+    body.jojo-tablet.menu-page--palavras #homeScreen .home-footer {
+        grid-column: 1 / -1;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .hero {
+        grid-column: 1;
+        grid-row: 2;
+        min-height: 0;
+        align-self: start;
+        padding: 22px 24px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: 0 18px 38px rgba(72, 99, 146, 0.12);
+        text-align: left;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .brand {
+        justify-items: start;
+        gap: 12px;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .brand__copy--home {
+        width: 100%;
+        max-width: none;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .brand__copy--home h1 {
+        font-size: clamp(2.15rem, 3.2vw, 2.85rem);
+        line-height: 0.98;
+        text-wrap: balance;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .hero__subheading {
+        margin-top: 10px;
+        font-size: 0.98rem;
+        letter-spacing: 0.16em;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .setup-panel {
+        grid-column: 2;
+        grid-row: 2;
+        align-self: start;
+        padding: 22px 24px;
+        border-radius: 30px;
+        gap: 16px;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .setup-options--mode .option-card {
+        min-height: 98px;
+        border-radius: 22px;
+        gap: 10px;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .setup-options--mode .option-card__icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(76, 130, 243, 0.18), rgba(123, 73, 234, 0.18));
+        box-shadow: inset 0 0 0 1px rgba(92, 122, 206, 0.14);
+        color: #4563c9;
+        display: grid;
+        place-items: center;
+        font-size: 1.35rem;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .setup-options--mode .option-card.is-selected .option-card__icon {
+        background: linear-gradient(135deg, #4c82f3 0%, #7b49ea 100%);
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(88, 95, 222, 0.22);
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .setup-options--mode .option-card__label {
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+    }
+
+    body.jojo-tablet.menu-page--palavras #homeScreen .start-session-button {
+        width: min(100%, 260px);
+        min-height: 50px;
+        justify-self: center;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-header {
+        position: fixed !important;
+        inset: 0 0 auto 0 !important;
+        min-height: 104px !important;
+        height: 104px !important;
+        grid-template-columns: 56px 1fr auto !important;
+        align-items: start !important;
+        gap: 12px !important;
+        padding:
+            max(12px, calc(env(safe-area-inset-top, 0px) + 4px))
+            24px
+            14px
+            24px !important;
+        overflow: visible !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-center {
+        position: absolute !important;
+        left: 50% !important;
+        top: max(12px, calc(env(safe-area-inset-top, 0px) + 4px)) !important;
+        width: min(340px, 44vw) !important;
+        justify-items: center !important;
+        gap: 3px !important;
+        transform: translateX(-50%) !important;
+        pointer-events: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-pill {
+        padding: 5px 16px !important;
+        font-size: 0.66rem !important;
+        line-height: 1 !important;
+        letter-spacing: 0.08em !important;
+        background: rgba(255, 255, 255, 0.14) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-timer {
+        margin: 0 !important;
+        font-size: clamp(2.2rem, 4.2vw, 3rem) !important;
+        line-height: 0.9 !important;
+        letter-spacing: 0.01em !important;
+        text-shadow: 0 8px 20px rgba(56, 29, 126, 0.26) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-caption {
+        font-size: 0.84rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.1em !important;
+        text-transform: uppercase !important;
+        color: rgba(255, 255, 255, 0.94) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-side {
+        justify-items: end !important;
+        align-self: start !important;
+        gap: 10px !important;
+        padding-top: 2px !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-tool-stack {
+        grid-auto-columns: 40px !important;
+        gap: 8px !important;
+        align-self: start !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-tool-stack .utility-button {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        border-radius: 14px !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard {
+        text-align: right !important;
+        padding-top: 4px !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard__value {
+        font-size: clamp(1.9rem, 3.7vw, 2.7rem) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-stage {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding:
+            calc(env(safe-area-inset-top, 0px) + 124px)
+            42px
+            150px !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-display {
+        max-width: 11ch !important;
+        font-size: clamp(5rem, 9vw, 7.2rem) !important;
+        line-height: 0.92 !important;
+        transform: translateY(-10px) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-display.is-prompt {
+        max-width: 16ch !important;
+        font-size: clamp(3.9rem, 7vw, 5.8rem) !important;
+        line-height: 0.98 !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .helper-text {
+        margin-top: 10px !important;
+    }
+}
+
+@media (orientation: portrait) {
+    body.jojo-tablet .popit-shell .game,
+    body.jojo-tablet .pitagoras-shell .game {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+        gap: 16px !important;
+        align-content: start;
+    }
+
+    body.jojo-tablet .popit-shell .color-goals,
+    body.jojo-tablet .popit-shell .problem-card,
+    body.jojo-tablet .popit-shell .play-zone,
+    body.jojo-tablet .popit-shell .count-zone,
+    body.jojo-tablet .popit-shell .game-actions,
+    body.jojo-tablet .pitagoras-shell .table-panel,
+    body.jojo-tablet .pitagoras-shell .problem-card,
+    body.jojo-tablet .pitagoras-shell .game-actions,
+    body.jojo-tablet .pitagoras-shell .result-panel {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+    }
+
+    body.jojo-tablet .popit-shell .color-goals {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    body.jojo-tablet .popit-shell .popit-board {
+        width: min(100%, 456px) !important;
+        height: auto !important;
+        min-height: 292px !important;
+    }
+
+    body.jojo-tablet .popit-shell .count-zone {
+        align-self: stretch !important;
+        padding: 16px !important;
+    }
+
+    body.jojo-tablet .popit-shell .count-tray {
+        min-height: 208px;
+        align-content: start;
+    }
+
+    body.jojo-tablet .popit-shell .game-actions {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    body.jojo-tablet .pitagoras-shell .table-panel {
+        padding: 18px 12px 14px !important;
+    }
+
+    body.jojo-tablet .pitagoras-shell .game-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    body.jojo-tablet .pitagoras-shell .result-panel {
+        align-self: start !important;
+        padding: 16px 18px !important;
+    }
+
+    body.jojo-tablet .pitagoras-shell .result-panel__equation {
+        font-size: 1.86rem !important;
+    }
+
+    body.jojo-tablet .pitagoras-shell .result-panel__value {
+        font-size: 4.6rem !important;
+    }
+
+    body.jojo-tablet .pitagoras-shell .result-text {
+        min-height: 0 !important;
+    }
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet .popit-shell .count-stack {
+        min-height: 0;
+        align-content: start;
+    }
+
+    body.jojo-tablet .popit-shell .count-zone {
+        align-self: start !important;
+    }
+
+    body.jojo-tablet .popit-shell .count-tray {
+        min-height: 72px;
+        max-height: none;
+        align-content: start;
+    }
+
+    body.jojo-tablet .popit-shell .count-result.is-revealed .count-result__value {
+        font-size: 3.8rem !important;
+    }
+
+    body.jojo-tablet .pitagoras-shell .result-panel {
+        align-self: start !important;
+        min-height: 0 !important;
+    }
+}
+
+/* Keep reading-test controls inside a stable header on tablet landscape. */
+@media (orientation: landscape) {
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-header {
+        position: fixed !important;
+        inset: 0 0 auto 0 !important;
+        height: 88px !important;
+        min-height: 88px !important;
+        display: grid !important;
+        grid-template-columns: 56px minmax(0, 1fr) 220px !important;
+        align-items: center !important;
+        gap: 14px !important;
+        padding:
+            max(12px, calc(env(safe-area-inset-top, 0px) + 4px))
+            max(22px, env(safe-area-inset-right, 0px))
+            12px
+            max(22px, env(safe-area-inset-left, 0px)) !important;
+        overflow: hidden !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session #backHomeBtn {
+        position: static !important;
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-center {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        width: min(340px, 42vw) !important;
+        transform: translate(-50%, -50%) !important;
+        pointer-events: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-side {
+        position: static !important;
+        grid-column: 3 !important;
+        grid-row: 1 !important;
+        width: 220px !important;
+        min-width: 0 !important;
+        justify-self: end !important;
+        align-self: center !important;
+        justify-items: end !important;
+        gap: 6px !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-tool-stack {
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+        transform: none !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .session-scoreboard {
+        display: block !important;
+        width: 100% !important;
+        text-align: right !important;
+        white-space: nowrap !important;
+    }
+
+    body.jojo-tablet.menu-page--textos:not(.textos-fullscreen) .screen--session .session-header {
+        display: grid !important;
+        grid-template-columns: 52px minmax(0, 1fr) 164px 118px !important;
+        align-items: center !important;
+        gap: 12px !important;
+        min-height: 82px !important;
+        padding: 12px 18px !important;
+    }
+
+    body.jojo-tablet.menu-page--textos:not(.textos-fullscreen) .screen--session .session-center {
+        justify-items: start !important;
+        text-align: left !important;
+    }
+
+    body.jojo-tablet.menu-page--textos:not(.textos-fullscreen) .screen--session .session-compact-stats {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 6px !important;
+        width: 164px !important;
+    }
+
+    body.jojo-tablet.menu-page--textos:not(.textos-fullscreen) .screen--session .session-tools {
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        gap: 6px !important;
+        width: 118px !important;
+    }
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card {
+        display: grid !important;
+        grid-template-columns: minmax(130px, 0.62fr) minmax(0, 1fr) !important;
+        grid-template-rows: auto auto 1fr !important;
+        align-items: center !important;
+        column-gap: 18px !important;
+        min-height: 206px !important;
+        padding: 18px 22px !important;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card__art {
+        grid-column: 1 !important;
+        grid-row: 1 / span 3 !important;
+        width: 100% !important;
+        max-width: 154px !important;
+        margin: 0 !important;
+        justify-self: center !important;
+        align-self: center !important;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card strong,
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card > span:not(.card-action),
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card .card-action {
+        grid-column: 2 !important;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card strong {
+        align-self: end !important;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .main-card .card-action {
+        align-self: start !important;
+        margin-top: 12px !important;
+    }
+
+    body.jojo-tablet:not(.agenda-page):not(.jogos-hub-page):not(.menu-page) .credit-card {
+        width: min(100%, 520px) !important;
+        justify-self: center !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--mood {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--arrival {
+        grid-column: 2 !important;
+        grid-row: 2 / span 2 !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--routine {
+        grid-column: 1 !important;
+        grid-row: 3 !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--behavior {
+        grid-column: 1 !important;
+        grid-row: 4 !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--activities {
+        grid-column: 2 !important;
+        grid-row: 4 !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--appetite {
+        grid-column: 1 !important;
+        grid-row: 5 !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-section:last-of-type {
+        grid-column: 2 !important;
+        grid-row: 5 !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-actions {
+        grid-column: 1 / -1 !important;
+        grid-row: 6 !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .save-status {
+        grid-column: 1 / -1 !important;
+        grid-row: 7 !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session #backHomeBtn {
+        position: absolute !important;
+        left: 28px !important;
+        top: 50% !important;
+        z-index: 4 !important;
+        margin: 0 !important;
+        transform: translateY(-50%) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-display {
+        max-width: 12ch !important;
+        font-size: clamp(6.4rem, 11vw, 9rem) !important;
+        line-height: 0.9 !important;
+        transform: translateY(-4px) !important;
+    }
+
+    body.jojo-tablet.menu-page--palavras.session-active .screen--session .word-display.is-prompt {
+        max-width: 16ch !important;
+        font-size: clamp(4rem, 7vw, 5.8rem) !important;
+        line-height: 0.98 !important;
+    }
+}

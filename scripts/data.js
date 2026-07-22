@@ -1,92 +1,74 @@
 window.JOJO_DATA = {
-    sections: {
-        games: {
-            eyebrow: "Jogos",
+    primaryCards: [
+        {
+            id: "jogos",
             title: "Jogos",
-            type: "tabs",
-            tabs: [
-                {
-                    id: "language",
-                    label: "Leitura",
-                    items: [
-                        {
-                            title: "Leitura de palavras",
-                            description: "Teste de fluência com palavras isoladas.",
-                            art: "./assets/jojo-card-palavras.png",
-                            tag: "Alfabetização",
-                            href: "./jogos/palavras/"
-                        },
-                        {
-                            title: "Leitura de textos",
-                            description: "Textos, palavras e pseudopalavras.",
-                            art: "./assets/jojo-card-textos.png",
-                            tag: "Alfabetização",
-                            href: "./jogos/textos/"
-                        }
-                    ]
-                },
-                {
-                    id: "math",
-                    label: "Matemática",
-                    items: [
-                        {
-                            title: "Pop-it da soma",
-                            description: "Aperte, junte e conte as bolinhas.",
-                            art: "./assets/jojo-card-popit.png",
-                            tag: "Novo",
-                            href: "./jogos/popit-soma/"
-                        },
-                        {
-                            title: "Pop-it da subtração",
-                            description: "Aperte, retire e conte o que sobrou.",
-                            art: "./assets/jojo-card-popit.png",
-                            tag: "Novo",
-                            href: "./jogos/popit-subtracao/"
-                        },
-                        {
-                            title: "Tabuada de Pitágoras",
-                            description: "Escolha os fatores e encontre o resultado na tabela.",
-                            art: "./assets/jojo-card-pitagoras.png",
-                            tag: "Novo",
-                            href: "./jogos/tabuada-pitagoras/"
-                        },
-                        {
-                            title: "Cabo de Guerra",
-                            description: "Cabo de guerra com operações e frações.",
-                            art: "./assets/jojo-card-cabo-guerra.png",
-                            tag: "Clássico",
-                            href: "./jogos/cabo-de-guerra-operacoes-fracoes/"
-                        }
-                    ]
-                },
-                {
-                    id: "geometry",
-                    label: "Geometria",
-                    items: [
-                        {
-                            title: "Formas geométricas",
-                            description: "Reconhecimento de figuras e padrões. Em breve.",
-                            art: "./assets/jojo-card-geometria.png",
-                            tag: "Em breve",
-                            placeholder: true
-                        }
-                    ]
-                }
-            ]
+            description: "Leitura, alfabetização e novos eixos em um só lugar.",
+            icon: "./assets/jojo-home-jogos.png",
+            buttonLabel: "Abrir jogos",
+            href: "./jogos/index.html",
+            variant: "reading"
         },
-        tools: {
-            eyebrow: "Ferramentas de apoio",
+        {
+            id: "timer",
             title: "Ferramentas",
-            type: "list",
-            items: [
-                {
-                    title: "Timer",
-                    description: "Organize o tempo da sala de forma leve.",
-                    art: "./assets/jojo-card-timer.png",
-                    tag: "Ferramenta",
-                    href: "./jogos/timer/"
-                }
-            ]
+            description: "Organize o tempo da sala de forma leve.",
+            icon: "./assets/jojo-menu-ferramentas.png",
+            buttonLabel: "Usar agora",
+            href: "./jogos/timer/index.html",
+            variant: "timer"
         }
+    ],
+    smallCards: [
+        {
+            id: "agenda",
+            title: "Agenda",
+            description: "Registro diário por aluno.",
+            icon: "./assets/jojo-home-registros.png",
+            href: "./agenda/index.html",
+            variant: "agenda",
+            panelTitle: "Agenda",
+            panelDescription: "Organize datas, combinados e atividades planejadas para a turma. Em breve este espaço vira a agenda do professor."
+        },
+        {
+            id: "favoritos",
+            title: "Favoritos",
+            description: "Atividades marcadas.",
+            icon: "./assets/jojo-home-favoritos.png",
+            action: "small-info",
+            variant: "favorites",
+            panelTitle: "Favoritos",
+            panelDescription: "Guarde atividades importantes para acessar mais rápido nas próximas versões do JOJO."
+        },
+        {
+            id: "relatorios",
+            title: "Relatórios",
+            description: "Resultados dos jogos e testes.",
+            icon: "./assets/jojo-home-relatorios.png",
+            action: "small-info",
+            variant: "reports",
+            panelTitle: "Relatórios",
+            panelDescription: "Aqui o professor vai buscar os resultados dos jogos e testes de leitura para acompanhar o desempenho da turma."
+        }
+    ],
+    readingOptions: [
+        {
+            title: "Leitura de palavras",
+            href: "./jogos/palavras/index.html"
+        },
+        {
+            title: "Leitura de textos",
+            href: "./jogos/textos/index.html"
+        }
+    ],
+    toolsOptions: [],
+    about: {
+        title: "Perfil JOJO",
+        description: "JOJO é um app de jogos educacionais criado para apoiar leitura, fluência e organização de rotina em sala de aula.",
+        credits: "Desenvolvido por Ana Clara Silva de Lima"
+    },
+    soon: {
+        title: "Em breve",
+        description: "Esse espaço já ficou reservado para uma próxima versão do JOJO."
     }
 };

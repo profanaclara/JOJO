@@ -6,22 +6,27 @@ const STORAGE = {
 };
 
 const DEFAULTS = {
-    mood: "Tranquilo",
+    mood: ["Tranquilo"],
     arrival: "Bem",
     departure: "Bem",
     activityStatus: "Todas",
-    appetite: "Normal",
-    reportPeriod: "daily"
+    appetite: "Normal"
 };
 
 const ui = {
     body: document.body,
+    agendaMain: document.querySelector(".agenda-main"),
     form: document.getElementById("agendaForm"),
     studentName: document.getElementById("studentName"),
     recordDate: document.getElementById("recordDate"),
+    dailyRecordDate: document.getElementById("dailyRecordDate"),
     recorderName: document.getElementById("recorderName"),
-    recipientEmail: document.getElementById("recipientEmail"),
     notes: document.getElementById("notes"),
+    notesSection: document.getElementById("notesSection"),
+    stepNav: document.getElementById("agendaStepNav"),
+    previousStepBtn: document.getElementById("agendaPreviousStep"),
+    nextStepBtn: document.getElementById("agendaNextStep"),
+    stepLabel: document.getElementById("agendaStepLabel"),
     clearBtn: document.getElementById("clearBtn"),
     saveStatus: document.getElementById("saveStatus"),
     recordView: document.getElementById("recordView"),
@@ -38,7 +43,13 @@ const ui = {
 const state = {
     records: readJson(STORAGE.records, readJson("jojo_agenda_records_v1", [])),
     students: [],
-    activeRecordKey: ""
+    activeRecordKey: "",
+    reportMode: "dates",
+    reportDates: new Set(),
+    reportAnchor: "",
+    reportQuery: "",
+    reportMonth: "all",
+    agendaStep: 0
 };
 
 state.students = sanitizeStudents(readJson(STORAGE.students, readJson("jojo_agenda_students_v1", [])), state.records);
@@ -90,6 +101,81 @@ function currentKey() {
     return `${studentKey(ui.studentName.value)}::${ui.recordDate.value}`;
 }
 
+const agendaSteps = [
+    { title: "Dados do aluno", element: document.querySelector(".agenda-student") },
+    { title: "Humor", element: document.querySelector(".agenda-details--mood") },
+    { title: "Entrada e saída", element: document.querySelector(".agenda-details--arrival") },
+    { title: "Rotina", element: document.querySelector(".agenda-details--routine") },
+    { title: "Atividades", element: document.querySelector(".agenda-details--activities") },
+    { title: "Comportamentos", element: document.querySelector(".agenda-details--behavior") },
+    { title: "Apetite e reforçador", element: document.querySelector(".agenda-details--appetite") },
+    { title: "Anotações", element: ui.notesSection }
+];
+
+function setWizardDisplay(element, active) {
+    if (!element) {
+        return;
+    }
+
+    if (!active) {
+        element.style.setProperty("display", "none", "important");
+        return;
+    }
+
+    element.style.setProperty("display", element instanceof HTMLDetailsElement ? "block" : "grid", "important");
+    element.style.setProperty("grid-column", "1 / -1", "important");
+    element.style.setProperty("grid-row", "1", "important");
+    element.style.setProperty("width", "100%", "important");
+    element.style.setProperty("max-width", "none", "important");
+    element.style.setProperty("justify-self", "stretch", "important");
+}
+
+function setWizardFooterLayout(currentStep) {
+    const isLastStep = currentStep === agendaSteps.length - 1;
+    const actions = ui.form.querySelector(".agenda-actions");
+
+    ui.stepNav.style.setProperty("display", "grid", "important");
+    ui.stepNav.style.setProperty("grid-column", "1 / -1", "important");
+    ui.stepNav.style.setProperty("grid-row", "2", "important");
+    ui.stepNav.style.setProperty("width", "100%", "important");
+
+    actions.classList.toggle("is-wizard-active", isLastStep);
+    actions.style.setProperty("display", isLastStep ? "grid" : "none", "important");
+    actions.style.setProperty("grid-column", "1 / -1", "important");
+    actions.style.setProperty("grid-row", "3", "important");
+    actions.style.setProperty("width", "100%", "important");
+    actions.style.setProperty("max-width", "none", "important");
+
+    ui.saveStatus.classList.toggle("is-wizard-active", isLastStep);
+    ui.saveStatus.style.setProperty("display", isLastStep ? "block" : "none", "important");
+    ui.saveStatus.style.setProperty("grid-column", "1 / -1", "important");
+    ui.saveStatus.style.setProperty("grid-row", "4", "important");
+}
+
+function renderAgendaStep() {
+    const currentStep = Math.max(0, Math.min(state.agendaStep, agendaSteps.length - 1));
+    state.agendaStep = currentStep;
+
+    agendaSteps.forEach((step, index) => {
+        const active = index === currentStep;
+        step.element.classList.toggle("is-wizard-active", active);
+        setWizardDisplay(step.element, active);
+        if (step.element instanceof HTMLDetailsElement) {
+            step.element.open = active;
+        }
+    });
+
+    ui.stepLabel.textContent = `${currentStep + 1} de ${agendaSteps.length} · ${agendaSteps[currentStep].title}`;
+    ui.previousStepBtn.disabled = currentStep === 0;
+    ui.nextStepBtn.classList.toggle("hidden", currentStep === agendaSteps.length - 1);
+    setWizardFooterLayout(currentStep);
+}
+
+function moveAgendaStep(direction) {
+    state.agendaStep += direction;
+    renderAgendaStep();
+}
+
 function formatDate(value) {
     if (!value) {
         return "";
@@ -112,10 +198,42 @@ function dayLabel(value) {
 
 function periodLabel(value) {
     return {
-        daily: "diário",
-        weekly: "semanal",
-        monthly: "mensal"
-    }[value] || "diário";
+        dates: "dias selecionados",
+        weekly: "semana inteira",
+        monthly: "mês inteiro"
+    }[value] || "dias selecionados";
+}
+
+function isMultiGroup(group) {
+    return group === "mood";
+}
+
+function normalizeMultiValue(value) {
+    if (Array.isArray(value)) {
+        return [...new Set(value.map((item) => normalizeName(item)).filter(Boolean))];
+    }
+    const single = normalizeName(value);
+    return single ? [single] : [];
+}
+
+function formatMood(value) {
+    return normalizeMultiValue(value).join(", ");
+}
+
+function normalizeSearch(value) {
+    return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
+
+function updateDailyRecordLabel() {
+    if (!ui.dailyRecordDate) {
+        return;
+    }
+    const prefix = ui.recordDate.value === todayIso() ? "Hoje" : "Editando o dia";
+    ui.dailyRecordDate.textContent = `${prefix} · ${formatDate(ui.recordDate.value)}`;
 }
 
 function sameReportPeriod(recordDate, baseDate, period) {
@@ -148,11 +266,23 @@ function selectedValue(group) {
     return document.querySelector(`[data-group="${group}"].is-active`)?.dataset.value || "";
 }
 
+function selectedValues(group) {
+    return [...document.querySelectorAll(`[data-group="${group}"].is-active`)].map((item) => item.dataset.value);
+}
+
 function selectedFlags() {
     return [...document.querySelectorAll(".flag-chip.is-active")].map((item) => item.dataset.flag);
 }
 
 function setGroupValue(group, value) {
+    if (isMultiGroup(group)) {
+        const selected = new Set(normalizeMultiValue(value));
+        document.querySelectorAll(`[data-group="${group}"]`).forEach((button) => {
+            button.classList.toggle("is-active", selected.has(button.dataset.value));
+        });
+        return;
+    }
+
     const fallback = DEFAULTS[group] || "";
     const nextValue = value || fallback;
     document.querySelectorAll(`[data-group="${group}"]`).forEach((button) => {
@@ -195,6 +325,13 @@ function getCurrentStudentRecords() {
         .sort((a, b) => b.date.localeCompare(a.date));
 }
 
+function recordsForStudent(name) {
+    const key = studentKey(name);
+    return state.records
+        .filter((record) => studentKey(record.student) === key)
+        .sort((a, b) => b.date.localeCompare(a.date));
+}
+
 function getRecordForCurrentDay() {
     const key = currentKey();
     return state.records.find((record) => record.key === key);
@@ -203,6 +340,7 @@ function getRecordForCurrentDay() {
 function showForm() {
     ui.form.classList.remove("hidden");
     ui.recordView.classList.add("hidden");
+    ui.body.classList.remove("agenda-record-only");
 }
 
 function showRecordView(record, mode = "view") {
@@ -211,9 +349,16 @@ function showRecordView(record, mode = "view") {
     }
 
     state.activeRecordKey = record.key;
+    state.reportMode = "dates";
+    state.reportDates = new Set([record.date]);
+    state.reportAnchor = record.date;
+    state.reportQuery = "";
+    state.reportMonth = "all";
     ui.form.classList.add("hidden");
     ui.recordView.classList.remove("hidden");
+    ui.body.classList.add("agenda-record-only");
     ui.recordView.innerHTML = renderRecordView(record, mode);
+    applyReportListFilters();
     renderDrawer();
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -234,9 +379,8 @@ function loadRecord(record) {
 
     ui.studentName.value = record.student;
     ui.recordDate.value = record.date;
+    updateDailyRecordLabel();
     ui.recorderName.value = record.recorder || ui.recorderName.value;
-    ui.recipientEmail.value = record.recipientEmail || ui.recipientEmail.value;
-    setGroupValue("reportPeriod", record.reportPeriod || "daily");
     setGroupValue("mood", record.mood);
     setGroupValue("arrival", record.arrival);
     setGroupValue("departure", record.departure);
@@ -256,12 +400,14 @@ function loadCurrentRecord() {
     }
 
     clearCurrentForm();
+    updateDailyRecordLabel();
     renderDrawer();
 }
 
 function compactTags(record) {
+    const mood = formatMood(record.mood);
     const tags = [
-        record.mood,
+        mood,
         `Chegou: ${record.arrival}`,
         `Saiu: ${record.departure}`,
         `Atividade: ${record.activityStatus}`,
@@ -273,8 +419,9 @@ function compactTags(record) {
 }
 
 function allRecordTags(record) {
+    const mood = formatMood(record.mood);
     return [
-        `Humor: ${record.mood}`,
+        mood ? `Humor: ${mood}` : "",
         `Chegou: ${record.arrival}`,
         `Saiu: ${record.departure}`,
         `Atividade: ${record.activityStatus}`,
@@ -285,7 +432,6 @@ function allRecordTags(record) {
 
 function renderRecordView(record, mode = "view") {
     const tags = allRecordTags(record);
-    const period = record.reportPeriod || selectedValue("reportPeriod") || "daily";
     const updatedDate = record.updatedAt ? new Date(record.updatedAt) : null;
     const updatedLabel = updatedDate && !Number.isNaN(updatedDate.getTime())
         ? updatedDate.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })
@@ -297,14 +443,14 @@ function renderRecordView(record, mode = "view") {
             <header>
                 <div>
                     <h2>${escapeHtml(record.student)}</h2>
-                    <p class="empty-state">Registro ${escapeHtml(periodLabel(period))}</p>
+                    <p class="empty-state">Registro do dia</p>
                 </div>
                 <time>${escapeHtml(formatDate(record.date))}</time>
             </header>
             <div class="record-meta">
                 <div><span>Registrado por</span><strong>${escapeHtml(record.recorder || "-")}</strong></div>
-                <div><span>E-mail</span><strong>${escapeHtml(record.recipientEmail || "-")}</strong></div>
-                <div><span>Período</span><strong>${escapeHtml(periodLabel(period))}</strong></div>
+                <div><span>Data</span><strong>${escapeHtml(formatDate(record.date))}</strong></div>
+                <div><span>Tipo</span><strong>Registro diário</strong></div>
                 <div><span>Atualizado</span><strong>${escapeHtml(updatedLabel)}</strong></div>
             </div>
             <div class="record-view-tags">
@@ -312,6 +458,7 @@ function renderRecordView(record, mode = "view") {
             </div>
             ${record.notes ? `<p class="record-view-note">${escapeHtml(record.notes)}</p>` : ""}
         </article>
+        ${renderReportBuilder(record)}
         <div class="record-view-actions">
             <button class="secondary-action" type="button" data-record-action="edit">Editar</button>
             <button class="secondary-action" type="button" data-record-action="new">Novo</button>
@@ -320,6 +467,138 @@ function renderRecordView(record, mode = "view") {
         </div>
         <p id="reportStatus" class="save-status" aria-live="polite"></p>
     `;
+}
+
+function selectedReportRecords(record) {
+    const records = recordsForStudent(record.student);
+    if (state.reportMode === "dates") {
+        return records
+            .filter((item) => state.reportDates.has(item.date))
+            .sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    return records
+        .filter((item) => sameReportPeriod(item.date, state.reportAnchor || record.date, state.reportMode))
+        .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+function reportDateSummary(records) {
+    if (!records.length) {
+        return "Nenhum registro encontrado";
+    }
+    if (records.length === 1) {
+        return formatDate(records[0].date);
+    }
+    return `${formatDate(records[0].date)} a ${formatDate(records[records.length - 1].date)}`;
+}
+
+function renderReportBuilder(record) {
+    const records = recordsForStudent(record.student);
+    const selected = selectedReportRecords(record);
+    const recipient = window.localStorage.getItem(STORAGE.recipient) || record.recipientEmail || "";
+    const monthOptions = [...new Map(records.map((item) => [item.date.slice(0, 7), monthLabel(item.date)])).entries()];
+    const groupedRecords = monthOptions.map(([month, label]) => {
+        const rows = records.filter((item) => item.date.startsWith(month)).map((item) => {
+            const selectedDate = state.reportDates.has(item.date);
+            const previewed = item.key === state.activeRecordKey;
+            const searchable = normalizeSearch([
+                dayLabel(item.date),
+                formatMood(item.mood),
+                item.arrival,
+                item.departure,
+                item.activityStatus,
+                item.appetite,
+                ...(item.flags || []),
+                item.notes
+            ].join(" "));
+            return `
+                <div class="report-date${selectedDate ? " is-selected" : ""}${previewed ? " is-previewed" : ""}" data-report-row data-month="${escapeHtml(month)}" data-search="${escapeHtml(searchable)}">
+                    <button class="report-date__preview" type="button" data-preview-record="${escapeHtml(item.key)}">
+                        <strong>${escapeHtml(dayLabel(item.date))}</strong>
+                        <span>${escapeHtml(compactTags(item).slice(0, 2).join(" · ") || "Abrir registro")}</span>
+                    </button>
+                    <button class="report-date__select" type="button" data-report-date="${escapeHtml(item.date)}" aria-pressed="${selectedDate}" aria-label="${selectedDate ? "Remover" : "Incluir"} ${escapeHtml(formatDate(item.date))} no relatório">
+                        <span aria-hidden="true">${selectedDate ? "✓" : "+"}</span>
+                    </button>
+                </div>
+            `;
+        }).join("");
+        return `<section class="report-month-group" data-report-month-group="${escapeHtml(month)}"><h3>${escapeHtml(label)}</h3>${rows}</section>`;
+    }).join("");
+
+    return `
+        <section class="report-builder" aria-labelledby="reportBuilderTitle">
+            <div class="report-builder__heading">
+                <div><p>RELATÓRIO</p><h2 id="reportBuilderTitle">Escolha o período</h2></div>
+                <span class="report-count">${selected.length} ${selected.length === 1 ? "dia" : "dias"}</span>
+            </div>
+            <div class="report-mode-tabs" role="group" aria-label="Tipo de período">
+                <button type="button" data-report-mode="dates" class="${state.reportMode === "dates" ? "is-active" : ""}">Dias escolhidos</button>
+                <button type="button" data-report-mode="weekly" class="${state.reportMode === "weekly" ? "is-active" : ""}">Semana inteira</button>
+                <button type="button" data-report-mode="monthly" class="${state.reportMode === "monthly" ? "is-active" : ""}">Mês inteiro</button>
+            </div>
+            ${state.reportMode === "dates" ? `
+                <div class="report-list-toolbar">
+                    <label class="report-search" for="reportSearch"><span class="sr-only">Buscar registros</span><input id="reportSearch" type="search" value="${escapeHtml(state.reportQuery)}" placeholder="Buscar observação ou registro"></label>
+                    <label class="report-month-filter" for="reportMonthFilter"><span class="sr-only">Filtrar por mês</span><select id="reportMonthFilter"><option value="all">Todos os meses</option>${monthOptions.map(([month, label]) => `<option value="${escapeHtml(month)}"${state.reportMonth === month ? " selected" : ""}>${escapeHtml(label)}</option>`).join("")}</select></label>
+                </div>
+                <p id="reportVisibleCount" class="report-visible-count"></p>
+                <div class="report-date-list" aria-label="Registros do aluno">${groupedRecords || `<p class="empty-state">Ainda não há dias registrados.</p>`}</div>
+                <p id="reportFilterEmpty" class="empty-state hidden">Nenhum registro corresponde à busca.</p>
+            ` : `
+                <label class="report-anchor-label" for="reportAnchor">
+                    <span>${state.reportMode === "weekly" ? "Escolha um dia da semana" : "Escolha um dia do mês"}</span>
+                    <input id="reportAnchor" type="date" value="${escapeHtml(state.reportAnchor || record.date)}">
+                </label>
+            `}
+            <div class="report-selection-summary">
+                <span>Período incluído</span>
+                <strong>${escapeHtml(reportDateSummary(selected))}</strong>
+                <small>${selected.length ? `${selected.length} registro${selected.length === 1 ? "" : "s"} será${selected.length === 1 ? "" : "ão"} usado${selected.length === 1 ? "" : "s"} no relatório.` : "Escolha um período que tenha registros salvos."}</small>
+            </div>
+            <label class="field-label report-email-label" for="reportRecipientEmail">Enviar relatório para</label>
+            <input id="reportRecipientEmail" type="email" autocomplete="off" value="${escapeHtml(recipient)}" placeholder="email@exemplo.com">
+        </section>
+    `;
+}
+
+function persistReportRecipient() {
+    const field = document.getElementById("reportRecipientEmail");
+    if (field) {
+        window.localStorage.setItem(STORAGE.recipient, normalizeName(field.value));
+    }
+}
+
+function applyReportListFilters() {
+    const query = normalizeSearch(state.reportQuery);
+    let visibleCount = 0;
+    document.querySelectorAll("[data-report-month-group]").forEach((group) => {
+        let groupCount = 0;
+        group.querySelectorAll("[data-report-row]").forEach((row) => {
+            const matchesMonth = state.reportMonth === "all" || row.dataset.month === state.reportMonth;
+            const matchesQuery = !query || row.dataset.search.includes(query);
+            const visible = matchesMonth && matchesQuery;
+            row.classList.toggle("hidden", !visible);
+            if (visible) {
+                groupCount += 1;
+                visibleCount += 1;
+            }
+        });
+        group.classList.toggle("hidden", groupCount === 0);
+    });
+    const count = document.getElementById("reportVisibleCount");
+    if (count) {
+        count.textContent = `${visibleCount} ${visibleCount === 1 ? "registro encontrado" : "registros encontrados"}`;
+    }
+    document.getElementById("reportFilterEmpty")?.classList.toggle("hidden", visibleCount !== 0);
+}
+
+function rerenderRecordView(record = activeRecord()) {
+    if (!record) {
+        return;
+    }
+    ui.recordView.innerHTML = renderRecordView(record);
+    applyReportListFilters();
 }
 
 function renderDrawerStudents() {
@@ -340,6 +619,12 @@ function renderDrawerHistory() {
         return;
     }
 
+    const reportShortcut = `
+        <button class="drawer-report-shortcut" type="button" data-open-student-report>
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7zM15 3v5h4M10 12h6m-6 4h6"/></svg>
+            <span><strong>Ver registros e criar relatório</strong><small>Escolha dias, uma semana ou um mês</small></span>
+        </button>
+    `;
     let currentMonth = "";
     const activeKey = state.activeRecordKey || currentKey();
     const html = records.map((record) => {
@@ -358,7 +643,7 @@ function renderDrawerHistory() {
         `;
     }).join("");
 
-    ui.drawerHistory.innerHTML = html;
+    ui.drawerHistory.innerHTML = reportShortcut + html;
 }
 
 function renderDrawer() {
@@ -389,7 +674,6 @@ function saveRecord(event) {
     const student = normalizeName(ui.studentName.value);
     const date = ui.recordDate.value;
     const recorder = normalizeName(ui.recorderName.value);
-    const recipientEmail = normalizeName(ui.recipientEmail.value);
     if (!student || !date || !recorder) {
         ui.saveStatus.textContent = "Preencha aluno, data e registrador.";
         return;
@@ -397,16 +681,13 @@ function saveRecord(event) {
 
     addStudent(student);
     window.localStorage.setItem(STORAGE.recorder, recorder);
-    window.localStorage.setItem(STORAGE.recipient, recipientEmail);
 
     const nextRecord = {
         key: currentKey(),
         student,
         date,
         recorder,
-        recipientEmail,
-        reportPeriod: selectedValue("reportPeriod"),
-        mood: selectedValue("mood"),
+        mood: selectedValues("mood"),
         arrival: selectedValue("arrival"),
         departure: selectedValue("departure"),
         activityStatus: selectedValue("activityStatus"),
@@ -432,24 +713,19 @@ function activeRecord() {
     return state.records.find((record) => record.key === state.activeRecordKey) || getRecordForCurrentDay();
 }
 
-function reportRecordsFor(record) {
-    const period = record.reportPeriod || "daily";
-    return state.records
-        .filter((item) => studentKey(item.student) === studentKey(record.student))
-        .filter((item) => sameReportPeriod(item.date, record.date, period))
-        .sort((a, b) => a.date.localeCompare(b.date));
-}
-
 function buildReportPayload(record) {
-    const period = record.reportPeriod || "daily";
-    const records = reportRecordsFor(record);
+    const period = state.reportMode;
+    const records = selectedReportRecords(record);
+    const recipientField = document.getElementById("reportRecipientEmail");
+    const recipientEmail = normalizeName(recipientField?.value || window.localStorage.getItem(STORAGE.recipient) || "");
+    window.localStorage.setItem(STORAGE.recipient, recipientEmail);
     return {
         student: record.student,
-        baseDate: record.date,
-        baseDisplayDate: formatDate(record.date),
+        baseDate: state.reportAnchor || record.date,
+        baseDisplayDate: reportDateSummary(records),
         period,
         periodLabel: periodLabel(period),
-        recipientEmail: record.recipientEmail || ui.recipientEmail.value || "",
+        recipientEmail,
         recorder: record.recorder || ui.recorderName.value || "",
         subject: `Agenda JOJO - ${record.student} - ${periodLabel(period)}`,
         body: [
@@ -465,7 +741,7 @@ function buildReportPayload(record) {
             date: item.date,
             displayDate: formatDate(item.date),
             recorder: item.recorder || "",
-            mood: item.mood || "",
+            mood: formatMood(item.mood),
             arrival: item.arrival || "",
             departure: item.departure || "",
             activityStatus: item.activityStatus || "",
@@ -486,6 +762,11 @@ function setReportStatus(message) {
 function sendReportToAndroid(action) {
     const record = activeRecord();
     if (!record) {
+        return;
+    }
+
+    if (!selectedReportRecords(record).length) {
+        setReportStatus("Escolha pelo menos um dia com registro.");
         return;
     }
 
@@ -521,6 +802,7 @@ function handleRecordAction(action) {
 
     if (action === "new") {
         ui.recordDate.value = todayIso();
+        updateDailyRecordLabel();
         clearCurrentForm();
         showForm();
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -533,14 +815,51 @@ function handleRecordAction(action) {
 function chooseStudent(name) {
     ui.studentName.value = name;
     ui.recordDate.value = todayIso();
+    updateDailyRecordLabel();
     ui.saveStatus.textContent = "";
     showForm();
     loadCurrentRecord();
 }
 
 document.addEventListener("click", (event) => {
+    const reportMode = event.target.closest("[data-report-mode]");
+    if (reportMode) {
+        persistReportRecipient();
+        state.reportMode = reportMode.dataset.reportMode;
+        rerenderRecordView();
+        return;
+    }
+
+    const reportDate = event.target.closest("[data-report-date]");
+    if (reportDate) {
+        persistReportRecipient();
+        const date = reportDate.dataset.reportDate;
+        if (state.reportDates.has(date)) {
+            state.reportDates.delete(date);
+        } else {
+            state.reportDates.add(date);
+        }
+        rerenderRecordView();
+        return;
+    }
+
+    const previewRecord = event.target.closest("[data-preview-record]");
+    if (previewRecord) {
+        persistReportRecipient();
+        const record = state.records.find((item) => item.key === previewRecord.dataset.previewRecord);
+        if (record) {
+            state.activeRecordKey = record.key;
+            rerenderRecordView(record);
+        }
+        return;
+    }
+
     const choice = event.target.closest(".choice-chip");
     if (choice) {
+        if (isMultiGroup(choice.dataset.group)) {
+            choice.classList.toggle("is-active");
+            return;
+        }
         setGroupValue(choice.dataset.group, choice.dataset.value);
         return;
     }
@@ -565,6 +884,14 @@ document.addEventListener("click", (event) => {
         return;
     }
 
+    const openStudentReport = event.target.closest("[data-open-student-report]");
+    if (openStudentReport) {
+        const latestRecord = getCurrentStudentRecords()[0];
+        showRecordView(latestRecord);
+        closeDrawer();
+        return;
+    }
+
     const recordAction = event.target.closest("[data-record-action]");
     if (recordAction) {
         handleRecordAction(recordAction.dataset.recordAction);
@@ -576,6 +903,8 @@ ui.drawerCloseBtn.addEventListener("click", closeDrawer);
 ui.drawerBackdrop.addEventListener("click", closeDrawer);
 ui.form.addEventListener("submit", saveRecord);
 ui.clearBtn.addEventListener("click", clearCurrentForm);
+ui.previousStepBtn.addEventListener("click", () => moveAgendaStep(-1));
+ui.nextStepBtn.addEventListener("click", () => moveAgendaStep(1));
 ui.addStudentBtn.addEventListener("click", () => {
     const name = normalizeName(ui.newStudentName.value);
     if (!name) {
@@ -598,8 +927,35 @@ ui.studentName.addEventListener("change", () => {
     loadCurrentRecord();
 });
 ui.recordDate.addEventListener("change", loadCurrentRecord);
+document.querySelectorAll(".agenda-details").forEach((section) => {
+    section.addEventListener("toggle", () => {
+        if (!section.open) return;
+        document.querySelectorAll(".agenda-details[open]").forEach((otherSection) => {
+            if (otherSection !== section) otherSection.open = false;
+        });
+    });
+});
 ui.recorderName.addEventListener("change", () => {
     window.localStorage.setItem(STORAGE.recorder, normalizeName(ui.recorderName.value));
+});
+document.addEventListener("change", (event) => {
+    if (event.target.id === "reportAnchor") {
+        state.reportAnchor = event.target.value;
+        rerenderRecordView();
+    }
+    if (event.target.id === "reportRecipientEmail") {
+        window.localStorage.setItem(STORAGE.recipient, normalizeName(event.target.value));
+    }
+    if (event.target.id === "reportMonthFilter") {
+        state.reportMonth = event.target.value;
+        applyReportListFilters();
+    }
+});
+document.addEventListener("input", (event) => {
+    if (event.target.id === "reportSearch") {
+        state.reportQuery = event.target.value;
+        applyReportListFilters();
+    }
 });
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && ui.drawer.classList.contains("is-open")) {
@@ -608,8 +964,9 @@ document.addEventListener("keydown", (event) => {
 });
 
 ui.recordDate.value = todayIso();
+updateDailyRecordLabel();
 ui.studentName.value = "";
 ui.recorderName.value = window.localStorage.getItem(STORAGE.recorder) || "";
-ui.recipientEmail.value = window.localStorage.getItem(STORAGE.recipient) || "";
 loadCurrentRecord();
 renderDrawer();
+renderAgendaStep();

@@ -1,0 +1,221 @@
+/* Final tablet agenda wizard override. Loaded after tablet.css by Android. */
+body.jojo-tablet.agenda-page .agenda-main {
+    grid-template-columns: minmax(0, 1fr) !important;
+    justify-items: center !important;
+    gap: 12px !important;
+}
+
+body.jojo-tablet.agenda-page .agenda-title,
+body.jojo-tablet.agenda-page #agendaForm,
+body.jojo-tablet.agenda-page #recordView {
+    width: min(100%, 1030px) !important;
+    max-width: 1030px !important;
+    grid-column: 1 / -1 !important;
+}
+
+body.jojo-tablet.agenda-page .agenda-title {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: end !important;
+    gap: 10px 18px !important;
+}
+
+body.jojo-tablet.agenda-page .agenda-title p {
+    margin: 0 !important;
+}
+
+body.jojo-tablet.agenda-page .agenda-title h1 {
+    justify-self: end !important;
+    text-align: right !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto auto auto !important;
+    grid-auto-flow: row !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details,
+body.jojo-tablet.agenda-page #agendaForm > #notesSection,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-actions,
+body.jojo-tablet.agenda-page #agendaForm > .save-status {
+    display: none !important;
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    justify-self: stretch !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student.is-wizard-active,
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active {
+    display: grid !important;
+    grid-row: 1 !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active {
+    display: block !important;
+    grid-row: 1 !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student.is-wizard-active,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active,
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active {
+    min-height: 0 !important;
+    padding: 18px !important;
+    border-radius: 26px !important;
+    align-content: center !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-student.is-wizard-active {
+    min-height: 230px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-step-nav {
+    display: grid !important;
+    grid-template-columns: 138px minmax(0, 1fr) 138px !important;
+    grid-row: 2 !important;
+    grid-column: 1 / -1 !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+body.jojo-tablet.agenda-page #agendaStepLabel {
+    min-height: 46px !important;
+    border-radius: 18px !important;
+    background: rgba(255, 255, 255, 0.78) !important;
+    box-shadow: inset 0 0 0 1px rgba(203, 219, 237, 0.9) !important;
+    display: grid !important;
+    place-items: center !important;
+    color: #2d5879 !important;
+    font-weight: 850 !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-actions.is-wizard-active {
+    display: grid !important;
+    grid-row: 3 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .save-status.is-wizard-active {
+    display: block !important;
+    grid-row: 4 !important;
+    min-height: 18px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active summary {
+    min-height: 34px !important;
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+    font-size: 1.08rem !important;
+    pointer-events: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active summary::after {
+    display: none !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-grid,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .flag-grid {
+    gap: 10px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-stack {
+    gap: 9px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .agenda-split {
+    width: 100% !important;
+    gap: 16px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-chip,
+body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .flag-chip {
+    min-height: 44px !important;
+    font-size: 0.82rem !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active {
+    min-height: 230px !important;
+}
+
+body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active textarea {
+    min-height: 132px !important;
+    resize: none !important;
+}
+
+@media (orientation: landscape) {
+    body.jojo-tablet.agenda-page .agenda-shell {
+        padding-top: calc(env(safe-area-inset-top, 0px) + 18px) !important;
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 96px) !important;
+    }
+
+    body.jojo-tablet.agenda-page .agenda-header {
+        min-height: 54px !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-student.is-wizard-active,
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active,
+    body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active {
+        min-height: 0 !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-student.is-wizard-active {
+        min-height: 220px !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > #notesSection.is-wizard-active {
+        min-height: 220px !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-grid,
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .flag-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .agenda-split {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--arrival.is-wizard-active {
+        padding: 14px 18px !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--arrival.is-wizard-active .choice-stack {
+        gap: 6px !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details--arrival.is-wizard-active .choice-chip {
+        min-height: 38px !important;
+    }
+}
+
+@media (orientation: portrait) {
+    body.jojo-tablet.agenda-page .agenda-title {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    body.jojo-tablet.agenda-page .agenda-title h1 {
+        justify-self: start !important;
+        text-align: left !important;
+    }
+
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .choice-grid,
+    body.jojo-tablet.agenda-page #agendaForm > .agenda-details.is-wizard-active .flag-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}

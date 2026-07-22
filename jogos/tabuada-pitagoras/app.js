@@ -6,12 +6,14 @@ const ui = {
     factorBInput: document.getElementById("factorBInput"),
     topAnswerValue: document.getElementById("topAnswerValue"),
     grid: document.getElementById("pitagorasGrid"),
+    resultPanel: document.getElementById("resultPanel"),
+    resultEquation: document.getElementById("resultEquation"),
+    resultValue: document.getElementById("resultValue"),
     statusText: document.getElementById("statusText"),
+    nextBtn: document.getElementById("nextBtn"),
     modeBtn: document.getElementById("modeBtn"),
-    shuffleBtn: document.getElementById("shuffleBtn"),
     clearBtn: document.getElementById("clearBtn"),
-    showBtn: document.getElementById("showBtn"),
-    fullscreenBtn: document.getElementById("fullscreenBtn")
+    showBtn: document.getElementById("showBtn")
 };
 
 const state = {
@@ -62,7 +64,6 @@ function updateModeUI() {
     ui.modeBtn.setAttribute("aria-label", automatic ? "Modo automático" : "Modo manual");
     ui.factorAInput.readOnly = automatic;
     ui.factorBInput.readOnly = automatic;
-    ui.shuffleBtn.disabled = !automatic;
 }
 
 function setMode(mode, silent = false) {
@@ -86,25 +87,6 @@ function toggleMode() {
     setMode(state.mode === "automatic" ? "manual" : "automatic");
 }
 
-function shuffleProblem() {
-    if (state.mode !== "automatic") {
-        return;
-    }
-
-    const previous = `${state.a}-${state.b}`;
-    let nextA = randomFactor();
-    let nextB = randomFactor();
-    for (let attempt = 0; attempt < 5 && `${nextA}-${nextB}` === previous; attempt += 1) {
-        nextA = randomFactor();
-        nextB = randomFactor();
-    }
-    state.a = nextA;
-    state.b = nextB;
-    syncInputs();
-    softTone(0.58, 1.06);
-    clearSelection();
-}
-
 function applyManualProblem() {
     if (state.mode !== "manual") {
         return;
@@ -124,6 +106,11 @@ function clearSelection() {
     render();
 }
 
+function resultEquationText(revealed = false) {
+    const currentAnswer = revealed && answer() !== null ? answer() : "?";
+    return `${formatTarget(state.a)} × ${formatTarget(state.b)} = ${currentAnswer}`;
+}
+
 function revealAnswer() {
     if (!hasProblem()) {
         softTone(0.28, 0.74);
@@ -139,11 +126,6 @@ function revealAnswer() {
     render();
 }
 
-function matchesProblem(row, column) {
-    return hasProblem()
-        && ((row === state.a && column === state.b) || (row === state.b && column === state.a));
-}
-
 function selectCell(row, column) {
     state.selectedRow = row;
     state.selectedColumn = column;
@@ -157,7 +139,7 @@ function selectCell(row, column) {
         return;
     }
 
-    if (matchesProblem(row, column)) {
+    if (row === state.a && column === state.b) {
         state.revealed = true;
         state.wrongKey = null;
         softTone(0.95, 1.26);
@@ -195,6 +177,12 @@ function render() {
     const answerText = state.revealed && currentAnswer !== null ? currentAnswer : "?";
     ui.topAnswerValue.textContent = answerText;
     ui.topAnswerValue.classList.toggle("is-visible", state.revealed);
+    ui.resultEquation.textContent = resultEquationText(state.revealed);
+    ui.resultValue.textContent = answerText;
+    ui.resultPanel.classList.toggle("is-ready", hasProblem());
+    ui.resultPanel.classList.toggle("is-revealed", state.revealed);
+    ui.nextBtn.disabled = !state.revealed;
+    ui.nextBtn.textContent = state.mode === "automatic" ? "Próxima conta" : "Nova rodada";
     renderGrid();
     renderStatus();
 }
@@ -233,7 +221,7 @@ function renderGrid() {
             const isRow = state.selectedRow === row;
             const isColumn = state.selectedColumn === column;
             const isSelected = state.selectedCellKey === key;
-            const isCorrect = state.revealed && matchesProblem(row, column);
+            const isCorrect = state.revealed && row === state.a && column === state.b;
             const isWrong = state.wrongKey === key;
             const classes = [
                 "grid-cell",
@@ -273,7 +261,7 @@ function renderStatus() {
     }
 
     if (state.selectedRow && state.selectedColumn) {
-        if (matchesProblem(state.selectedRow, state.selectedColumn)) {
+        if (state.selectedRow === state.a && state.selectedColumn === state.b) {
             ui.statusText.textContent = "Agora toque no resultado.";
             return;
         }
@@ -292,6 +280,16 @@ function renderStatus() {
     }
 
     ui.statusText.textContent = "Escolha os dois números.";
+}
+
+function nextRound() {
+    if (state.mode === "automatic") {
+        state.a = randomFactor();
+        state.b = randomFactor();
+        syncInputs();
+    }
+    clearSelection();
+    softTone(0.74, 1.08);
 }
 
 function ensureAudio() {
@@ -335,18 +333,6 @@ function softTone(intensity = 0.6, pitch = 1) {
     osc.stop(now + duration);
 }
 
-async function toggleFullscreen() {
-    try {
-        if (document.fullscreenElement) {
-            await document.exitFullscreen();
-        } else {
-            await document.documentElement.requestFullscreen();
-        }
-    } catch {
-        softTone(0.28, 0.8);
-    }
-}
-
 ui.grid.addEventListener("click", (event) => {
     const button = event.target.closest("button");
     if (!button) {
@@ -375,10 +361,9 @@ ui.soundBtn.addEventListener("click", () => {
 });
 
 ui.modeBtn.addEventListener("click", toggleMode);
-ui.shuffleBtn.addEventListener("click", shuffleProblem);
 ui.clearBtn.addEventListener("click", clearSelection);
 ui.showBtn.addEventListener("click", revealAnswer);
-ui.fullscreenBtn?.addEventListener("click", toggleFullscreen);
+ui.nextBtn.addEventListener("click", nextRound);
 ui.factorAInput.addEventListener("input", applyManualProblem);
 ui.factorBInput.addEventListener("input", applyManualProblem);
 ui.factorAInput.addEventListener("change", applyManualProblem);

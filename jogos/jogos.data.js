@@ -49,13 +49,6 @@ window.JOJO_GAMES = {
                     href: "./tabuada-pitagoras/index.html",
                     art: "../assets/jojo-card-pitagoras.png",
                     status: "Praticar"
-                },
-                {
-                    title: "Cabo de Guerra",
-                    description: "Versão completa do cabo de guerra matemático.",
-                    href: "./cabo-de-guerra-operacoes-fracoes/index.html",
-                    art: "../assets/jojo-card-cabo-guerra.png",
-                    status: "Jogar"
                 }
             ]
         },

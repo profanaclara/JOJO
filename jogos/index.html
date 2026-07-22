@@ -25,7 +25,7 @@
     </style>
     <link rel="stylesheet" href="../styles/main.css?v=16">
     <link rel="stylesheet" href="../styles/menu.css?v=8">
-    <link rel="stylesheet" href="./jogos.css?v=5">
+    <link rel="stylesheet" href="./jogos.css?v=3">
 </head>
 <body class="jogos-hub-page">
     <div class="jogos-shell">
@@ -58,9 +58,37 @@
             <section id="jogosGrid" class="jogos-grid" aria-live="polite"></section>
         </main>
 
+        <div id="panelBackdrop" class="panel-backdrop hidden"></div>
+        <section id="infoPanel" class="info-panel hidden" aria-hidden="true" aria-labelledby="panelTitle">
+            <div class="sheet-handle" aria-hidden="true"></div>
+            <header class="info-panel__header">
+                <div>
+                    <p>JOJO</p>
+                    <h2 id="panelTitle">Ferramentas</h2>
+                </div>
+                <button id="panelCloseBtn" class="icon-button" type="button" aria-label="Fechar painel">×</button>
+            </header>
+            <p id="panelDescription" class="info-panel__description">Atalhos rápidos para organizar a aula.</p>
+            <div id="panelContent" class="info-panel__content"></div>
+        </section>
+
+        <nav class="jojo-bottom-nav" aria-label="Navegação principal">
+            <a class="jojo-bottom-nav__item" href="../index.html" data-nav="home" aria-label="Início" aria-current="false">
+                <img class="jojo-nav-icon" src="../assets/jojo-nav-home.png" alt="" aria-hidden="true">
+                <span class="sr-only">Início</span>
+            </a>
+            <button class="jojo-bottom-nav__item is-active" type="button" data-nav="jogos" aria-label="Jogos" aria-current="page">
+                <img class="jojo-nav-icon" src="../assets/jojo-nav-jogos.png" alt="" aria-hidden="true">
+                <span class="sr-only">Jogos</span>
+            </button>
+            <a class="jojo-bottom-nav__item" href="./timer/index.html" data-nav="ferramentas" aria-label="Ferramentas" aria-current="false">
+                <img class="jojo-nav-icon" src="../assets/jojo-nav-ferramentas.png" alt="" aria-hidden="true">
+                <span class="sr-only">Ferramentas</span>
+            </a>
+        </nav>
     </div>
 
-    <script src="./jogos.data.js?v=10"></script>
-    <script src="./jogos.js?v=8"></script>
+    <script src="./jogos.data.js?v=6"></script>
+    <script src="./jogos.js?v=6"></script>
 </body>
 </html>
