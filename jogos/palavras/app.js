@@ -22,7 +22,6 @@ const ui = {
     fullscreenBtn: document.getElementById("fullscreenBtn"),
     exitFullscreenBtn: document.getElementById("exitFullscreenBtn"),
     sessionSoundBtn: document.getElementById("sessionSoundBtn"),
-    rotateScreenBtn: document.getElementById("rotateScreenBtn"),
     letterButtons: [...document.querySelectorAll("[data-letter-option]")],
     modeButtons: [...document.querySelectorAll("[data-mode-option]")],
     startSessionBtn: document.getElementById("startSessionBtn"),
@@ -226,6 +225,7 @@ function switchScreen(nextScreen) {
     ui.body.classList.toggle("session-active", nextScreen === "session");
     ui.body.classList.toggle("result-active", nextScreen === "result");
     syncFullscreenState();
+    window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 function syncFullscreenState() {
@@ -476,27 +476,6 @@ function toggleSound() {
     }
 }
 
-async function requestLandscapeOrientation() {
-    if (state.soundEnabled) {
-        playToggleSound();
-    }
-
-    try {
-        if (document.fullscreenElement == null && document.documentElement.requestFullscreen) {
-            await document.documentElement.requestFullscreen();
-        }
-
-        if (screen.orientation?.lock) {
-            await screen.orientation.lock("landscape");
-            return;
-        }
-    } catch (error) {
-        console.warn("Nao foi possivel ativar o modo horizontal.", error);
-    }
-
-    window.alert("Se o celular não girar sozinho, ative a rotação automática e vire o aparelho para a horizontal.");
-}
-
 function retrySession() {
     if (!state.mode || !state.letter) {
         goHome();
@@ -538,7 +517,6 @@ ui.toggleSoundBtn.addEventListener("click", toggleSound);
 ui.fullscreenBtn.addEventListener("click", enterFullscreen);
 ui.exitFullscreenBtn.addEventListener("click", exitFullscreen);
 ui.sessionSoundBtn.addEventListener("click", toggleSound);
-ui.rotateScreenBtn.addEventListener("click", requestLandscapeOrientation);
 ui.openInfoBtn.addEventListener("click", openInfoModal);
 ui.closeInfoBtn.addEventListener("click", closeInfoModal);
 ui.infoModal.addEventListener("click", (event) => {

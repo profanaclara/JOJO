@@ -7,10 +7,14 @@ const ui = {
     topAnswerValue: document.getElementById("topAnswerValue"),
     grid: document.getElementById("pitagorasGrid"),
     statusText: document.getElementById("statusText"),
+    resultPanel: document.getElementById("resultPanel"),
+    resultEquation: document.getElementById("resultEquation"),
+    resultValue: document.getElementById("resultValue"),
     modeBtn: document.getElementById("modeBtn"),
     shuffleBtn: document.getElementById("shuffleBtn"),
     clearBtn: document.getElementById("clearBtn"),
     showBtn: document.getElementById("showBtn"),
+    nextBtn: document.getElementById("nextBtn"),
     fullscreenBtn: document.getElementById("fullscreenBtn")
 };
 
@@ -195,6 +199,10 @@ function render() {
     const answerText = state.revealed && currentAnswer !== null ? currentAnswer : "?";
     ui.topAnswerValue.textContent = answerText;
     ui.topAnswerValue.classList.toggle("is-visible", state.revealed);
+    ui.resultEquation.textContent = `${formatTarget(state.a)} × ${formatTarget(state.b)} = ${answerText}`;
+    ui.resultValue.textContent = answerText;
+    ui.resultPanel.classList.toggle("is-revealed", state.revealed);
+    ui.nextBtn.disabled = !state.revealed;
     renderGrid();
     renderStatus();
 }
@@ -378,6 +386,17 @@ ui.modeBtn.addEventListener("click", toggleMode);
 ui.shuffleBtn.addEventListener("click", shuffleProblem);
 ui.clearBtn.addEventListener("click", clearSelection);
 ui.showBtn.addEventListener("click", revealAnswer);
+ui.nextBtn.addEventListener("click", () => {
+    if (state.mode === "automatic") {
+        shuffleProblem();
+        return;
+    }
+    state.a = null;
+    state.b = null;
+    syncInputs();
+    clearSelection();
+    ui.factorAInput.focus();
+});
 ui.fullscreenBtn?.addEventListener("click", toggleFullscreen);
 ui.factorAInput.addEventListener("input", applyManualProblem);
 ui.factorBInput.addEventListener("input", applyManualProblem);

@@ -52,6 +52,13 @@ body.session-active.textos-fullscreen {
     overflow: hidden;
 }
 
+body.textos-fullscreen .screen--session {
+    background:
+        radial-gradient(circle at 12% 10%, rgba(75, 132, 244, 0.1), transparent 24%),
+        radial-gradient(circle at 88% 86%, rgba(255, 197, 91, 0.12), transparent 22%),
+        linear-gradient(145deg, #f8fbff, #eef5ff);
+}
+
 button,
 a {
     font: inherit;

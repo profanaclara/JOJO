@@ -80,6 +80,13 @@ window.JOJO_DATA = {
             type: "list",
             items: [
                 {
+                    title: "Agenda",
+                    description: "Registre o dia e acompanhe o histórico de cada aluno.",
+                    art: "./assets/jojo-home-registros.png",
+                    tag: "Ferramenta",
+                    href: "./agenda/"
+                },
+                {
                     title: "Timer",
                     description: "Organize o tempo da sala de forma leve.",
                     art: "./assets/jojo-card-timer.png",

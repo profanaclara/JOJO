@@ -29,7 +29,7 @@
             font-display: swap;
         }
     </style>
-    <link rel="stylesheet" href="./styles.css?v=13">
+    <link rel="stylesheet" href="./styles.css?v=15">
 </head>
 <body class="pitagoras-page">
     <div class="pitagoras-shell layout-board">
@@ -75,11 +75,17 @@
             <footer class="game-actions layout-count">
                 <button id="clearBtn" class="soft-button" type="button">Limpar</button>
                 <button id="showBtn" class="soft-button soft-button--primary" type="button">Mostrar</button>
-                <p id="statusText" class="result-text">Escolha os dois números.</p>
+                <div id="resultPanel" class="animated-result" aria-live="polite">
+                    <p class="eyebrow">Resultado animado</p>
+                    <div id="resultEquation" class="animated-result__equation">? × ? = ?</div>
+                    <output id="resultValue" class="animated-result__value">?</output>
+                    <p id="statusText" class="result-text">Escolha os dois números.</p>
+                </div>
+                <button id="nextBtn" class="soft-button soft-button--primary next-button" type="button" disabled>Próxima conta</button>
             </footer>
         </main>
     </div>
 
-    <script src="./app.js?v=8"></script>
+    <script src="./app.js?v=9"></script>
 </body>
 </html>

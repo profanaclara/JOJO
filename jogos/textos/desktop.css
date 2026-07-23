@@ -1,0 +1,19 @@
+#sessionScreen:fullscreen,
+body.textos-fullscreen #sessionScreen {
+    width: 100vw !important;
+    max-width: none !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    margin: 0 !important;
+    background:
+        radial-gradient(circle at 12% 10%, rgba(75, 132, 244, 0.1), transparent 24%),
+        radial-gradient(circle at 88% 86%, rgba(255, 197, 91, 0.12), transparent 22%),
+        linear-gradient(145deg, #f8fbff, #eef5ff) !important;
+}
+
+@media (min-width: 900px) {
+    .orientation-button {
+        display: none !important;
+    }
+}

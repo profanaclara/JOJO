@@ -29,7 +29,7 @@
             font-display: swap;
         }
     </style>
-    <link rel="stylesheet" href="./styles.css?v=8">
+    <link rel="stylesheet" href="./styles.css?v=10">
 </head>
 <body class="popit-page">
     <div class="popit-shell layout-board">
@@ -93,7 +93,15 @@
                     </div>
                     <output id="countedValue" aria-label="Bolinhas contadas">0</output>
                 </div>
-                <div id="countTray" class="count-tray" aria-label="Campo de contagem"></div>
+                <div class="count-stack">
+                    <div id="countTray" class="count-tray" aria-label="Campo de contagem"></div>
+                    <div id="countResult" class="count-result" aria-live="polite">
+                        <span class="count-result__label">Resultado da soma</span>
+                        <strong id="resultEquation" class="count-result__equation">? + ? = ?</strong>
+                        <strong id="resultValue" class="count-result__value">?</strong>
+                        <p id="resultHint" class="count-result__hint">Conte todas as bolinhas para descobrir.</p>
+                    </div>
+                </div>
             </section>
 
             <footer class="game-actions layout-actions">
@@ -104,6 +112,6 @@
         </main>
     </div>
 
-    <script src="./app.js?v=9"></script>
+    <script src="./app.js?v=10"></script>
 </body>
 </html>

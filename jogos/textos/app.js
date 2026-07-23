@@ -137,7 +137,6 @@ const ui = {
     fullscreenTimerValue: document.getElementById("fullscreenTimerValue"),
     fullscreenErrorDock: document.getElementById("fullscreenErrorDock"),
     fullscreenErrorValue: document.getElementById("fullscreenErrorValue"),
-    rotateScreenBtn: document.getElementById("rotateScreenBtn"),
     selectionBackBtn: document.getElementById("selectionBackBtn"),
     selectionEyebrow: document.getElementById("selectionEyebrow"),
     selectionTitle: document.getElementById("selectionTitle"),
@@ -352,6 +351,7 @@ function switchScreen(nextScreen) {
     ui.selectionScreen.classList.toggle("hidden", nextScreen !== "selection");
     ui.sessionScreen.classList.toggle("hidden", nextScreen !== "session");
     ui.body.classList.toggle("session-active", nextScreen === "session");
+    window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 function updateSoundButtons() {
@@ -538,25 +538,6 @@ async function exitFullscreen() {
     } catch (error) {
         console.warn("Nao foi possivel sair da tela cheia.", error);
     }
-}
-
-async function requestLandscapeOrientation() {
-    playUiSound();
-
-    try {
-        if (document.fullscreenElement == null && document.documentElement.requestFullscreen) {
-            await document.documentElement.requestFullscreen();
-        }
-
-        if (screen.orientation?.lock) {
-            await screen.orientation.lock("landscape");
-            return;
-        }
-    } catch (error) {
-        console.warn("Nao foi possivel travar a tela na horizontal.", error);
-    }
-
-    window.alert("Se o celular não girar sozinho, ative a rotação automática e vire o aparelho para a horizontal.");
 }
 
 function resetTimerVisual() {
@@ -1360,7 +1341,6 @@ ui.sessionSoundBtn.addEventListener("click", toggleSound);
 ui.toggleBoldBtn.addEventListener("click", toggleTextBold);
 ui.toggleFullscreenBtn.addEventListener("click", enterFullscreen);
 ui.exitFullscreenBtn.addEventListener("click", exitFullscreen);
-ui.rotateScreenBtn.addEventListener("click", requestLandscapeOrientation);
 ui.selectionBackBtn.addEventListener("click", goBackFromSelection);
 ui.sessionHomeBtn.addEventListener("click", goHome);
 ui.backToSelectionBtn.addEventListener("click", backToSelection);

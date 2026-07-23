@@ -3,208 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#d8e8ff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="JOJO">
-    <title>JOJO | TIMER</title>
+    <meta name="theme-color" content="#dcecff">
+    <title>JOJO | Timer</title>
     <link rel="manifest" href="../../manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icon-192.png">
-    <link rel="apple-touch-icon" href="../../assets/icon-192.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css?v=3">
+    <style>
+        @font-face { font-family: "Archivo"; src: url("../../assets/fonts/archivo-latin.woff2") format("woff2"); font-weight: 500 800; font-display: swap; }
+        @font-face { font-family: "Inter"; src: url("../../assets/fonts/inter-latin.woff2") format("woff2"); font-weight: 400 800; font-display: swap; }
+    </style>
+    <link rel="stylesheet" href="./styles.css?v=34">
 </head>
 <body>
-    <div class="app-shell">
-        <div class="utility-dock" aria-label="Controles rápidos">
-            <button id="soundToggleBtn" class="ghost-button ghost-button--pill sound-toggle utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                <span aria-hidden="true">🔊</span>
-                <span class="sr-only">Som ligado</span>
-            </button>
-            <button id="fullscreenBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Entrar em tela cheia">
-                <span aria-hidden="true">⛶</span>
-                <span class="sr-only">Entrar em tela cheia</span>
-            </button>
-            <button id="exitFullscreenBtn" class="ghost-button ghost-button--pill utility-button hidden" type="button" aria-label="Sair da tela cheia">
-                <span aria-hidden="true">⤫</span>
-                <span class="sr-only">Sair da tela cheia</span>
-            </button>
-        </div>
+    <main class="timer-app">
+        <header class="app-header">
+            <a class="round-button" href="../../" aria-label="Voltar para a plataforma">←</a>
+            <img class="app-logo" src="../../assets/jojo-horizontal.svg" alt="JOJO">
+            <div class="header-actions">
+                <button id="soundToggleBtn" class="round-button" type="button" aria-pressed="true" aria-label="Desligar som">
+                    <img src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                </button>
+                <button id="fullscreenBtn" class="round-button" type="button" aria-label="Entrar em tela cheia">⛶</button>
+            </div>
+        </header>
 
-        <div id="homeScreen" class="screen screen--home">
-            <div class="top-actions top-actions--home">
-                <a class="brand-link" href="../../" aria-label="Voltar à JOJO">
-                    <img src="../../assets/jojo-horizontal.svg" alt="JOJO">
-                </a>
-                <div class="top-actions__group">
-                    <button id="openInfoBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Abrir ajuda">
-                        <span aria-hidden="true">?</span>
-                        <span class="sr-only">Abrir ajuda</span>
-                    </button>
+        <section id="homeScreen" class="screen screen--home">
+            <div class="title-row">
+                <div>
+                    <p class="eyebrow">Ferramentas</p>
+                    <h1>Timer</h1>
                 </div>
+                <p class="title-hint">Escolha uma rotina.</p>
             </div>
 
-            <header class="home-hero">
-                <h1>TIMER</h1>
-            </header>
-
-            <div class="home-workspace">
-                <section class="choice-section">
-                    <div class="mode-grid">
-                        <button class="mode-card mode-card--lanche" type="button" data-mode="lanche">
-                            <img class="mode-card__icon mode-card__icon--food" src="./assets/comida.svg" alt="" aria-hidden="true">
-                            <strong>Lanche</strong>
-                        </button>
-
-                        <button class="mode-card mode-card--casa" type="button" data-mode="casa">
-                            <img class="mode-card__icon mode-card__icon--home" src="./assets/casa.gif" alt="" aria-hidden="true">
-                            <strong>Casa</strong>
-                        </button>
-                    </div>
-                </section>
-
-                <section id="setupCard" class="surface-card setup-card hidden" aria-live="polite">
-                    <div class="setup-card__header">
-                        <div>
-                            <p id="setupEyebrow" class="eyebrow"></p>
-                            <h2 id="setupTitle"></h2>
-                            <p id="setupSubtitle" class="section-text"></p>
-                        </div>
-                        <button id="changeModeBtn" class="text-link-button" type="button">Trocar tipo</button>
-                    </div>
-
-                    <div class="input-grid">
-                        <label class="time-field" for="hoursInput">
-                            <span>Horas</span>
-                            <input id="hoursInput" type="number" min="0" max="8" inputmode="numeric" placeholder="0">
-                        </label>
-
-                        <label class="time-field" for="minutesInput">
-                            <span>Minutos</span>
-                            <input id="minutesInput" type="number" min="0" max="59" inputmode="numeric" placeholder="15">
-                        </label>
-                    </div>
-
-                    <div class="preview-panel">
-                        <div class="preview-panel__time">
-                            <span class="preview-panel__label">Tempo digitado</span>
-                            <strong id="timePreview">00:15:00</strong>
-                        </div>
-                        <p id="validationMessage" class="preview-panel__hint"></p>
-                    </div>
-
-                    <button id="startTimerBtn" class="primary-button" type="button" disabled>Começar timer</button>
-                </section>
-            </div>
-
-            <footer class="home-footer" aria-label="Créditos do timer">
-                <img
-                    class="home-footer__logo"
-                    src="../../assets/logo-profanapixelart.png"
-                    alt="Logo Ana Clara Silva de Lima"
-                >
-                <p>Idealizado por Ana Clara Silva de Lima</p>
-            </footer>
-        </div>
-
-        <div id="timerScreen" class="screen screen--timer hidden">
-            <div class="top-actions top-actions--timer">
-                <a class="brand-link brand-link--timer" href="../../" aria-label="Voltar à JOJO">
-                    <img src="../../assets/jojo-horizontal.svg" alt="JOJO">
-                </a>
-                <button id="backHomeBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-label="Voltar ao timer">
-                    <span aria-hidden="true">←</span>
-                    <span class="sr-only">Voltar ao timer</span>
+            <div class="mode-grid" aria-label="Tipos de timer">
+                <button class="mode-card mode-card--lanche" type="button" data-mode="lanche">
+                    <img src="../../assets/jojo-timer-lanche.png" alt="">
+                    <strong>Lanche</strong>
+                </button>
+                <button class="mode-card mode-card--casa" type="button" data-mode="casa">
+                    <img src="../../assets/jojo-timer-casa.png" alt="">
+                    <strong>Casa</strong>
+                </button>
+                <button class="mode-card mode-card--livre" type="button" data-mode="livre">
+                    <img src="../../assets/jojo-timer-cronometro.png" alt="">
+                    <strong>Cronômetro</strong>
                 </button>
             </div>
 
-            <header class="timer-header">
-                <p id="timerModeEyebrow" class="eyebrow hidden"></p>
-                <h2 id="timerModeTitle" class="hidden"></h2>
-                <p id="timerStatusText" class="timer-status-text hidden"></p>
-            </header>
-
-            <section id="journeyCard" class="surface-card journey-card">
-                <div class="journey-card__top">
+            <section id="setupPanel" class="setup-panel hidden" aria-live="polite">
+                <div class="setup-heading">
                     <div>
-                        <span class="mini-label">Tempo restante</span>
-                        <strong id="countdownValue" class="countdown-value">00:15:00</strong>
+                        <p class="eyebrow">Configurar</p>
+                        <h2 id="setupTitle">Lanche</h2>
                     </div>
+                    <button id="changeModeBtn" class="text-button" type="button">Trocar tipo</button>
                 </div>
-
-                <div class="journey-scene">
-                    <div class="journey-track">
-                        <div id="journeyMilestones" class="journey-milestones"></div>
-                        <div id="journeyBasePath" class="journey-path"></div>
-                        <div id="journeyProgress" class="journey-path journey-path--progress"></div>
-                        <div id="studentMarker" class="student-marker">
-                            <img src="./assets/crianca.gif" alt="Estudante caminhando">
-                        </div>
-                        <div class="destination-marker">
-                            <img id="destinationAsset" src="" alt="">
-                            <span id="destinationLabel"></span>
-                        </div>
-                    </div>
+                <div class="time-fields">
+                    <label>Horas<input id="hoursInput" type="number" min="0" max="8" value="0" inputmode="numeric"></label>
+                    <span aria-hidden="true">:</span>
+                    <label>Minutos<input id="minutesInput" type="number" min="0" max="59" value="15" inputmode="numeric"></label>
                 </div>
-
-                <div class="journey-card__bottom">
-                    <p id="journeyMessage" class="journey-message"></p>
-                    <div class="time-split">
-                        <article class="time-split__card">
-                            <span class="mini-label">Já passou</span>
-                            <strong id="elapsedTimeValue">00:00:00</strong>
-                        </article>
-                    </div>
+                <div class="preset-row" aria-label="Atalhos de tempo">
+                    <button type="button" data-preset="5">5 min</button>
+                    <button type="button" data-preset="10">10 min</button>
+                    <button type="button" data-preset="15">15 min</button>
+                    <button type="button" data-preset="20">20 min</button>
+                    <button type="button" data-preset="30">30 min</button>
                 </div>
+                <div class="setup-footer">
+                    <div class="time-preview"><span>Tempo definido</span><strong id="timePreview">00:15:00</strong></div>
+                    <button id="startTimerBtn" class="primary-button" type="button">Iniciar</button>
+                </div>
+                <p id="validationMessage" class="validation-message" role="alert"></p>
             </section>
+        </section>
 
-            <div class="controls">
-                <button id="pauseBtn" class="control-button control-button--pause" type="button">⏸️ Pausar</button>
-                <button id="resumeBtn" class="control-button control-button--resume" type="button" disabled>▶️ Continuar</button>
-                <button id="resetBtn" class="control-button control-button--reset" type="button">🔄 Recomeçar</button>
-                <button id="newTimerBtn" class="control-button control-button--back" type="button">✨ Novo timer</button>
-            </div>
-        </div>
-
-        <div id="finishScreen" class="screen screen--finish hidden">
-            <div class="finish-card">
-                <p class="eyebrow">CHEGOU A HORA</p>
-                <div id="finishEmoji" class="finish-card__emoji"></div>
-                <div id="finishVisuals" class="finish-card__visuals hidden"></div>
-                <h2 id="finishTitle"></h2>
-                <p id="finishText" class="finish-card__text"></p>
-                <span id="finishBadge" class="finish-card__badge"></span>
-                <div class="finish-card__actions">
-                    <button id="finishNewTimerBtn" class="primary-button" type="button">✨ Criar novo timer</button>
-                    <button id="finishSameModeBtn" class="ghost-button" type="button">🔁 Usar o mesmo tipo</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="infoModal" class="modal hidden" aria-hidden="true">
-            <div class="modal__backdrop"></div>
-            <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
-                <div class="modal__header">
-                    <div>
-                        <p class="eyebrow">Informações</p>
-                        <h2 id="infoTitle">Ajuda</h2>
+        <section id="timerScreen" class="screen screen--running hidden">
+            <div id="journeyLayout" class="journey-running-layout hidden">
+                <section id="journeyCard" class="journey-card-classic">
+                    <div class="journey-card-classic__top">
+                        <span class="mini-label">Tempo restante</span>
+                        <strong id="journeyCountdownValue" class="journey-countdown">00:15:00</strong>
                     </div>
-                    <button id="closeInfoBtn" class="icon-button" type="button" aria-label="Fechar">×</button>
+
+                    <div id="journeyScene" class="journey-scene">
+                        <div class="journey-track">
+                            <div id="journeyMilestones" class="journey-milestones"></div>
+                            <div id="journeyBasePath" class="journey-path"></div>
+                            <div id="journeyProgress" class="journey-path journey-path--progress"></div>
+                            <img id="studentMarker" class="student-marker" src="./assets/crianca.webp" alt="Criança caminhando">
+                            <div class="destination-marker">
+                                <img id="destinationMarker" src="" alt="Destino do timer">
+                            </div>
+                        </div>
+                    </div>
+
+                    <article class="journey-elapsed-card">
+                        <span class="mini-label">Já passou</span>
+                        <strong id="journeyElapsedValue">00:00:00</strong>
+                    </article>
+                </section>
+            </div>
+
+            <div id="hourglassLayout" class="hourglass-running-layout hidden">
+                <div class="running-bar">
+                    <button id="backMenuBtn" class="round-button" type="button" aria-label="Voltar aos tipos de timer">←</button>
+                    <div class="running-time">
+                        <span>Tempo restante</span>
+                        <strong id="countdownValue">00:15:00</strong>
+                    </div>
+                    <span id="runningMode" class="mode-badge">Cronômetro</span>
                 </div>
 
-                <div class="modal__content">
-                    <div id="aboutParagraphs" class="about-copy"></div>
-                    <ul id="aboutBullets" class="bullet-list"></ul>
-                    <p id="aboutFooter" class="about-footer"></p>
+                <section class="visual-stage">
+                    <div id="hourglassScene" class="hourglass-scene">
+                    <canvas id="hourglassCanvas" class="hourglass-canvas" width="200" height="400" aria-label="Ampulheta animada"></canvas>
+                    </div>
+                </section>
+            </div>
+
+            <div class="running-footer">
+                <div class="elapsed-card"><span>Tempo corrido</span><strong id="elapsedValue">00:00:00</strong></div>
+                <div class="controls">
+                    <button id="pauseBtn" class="control-button control-button--pause" type="button">⏸ Pausar</button>
+                    <button id="resumeBtn" class="control-button control-button--resume" type="button" disabled>▶ Continuar</button>
+                    <button id="resetBtn" class="control-button control-button--reset" type="button">↻ Recomeçar</button>
+                    <button id="newTimerBtn" class="control-button control-button--back" type="button">✨ Novo timer</button>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <script src="./data.js"></script>
-    <script src="./app.js?v=2"></script>
-    <script src="../../scripts/pwa.js?v=10"></script>
+        <section id="finishScreen" class="screen screen--finish hidden">
+            <div class="finish-card">
+                <img id="finishImage" src="" alt="">
+                <p class="eyebrow">Tempo concluído</p>
+                <h2 id="finishTitle">Hora do lanche!</h2>
+                <div class="finish-actions">
+                    <button id="sameModeBtn" class="primary-button" type="button">Usar o mesmo timer</button>
+                    <button id="finishMenuBtn" class="control-button" type="button">Escolher outro</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./data.js?v=5"></script>
+    <script src="./hourglass-renderer.js?v=3"></script>
+    <script src="./app.js?v=32"></script>
 </body>
 </html>

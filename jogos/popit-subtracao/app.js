@@ -13,6 +13,10 @@ const ui = {
     tray: document.getElementById("countTray"),
     countedValue: document.getElementById("countedValue"),
     topAnswerValue: document.getElementById("topAnswerValue"),
+    countResult: document.getElementById("countResult"),
+    resultEquation: document.getElementById("resultEquation"),
+    resultValue: document.getElementById("resultValue"),
+    resultHint: document.getElementById("resultHint"),
     resultBtn: document.getElementById("resultBtn"),
     modeBtn: document.getElementById("modeBtn"),
     shuffleBtn: document.getElementById("shuffleBtn"),
@@ -148,12 +152,9 @@ function leftovers() {
     return state.minuend - state.subtrahend;
 }
 
-function shouldRevealAnswer() {
-    const counted = state.tray.filter((ball) => ball.counted).length;
-    return state.revealed && hasProblem() && (
-        (leftovers() === 0 && isInitialComplete() && isRemovalComplete()) ||
-        (state.tray.length > 0 && counted === leftovers())
-    );
+function equationPreview(revealed = false) {
+    const result = revealed && hasProblem() ? leftovers() : "?";
+    return `${formatTarget(state.minuend)} - ${formatTarget(state.subtrahend)} = ${result}`;
 }
 
 function canRevealAnswer() {
@@ -270,6 +271,9 @@ function countTrayBall(index) {
     softPop(0.9);
     renderTray();
     renderStatus();
+    if (canRevealAnswer() && !state.revealed) {
+        revealResult(0);
+    }
 }
 
 function undo() {
@@ -296,7 +300,6 @@ function render() {
     updateModeUI();
     ui.targetStart.textContent = formatTarget(state.minuend);
     ui.targetRemove.textContent = formatTarget(state.subtrahend);
-    ui.topAnswerValue.textContent = shouldRevealAnswer() ? leftovers() : "?";
     renderSteps();
     renderBoard();
     renderTray();
@@ -344,18 +347,39 @@ function renderTray() {
 
 function renderStatus() {
     const canReveal = canRevealAnswer();
+    const revealed = canReveal && state.revealed;
+    const counted = state.tray.filter((ball) => ball.counted).length;
+    ui.topAnswerValue.textContent = revealed ? leftovers() : "?";
+    ui.topAnswerValue.classList.toggle("is-revealed", revealed);
+    ui.countedValue.textContent = revealed ? "OK" : counted;
+    ui.countedValue.classList.toggle("is-confirmed", revealed);
+    ui.countResult.classList.toggle("is-ready", canReveal);
+    ui.countResult.classList.toggle("is-revealed", revealed);
+    ui.resultEquation.textContent = equationPreview(revealed);
+    ui.resultValue.textContent = revealed ? leftovers() : "?";
+    ui.resultHint.textContent = revealed ? "Muito bem! Essa é a quantidade que sobrou." : "Conte as bolinhas que sobraram.";
     ui.resultBtn.disabled = !canReveal;
     ui.resultBtn.classList.toggle("is-ready", canReveal);
-    ui.resultBtn.classList.toggle("is-revealed", canReveal && state.revealed);
+    ui.resultBtn.classList.toggle("is-revealed", revealed);
+    ui.resultBtn.textContent = revealed ? (state.mode === "automatic" ? "Próxima conta" : "Nova rodada") : (canReveal ? "Mostrar resultado" : "Resultado");
 }
 
-function revealResult() {
+function revealResult(intensity = 0.62) {
+    if (state.revealed) {
+        if (state.mode === "automatic") {
+            [state.minuend, state.subtrahend] = randomProblem();
+            syncInputs();
+        }
+        resetState(true);
+        softPop(0.72);
+        return;
+    }
     if (!canRevealAnswer()) {
         softPop(0.28);
         return;
     }
     state.revealed = true;
-    softPop(0.62);
+    if (intensity > 0) softPop(intensity);
     render();
 }
 

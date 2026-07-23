@@ -12,6 +12,10 @@ const ui = {
     board: document.getElementById("popitBoard"),
     tray: document.getElementById("countTray"),
     countedValue: document.getElementById("countedValue"),
+    countResult: document.getElementById("countResult"),
+    resultEquation: document.getElementById("resultEquation"),
+    resultValue: document.getElementById("resultValue"),
+    resultHint: document.getElementById("resultHint"),
     topAnswerValue: document.getElementById("topAnswerValue"),
     resultBtn: document.getElementById("resultBtn"),
     modeBtn: document.getElementById("modeBtn"),
@@ -137,20 +141,21 @@ function totalTarget() {
     return (state.a || 0) + (state.b || 0);
 }
 
-function shouldRevealAnswer() {
-    const counted = state.tray.filter((ball) => ball.counted).length;
-    return state.revealed && hasProblem() && (
+function countedTotal() {
+    return state.tray.filter((ball) => ball.counted).length;
+}
+
+function canRevealAnswer() {
+    const counted = countedTotal();
+    return hasProblem() && (
         (totalTarget() === 0 && state.a !== null && state.b !== null) ||
         (state.tray.length > 0 && counted === totalTarget())
     );
 }
 
-function canRevealAnswer() {
-    const counted = state.tray.filter((ball) => ball.counted).length;
-    return hasProblem() && (
-        (totalTarget() === 0 && state.a !== null && state.b !== null) ||
-        (state.tray.length > 0 && counted === totalTarget())
-    );
+function equationPreview(revealed = false) {
+    const total = revealed && hasProblem() ? totalTarget() : "?";
+    return `${formatTarget(state.a)} + ${formatTarget(state.b)} = ${total}`;
 }
 
 function remainingFor(group) {
@@ -240,6 +245,9 @@ function countTrayBall(index) {
     softPop(0.9);
     renderTray();
     renderStatus();
+    if (canRevealAnswer() && !state.revealed) {
+        revealResult(0);
+    }
 }
 
 function undo() {
@@ -266,7 +274,6 @@ function render() {
     updateModeUI();
     ui.targetA.textContent = formatTarget(state.a);
     ui.targetB.textContent = formatTarget(state.b);
-    ui.topAnswerValue.textContent = shouldRevealAnswer() ? totalTarget() : "?";
     renderGoals();
     renderBoard();
     renderTray();
@@ -311,24 +318,45 @@ function renderTray() {
             ></button>
         `;
     }).join("");
-    ui.countedValue.textContent = state.tray.filter((ball) => ball.counted).length;
+    ui.countedValue.textContent = countedTotal();
 }
 
 function renderStatus() {
     const canReveal = canRevealAnswer();
+    const revealed = canReveal && state.revealed;
+    ui.topAnswerValue.textContent = revealed ? totalTarget() : "?";
+    ui.topAnswerValue.classList.toggle("is-revealed", revealed);
+    ui.countedValue.textContent = revealed ? "OK" : countedTotal();
+    ui.countedValue.classList.toggle("is-confirmed", revealed);
+    ui.countResult.classList.toggle("is-ready", canReveal);
+    ui.countResult.classList.toggle("is-revealed", revealed);
+    ui.resultEquation.textContent = equationPreview(revealed);
+    ui.resultValue.textContent = revealed ? totalTarget() : "?";
+    ui.resultHint.textContent = revealed ? "Muito bem! Esse é o total da conta." : "Conte todas as bolinhas para descobrir.";
     ui.resultBtn.disabled = !canReveal;
     ui.resultBtn.classList.toggle("is-ready", canReveal);
-    ui.resultBtn.classList.toggle("is-revealed", canReveal && state.revealed);
+    ui.resultBtn.classList.toggle("is-revealed", revealed);
+    ui.resultBtn.textContent = revealed ? (state.mode === "automatic" ? "Próxima conta" : "Nova rodada") : (canReveal ? "Mostrar resultado" : "Resultado");
 }
 
-function revealResult() {
+function revealResult(intensity = 0.62) {
     if (!canRevealAnswer()) {
         softPop(0.28);
         return;
     }
+    if (state.revealed) return;
     state.revealed = true;
-    softPop(0.62);
+    if (intensity > 0) softPop(intensity);
     render();
+}
+
+function nextRound() {
+    if (state.mode === "automatic") {
+        [state.a, state.b] = randomAddends();
+        syncInputs();
+    }
+    resetState(true);
+    softPop(0.72);
 }
 
 function ensurePopAudio() {
@@ -410,7 +438,7 @@ ui.soundBtn.addEventListener("click", () => {
 
 ui.undoBtn.addEventListener("click", undo);
 ui.resetBtn.addEventListener("click", () => resetState(true));
-ui.resultBtn.addEventListener("click", revealResult);
+ui.resultBtn.addEventListener("click", () => state.revealed ? nextRound() : revealResult());
 ui.modeBtn.addEventListener("click", toggleMode);
 ui.shuffleBtn.addEventListener("click", shuffleProblem);
 ui.fullscreenBtn?.addEventListener("click", toggleFullscreen);

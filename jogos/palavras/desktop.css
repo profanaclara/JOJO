@@ -1,0 +1,84 @@
+@media (min-width: 900px) and (max-height: 760px) {
+    .screen--home {
+        gap: 12px;
+        padding-top: 10px;
+        padding-bottom: 12px;
+    }
+
+    .home-top-actions {
+        top: 8px;
+    }
+
+    .brand-link {
+        min-height: 42px;
+        padding: 7px 12px;
+    }
+
+    .brand-link img {
+        width: 96px;
+    }
+
+    .hero {
+        padding: 8px 22px 7px;
+    }
+
+    .brand__copy--home h1 {
+        font-size: 2.8rem;
+        line-height: 1;
+    }
+
+    .hero__subheading {
+        margin-top: 5px;
+    }
+
+    .setup-panel {
+        gap: 9px;
+        padding: 13px 18px;
+    }
+
+    .setup-group {
+        gap: 6px;
+    }
+
+    .setup-options {
+        gap: 9px;
+    }
+
+    .option-card {
+        min-height: 74px;
+        padding: 7px 10px;
+        gap: 4px;
+        border-radius: 20px;
+    }
+
+    .option-card__icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 13px;
+        font-size: 1rem;
+    }
+
+    .option-card__icon--cursive,
+    .option-card--mode .option-card__icon {
+        font-size: 1.45rem;
+    }
+
+    .start-session-button {
+        min-height: 42px;
+    }
+
+    .home-footer {
+        padding-top: 0;
+    }
+
+    .home-footer__logo {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+@media (min-width: 900px) {
+    .orientation-button {
+        display: none !important;
+    }
+}
