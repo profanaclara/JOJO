@@ -18,6 +18,7 @@ const state = {
 
 const ui = {
     body: document.body,
+    app: document.querySelector(".timer-app"),
     home: document.getElementById("homeScreen"),
     timer: document.getElementById("timerScreen"),
     finish: document.getElementById("finishScreen"),
@@ -360,6 +361,19 @@ function updateSoundButton() {
     ui.sound.setAttribute("aria-label", state.soundEnabled ? "Desligar som" : "Ligar som");
 }
 
+function syncFullscreenState() {
+    const isFullscreen = Boolean(document.fullscreenElement);
+    ui.body.classList.toggle("is-fullscreen", isFullscreen);
+    ui.fullscreen.textContent = isFullscreen ? "↙" : "⛶";
+    ui.fullscreen.setAttribute("aria-label", isFullscreen ? "Sair da tela cheia" : "Entrar em tela cheia");
+    window.requestAnimationFrame(() => hourglassRenderer?.redraw());
+    window.setTimeout(() => hourglassRenderer?.redraw(), 120);
+}
+
+function getFullscreenTarget() {
+    return ui.app || document.documentElement;
+}
+
 document.querySelectorAll("[data-mode]").forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
 document.querySelectorAll("[data-preset]").forEach((button) => button.addEventListener("click", () => {
     ui.hours.value = "0";
@@ -391,13 +405,10 @@ ui.fullscreen.addEventListener("click", async () => {
     if (document.fullscreenElement) {
         await leaveFullscreen();
     } else {
-        try { await document.documentElement.requestFullscreen(); } catch (_) { /* unsupported */ }
+        try { await getFullscreenTarget().requestFullscreen(); } catch (_) { /* unsupported */ }
     }
 });
-document.addEventListener("fullscreenchange", () => {
-    ui.body.classList.toggle("is-fullscreen", Boolean(document.fullscreenElement));
-    hourglassRenderer?.redraw();
-});
+document.addEventListener("fullscreenchange", syncFullscreenState);
 document.addEventListener("visibilitychange", () => {
     if (document.hidden && state.running) pauseTimer();
 });

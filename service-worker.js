@@ -1,10 +1,10 @@
-const CACHE_VERSION = "jojo-static-v2026-07-23-6";
+const CACHE_VERSION = "jojo-static-v2026-07-31-2";
 const APP_SHELL = [
     "./",
     "./index.html",
     "./offline.html",
     "./manifest.webmanifest",
-    "./styles/main.css?v=9",
+    "./styles/main.css?v=11",
     "./styles/menu.css?v=8",
     "./scripts/app.js?v=2",
     "./scripts/data.js?v=5",
@@ -88,8 +88,8 @@ const APP_SHELL = [
     "./assets/vendor/jspdf/jspdf.umd.min.js",
     "./jogos/timer/",
     "./jogos/timer/index.html",
-    "./jogos/timer/styles.css?v=34",
-    "./jogos/timer/app.js?v=32",
+    "./jogos/timer/styles.css?v=35",
+    "./jogos/timer/app.js?v=33",
     "./jogos/timer/data.js?v=5",
     "./jogos/timer/hourglass-renderer.js?v=3",
     "./jogos/timer/assets/jojo-eyes-logo.png",

@@ -203,7 +203,7 @@ h2 { margin: 0; }
 
 body.is-fullscreen .timer-app { width: 100%; padding: 14px; }
 body.is-fullscreen .app-header { display: none; }
-body.is-fullscreen .screen { min-height: calc(100vh - 28px); }
+body.is-fullscreen .screen { min-height: calc(100dvh - 28px); }
 body.is-fullscreen .visual-stage { min-height: 0; }
 body.is-fullscreen .journey-scene { height: min(64vh, 620px); }
 
@@ -517,6 +517,66 @@ body[data-screen="timer"] .control-button {
     min-height: 42px;
 }
 
+body.is-fullscreen[data-screen="timer"] .timer-app {
+    width: 100%;
+    height: 100dvh;
+    padding: clamp(8px, 1.4vh, 16px);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0;
+}
+
+.timer-app:fullscreen {
+    overflow: hidden;
+    background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.94), rgba(233, 243, 255, 0.78) 54%, rgba(207, 226, 255, 0.92) 100%);
+}
+
+body.is-fullscreen[data-screen="timer"] .screen--running,
+.screen--running:fullscreen {
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    padding: clamp(8px, 1.4vh, 16px);
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: clamp(8px, 1.2vh, 14px);
+    background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.94), rgba(233, 243, 255, 0.78) 54%, rgba(207, 226, 255, 0.92) 100%);
+}
+
+body.is-fullscreen[data-screen="timer"] .screen--running:not(:fullscreen) {
+    height: 100%;
+    padding: 0;
+}
+
+body.is-fullscreen[data-running-mode="hourglass"] .hourglass-running-layout,
+.screen--running:fullscreen .hourglass-running-layout {
+    height: 100%;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: clamp(8px, 1.2vh, 14px);
+}
+
+body.is-fullscreen[data-running-mode="hourglass"] .visual-stage,
+.screen--running:fullscreen .visual-stage {
+    min-height: 0;
+    border-radius: clamp(22px, 3vh, 36px);
+}
+
+body.is-fullscreen[data-running-mode="hourglass"] .hourglass-canvas,
+.screen--running:fullscreen .hourglass-canvas {
+    width: auto;
+    height: min(68dvh, 680px);
+    max-width: 82vw;
+    max-height: 100%;
+}
+
+body.is-fullscreen[data-running-mode="hourglass"] .running-bar,
+body.is-fullscreen[data-running-mode="hourglass"] .running-footer,
+.screen--running:fullscreen .running-bar,
+.screen--running:fullscreen .running-footer {
+    padding: clamp(8px, 1.1vh, 12px) clamp(12px, 2vw, 18px);
+}
+
 @media (max-width: 820px) {
     body[data-screen="timer"] .timer-app {
         width: min(100% - 24px, 680px);
@@ -524,5 +584,19 @@ body[data-screen="timer"] .control-button {
 
     body[data-screen="timer"] .visual-stage {
         min-height: 0;
+    }
+}
+
+@media (max-width: 520px) {
+    body.is-fullscreen[data-running-mode="hourglass"] .screen--running,
+    .screen--running:fullscreen {
+        gap: 8px;
+        padding: 8px;
+    }
+
+    body.is-fullscreen[data-running-mode="hourglass"] .hourglass-canvas,
+    .screen--running:fullscreen .hourglass-canvas {
+        height: min(58dvh, 480px);
+        max-width: 76vw;
     }
 }
