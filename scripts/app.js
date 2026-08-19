@@ -29,7 +29,7 @@ function escapeHtml(value) {
 
 function renderListCard(item) {
     const placeholderClass = item.placeholder ? " placeholder-card" : "";
-    const art = item.art ? `<img class="list-card__art" src="${item.art}" alt="" aria-hidden="true">` : "";
+    const art = item.art ? `<img class="list-card__art" src="${item.art}" alt="" aria-hidden="true" loading="lazy" decoding="async">` : "";
     const tagBadge = item.tag ? `<span class="card-badge">${escapeHtml(item.tag)}</span>` : "";
     const description = item.description ? `<p>${escapeHtml(item.description)}</p>` : "";
     const tag = item.href ? "a" : "article";

@@ -1,149 +1,63 @@
-const CACHE_VERSION = "jojo-static-v2026-07-31-2";
+const CACHE_PREFIX = "jojo-static-";
+const CACHE_VERSION = `${CACHE_PREFIX}v2026-08-19-7`;
+
+// Keep installation fast. Game pages and media enter the cache after their first visit.
 const APP_SHELL = [
     "./",
     "./index.html",
     "./offline.html",
     "./manifest.webmanifest",
-    "./styles/main.css?v=11",
+    "./styles/main.css?v=20",
     "./styles/menu.css?v=8",
     "./scripts/app.js?v=2",
-    "./scripts/data.js?v=5",
+    "./scripts/data.js?v=7",
     "./scripts/pwa.js?v=17",
-    "./assets/jojo-eyes-logo.png",
     "./assets/jojo-horizontal.svg",
-    "./assets/jojologo-fundo-branco.svg",
-    "./assets/JOJOdownload.svg",
     "./assets/JOJOdownloadsemfundo.svg",
-    "./assets/logo-profanapixelart.png",
-    "./assets/logo-profanapixelart-small.webp",
-    "./assets/controle.svg",
-    "./assets/cerebro.png",
-    "./assets/jojo-card-geometria.png",
-    "./assets/jojo-card-palavras.png",
-    "./assets/jojo-card-textos.png",
-    "./assets/jojo-card-popit.png",
-    "./assets/jojo-card-pitagoras.png",
-    "./assets/jojo-card-cabo-guerra.png",
-    "./assets/jojo-card-matematica.png",
-    "./assets/jojo-card-trilha.png",
-    "./assets/jojo-eixo-alfabetizacao.png",
-    "./assets/jojo-eixo-matematica.png",
-    "./assets/jojo-eixo-geometria.png",
-    "./assets/jojo-home-jogos.png",
+    "./assets/jojo-menu-jogos.png",
     "./assets/jojo-menu-ferramentas.png",
-    "./assets/jojo-home-registros.png",
-    "./assets/jojo-home-favoritos.png",
-    "./assets/jojo-home-relatorios.png",
-    "./assets/jojo-card-timer.png",
-    "./assets/jojo-timer-lanche.png",
-    "./assets/jojo-timer-casa.png",
-    "./assets/jojo-timer-cronometro.png",
-    "./assets/jojo-watermark.png",
-    "./assets/jojo-nav-home.png",
-    "./assets/jojo-nav-jogos.png",
-    "./assets/jojo-nav-ferramentas.png",
-    "./assets/jojo-som.png",
-    "./assets/fonts/Maria_lucia.woff2",
+    "./assets/logo-profanapixelart-small.webp",
+    "./assets/referencia-bem-comum.png",
+    "./assets/referencia-caed-ufjf.png",
+    "./assets/referencia-saeb.png",
     "./assets/fonts/archivo-latin.woff2",
     "./assets/fonts/inter-latin.woff2",
+    "./assets/favicon-48.png",
     "./assets/icon-192.png",
     "./assets/icon-512.png",
     "./assets/icon-maskable-192.png",
-    "./assets/icon-maskable-512.png",
-    "./jogos/palavras/",
-    "./jogos/palavras/index.html",
-    "./jogos/palavras/styles.css?v=21",
-    "./jogos/palavras/desktop.css?v=1",
-    "./jogos/palavras/app.js?v=9",
-    "./jogos/palavras/data.js",
-    "./jogos/palavras/assets/jojo-eyes-logo.png",
-    "./jogos/textos/",
-    "./jogos/textos/index.html",
-    "./jogos/textos/styles.css?v=12",
-    "./jogos/textos/desktop.css?v=1",
-    "./jogos/textos/app.js?v=11",
-    "./jogos/textos/data.js?v=2",
-    "./jogos/textos/assets/jojo-eyes-logo.png",
-    "./jogos/index.html",
-    "./jogos/jogos.css?v=5",
-    "./jogos/jogos.js?v=8",
-    "./jogos/jogos.data.js?v=10",
-    "./jogos/popit-soma/",
-    "./jogos/popit-soma/index.html",
-    "./jogos/popit-soma/styles.css?v=10",
-    "./jogos/popit-soma/app.js?v=10",
-    "./assets/sounds/dragon-studio-pop-402324.mp3",
-    "./jogos/popit-subtracao/",
-    "./jogos/popit-subtracao/index.html",
-    "./jogos/popit-subtracao/styles.css?v=2",
-    "./jogos/popit-subtracao/app.js?v=9",
-    "./jogos/tabuada-pitagoras/",
-    "./jogos/tabuada-pitagoras/index.html",
-    "./jogos/tabuada-pitagoras/styles.css?v=15",
-    "./jogos/tabuada-pitagoras/app.js?v=9",
-    "./agenda/",
-    "./agenda/index.html",
-    "./agenda/styles.css?v=20",
-    "./agenda/app.js?v=20",
-    "./assets/vendor/jspdf/jspdf.umd.min.js",
-    "./jogos/timer/",
-    "./jogos/timer/index.html",
-    "./jogos/timer/styles.css?v=35",
-    "./jogos/timer/app.js?v=33",
-    "./jogos/timer/data.js?v=5",
-    "./jogos/timer/hourglass-renderer.js?v=3",
-    "./jogos/timer/assets/jojo-eyes-logo.png",
-    "./jogos/timer/assets/carnes.webp",
-    "./jogos/timer/assets/casa.webp",
-    "./jogos/timer/assets/coracao-com-fome.webp",
-    "./jogos/timer/assets/coracao-feliz.webp",
-    "./jogos/timer/assets/crianca.webp",
-    "./jogos/timer/assets/frutas.webp",
-    "./jogos/timer/assets/hamburguer.webp",
-    "./jogos/timer/assets/legumes.webp",
-    "./jogos/timer/assets/pizza.webp",
-    "./jogos/timer/assets/tacos.webp",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/index.html",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/styles.css?v=7",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/app.js?v=6",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/gif-frame.html",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/jojo-eyes-logo.png",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/cabo-de-guerra-2.gif",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/equipe-azul.gif",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/equipe-vermelha.gif",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/ganhou-azul.gif",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/ganhou-vermelho.gif",
-    "./jogos/cabo-de-guerra-operacoes-fracoes/assets/musicacabodeguerra.mp3"
+    "./assets/icon-maskable-512.png"
 ];
 
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open(CACHE_VERSION).then(async (cache) => {
-            const urls = APP_SHELL.map((path) => new URL(path, self.location.href).toString());
+        caches.open(CACHE_VERSION)
+            .then(async (cache) => {
+                const urls = APP_SHELL.map((path) => new URL(path, self.location.href).toString());
 
-            await Promise.allSettled(
-                urls.map(async (url) => {
-                    const response = await fetch(url, { cache: "no-cache" });
-                    if (!response.ok) {
-                        throw new Error(`Falha ao cachear ${url}`);
-                    }
-                    await cache.put(url, response);
-                })
-            );
-        }).then(() => self.skipWaiting())
+                await Promise.allSettled(
+                    urls.map(async (url) => {
+                        const response = await fetch(url, { cache: "no-cache" });
+                        if (!response.ok) {
+                            throw new Error(`Falha ao cachear ${url}`);
+                        }
+                        await cache.put(url, response);
+                    })
+                );
+            })
+            .then(() => self.skipWaiting())
     );
 });
 
 self.addEventListener("activate", (event) => {
     event.waitUntil(
-        caches.keys().then((keys) =>
-            Promise.all(
+        caches.keys()
+            .then((keys) => Promise.all(
                 keys
-                    .filter((key) => key !== CACHE_VERSION)
+                    .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_VERSION)
                     .map((key) => caches.delete(key))
-            )
-        ).then(() => self.clients.claim())
+            ))
+            .then(() => self.clients.claim())
     );
 });
 
@@ -151,7 +65,7 @@ self.addEventListener("fetch", (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    if (request.method !== "GET") {
+    if (request.method !== "GET" || request.headers.has("range")) {
         return;
     }
 
@@ -159,8 +73,10 @@ self.addEventListener("fetch", (event) => {
         event.respondWith(
             fetch(request)
                 .then((response) => {
-                    const copy = response.clone();
-                    caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
+                    if (response.ok) {
+                        const copy = response.clone();
+                        caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
+                    }
                     return response;
                 })
                 .catch(async () => {
@@ -182,8 +98,10 @@ self.addEventListener("fetch", (event) => {
             }
 
             return fetch(request).then((response) => {
-                const copy = response.clone();
-                caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
+                if (response.ok && response.type === "basic") {
+                    const copy = response.clone();
+                    caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
+                }
                 return response;
             });
         })

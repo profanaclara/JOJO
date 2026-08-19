@@ -9,13 +9,80 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="JOJO">
     <title>JOJO | Plataforma Educativa</title>
+    <meta name="description" content="Jogos educacionais e ferramentas para leitura, matemática, fluência, organização do tempo e registros pedagógicos.">
+    <link rel="canonical" href="https://jojo.profanaclara.com.br/">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="JOJO">
+    <meta property="og:title" content="JOJO | Plataforma Educativa">
+    <meta property="og:description" content="Jogos educacionais e ferramentas para leitura, matemática, fluência, organização do tempo e registros pedagógicos.">
+    <meta property="og:url" content="https://jojo.profanaclara.com.br/">
+    <meta property="og:image" content="https://jojo.profanaclara.com.br/assets/jojo-social-share.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="JOJO em tablet e celular com jogos e ferramentas educativas">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="JOJO | Plataforma Educativa">
+    <meta name="twitter:description" content="Jogos educacionais e ferramentas para leitura, matemática, fluência, organização do tempo e registros pedagógicos.">
+    <meta name="twitter:image" content="https://jojo.profanaclara.com.br/assets/jojo-social-share.jpg">
     <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png">
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg?v=1">
     <link rel="apple-touch-icon" href="./assets/icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles/main.css?v=11">
+    <link rel="stylesheet" href="./styles/main.css?v=20">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "Organization",
+                    "@id": "https://jojo.profanaclara.com.br/#organization",
+                    "name": "JOJO",
+                    "url": "https://jojo.profanaclara.com.br/",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://jojo.profanaclara.com.br/assets/icon-512.png",
+                        "width": 512,
+                        "height": 512
+                    },
+                    "email": "jojo.profanaclara@gmail.com",
+                    "founder": {
+                        "@type": "Person",
+                        "name": "Ana Clara Silva de Lima"
+                    }
+                },
+                {
+                    "@type": "WebSite",
+                    "@id": "https://jojo.profanaclara.com.br/#website",
+                    "name": "JOJO",
+                    "alternateName": "JOJO Jogos Educacionais",
+                    "url": "https://jojo.profanaclara.com.br/",
+                    "inLanguage": "pt-BR",
+                    "publisher": { "@id": "https://jojo.profanaclara.com.br/#organization" }
+                },
+                {
+                    "@type": ["WebApplication", "SoftwareApplication"],
+                    "@id": "https://jojo.profanaclara.com.br/#app",
+                    "name": "JOJO",
+                    "url": "https://jojo.profanaclara.com.br/",
+                    "applicationCategory": "EducationalApplication",
+                    "operatingSystem": "Web",
+                    "inLanguage": "pt-BR",
+                    "description": "Jogos educacionais e ferramentas para leitura, matemática, fluência, organização do tempo e registros pedagógicos.",
+                    "isAccessibleForFree": true,
+                    "image": "https://jojo.profanaclara.com.br/assets/jojo-social-share.jpg",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "BRL"
+                    },
+                    "publisher": { "@id": "https://jojo.profanaclara.com.br/#organization" }
+                }
+            ]
+        }
+    </script>
 </head>
 <body>
     <div class="app-shell">
@@ -52,6 +119,21 @@
                 >
                 <p>Desenvolvido por Ana Clara Silva de Lima</p>
             </footer>
+
+            <aside class="reference-strip" aria-label="Referências pedagógicas">
+                <span class="reference-strip__label">Referências</span>
+                <div class="reference-strip__logos">
+                    <a href="https://abemcomum.org/" target="_blank" rel="noopener noreferrer" aria-label="Associação Bem Comum e SAEV">
+                        <img src="./assets/referencia-bem-comum.png" alt="Bem Comum">
+                    </a>
+                    <a href="https://caed.ufjf.br/" target="_blank" rel="noopener noreferrer" aria-label="CAEd da Universidade Federal de Juiz de Fora">
+                        <img src="./assets/referencia-caed-ufjf.png" alt="CAEd UFJF">
+                    </a>
+                    <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/saeb" target="_blank" rel="noopener noreferrer" aria-label="Saeb do Inep">
+                        <img src="./assets/referencia-saeb.png" alt="Saeb">
+                    </a>
+                </div>
+            </aside>
         </main>
 
         <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
@@ -81,7 +163,7 @@
         </a>
     </div>
 
-    <script src="./scripts/data.js?v=5"></script>
+    <script src="./scripts/data.js?v=7"></script>
     <script src="./scripts/app.js?v=2"></script>
     <script src="./scripts/pwa.js?v=17"></script>
 </body>

@@ -8,14 +8,25 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="JOJO">
     <title>JOJO | Fluência Leitora - Textos</title>
+    <meta name="description" content="Atividade de leitura de textos inspirada nos testes de fluência do Saeb, com tempo, erros e critérios.">
+    <link rel="canonical" href="https://jojo.profanaclara.com.br/jogos/textos/">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="JOJO">
+    <meta property="og:title" content="Fluência Leitora: Textos | JOJO">
+    <meta property="og:description" content="Atividade de leitura de textos inspirada nos testes de fluência do Saeb, com tempo, erros e critérios.">
+    <meta property="og:url" content="https://jojo.profanaclara.com.br/jogos/textos/">
+    <meta property="og:image" content="https://jojo.profanaclara.com.br/assets/jojo-social-share.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="manifest" href="../../manifest.webmanifest">
-    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icon-192.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg?v=1">
     <link rel="apple-touch-icon" href="../../assets/icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css?v=12">
     <link rel="stylesheet" href="./desktop.css?v=1">
+    <link rel="stylesheet" href="./refine.css?v=2">
 </head>
 <body>
     <div class="app-shell">
@@ -106,7 +117,7 @@
 
                 <div class="session-center">
                     <p id="sessionEyebrow" class="session-pill"></p>
-                    <div id="sessionHeading" class="session-heading"></div>
+                    <div id="sessionHeading" class="session-heading sr-only"></div>
                 </div>
 
                 <div class="session-tools">
@@ -127,7 +138,7 @@
 
             <section class="surface-card session-summary">
                 <div class="session-toolbar">
-                    <div id="stepNavigation" class="step-nav"></div>
+                    <div id="stepNavigation" class="step-nav hidden" aria-hidden="true"></div>
                     <button id="backToSelectionBtn" class="text-link-button" type="button">Voltar aos testes</button>
                 </div>
 
@@ -283,7 +294,6 @@
                     <ul class="bullet-list">
                         <li>Escolha o ano e depois o texto.</li>
                         <li>Use o cronômetro e marque erros durante a leitura.</li>
-                        <li>Nas etapas de palavras e pseudopalavras, toque para destacar ou use o avanço automático.</li>
                         <li>O som sinaliza início, erro e conferência.</li>
                     </ul>
                 </div>
@@ -292,7 +302,7 @@
     </div>
 
     <script src="./data.js?v=2"></script>
-    <script src="./app.js?v=11"></script>
+    <script src="./app.js?v=12"></script>
     <script src="../../scripts/pwa.js?v=10"></script>
 </body>
 </html>

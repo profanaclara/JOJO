@@ -10,8 +10,8 @@ window.JOJO_DATA = {
                     label: "Leitura",
                     items: [
                         {
-                            title: "Leitura de palavras",
-                            description: "Teste de fluência com palavras isoladas.",
+                            title: "Fluência leitora",
+                            description: "Letras, sílabas e palavras.",
                             art: "./assets/jojo-card-palavras.png",
                             tag: "Alfabetização",
                             href: "./jogos/palavras/"
@@ -33,28 +33,24 @@ window.JOJO_DATA = {
                             title: "Pop-it da soma",
                             description: "Aperte, junte e conte as bolinhas.",
                             art: "./assets/jojo-card-popit.png",
-                            tag: "Novo",
                             href: "./jogos/popit-soma/"
                         },
                         {
                             title: "Pop-it da subtração",
                             description: "Aperte, retire e conte o que sobrou.",
                             art: "./assets/jojo-card-popit.png",
-                            tag: "Novo",
                             href: "./jogos/popit-subtracao/"
                         },
                         {
                             title: "Tabuada de Pitágoras",
                             description: "Escolha os fatores e encontre o resultado na tabela.",
                             art: "./assets/jojo-card-pitagoras.png",
-                            tag: "Novo",
                             href: "./jogos/tabuada-pitagoras/"
                         },
                         {
                             title: "Cabo de Guerra",
                             description: "Cabo de guerra com operações e frações.",
                             art: "./assets/jojo-card-cabo-guerra.png",
-                            tag: "Clássico",
                             href: "./jogos/cabo-de-guerra-operacoes-fracoes/"
                         }
                     ]

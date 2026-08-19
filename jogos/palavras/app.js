@@ -1,10 +1,19 @@
-const { words, benchmarks } = window.JOJO_PALAVRAS_DATA;
+const { letters, syllables, words, pseudoWords, benchmarks } = window.JOJO_PALAVRAS_DATA;
+
+const CONTENT_META = {
+    letters: { label: "Letras", singular: "letra", plural: "letras", pace: "LPM" },
+    syllables: { label: "Sílabas", singular: "sílaba", plural: "sílabas", pace: "SPM" },
+    words: { label: "Palavras", singular: "palavra", plural: "palavras", pace: "PPM" },
+    pseudowords: { label: "Pseudopalavras", singular: "pseudopalavra", plural: "pseudopalavras", pace: "PPM" }
+};
 
 const state = {
     soundEnabled: true,
     audioContext: null,
     mode: "timed",
     letter: "lowercase",
+    content: "words",
+    syllableLevel: "simple",
     screen: "home",
     session: createIdleSession()
 };
@@ -16,14 +25,19 @@ const ui = {
     resultScreen: document.getElementById("resultScreen"),
     infoModal: document.getElementById("infoModal"),
     benchmarkGrid: document.getElementById("benchmarkGrid"),
+    benchmarkSection: document.getElementById("benchmarkSection"),
     openInfoBtn: document.getElementById("openInfoBtn"),
     closeInfoBtn: document.getElementById("closeInfoBtn"),
     toggleSoundBtn: document.getElementById("toggleSoundBtn"),
     fullscreenBtn: document.getElementById("fullscreenBtn"),
     exitFullscreenBtn: document.getElementById("exitFullscreenBtn"),
     sessionSoundBtn: document.getElementById("sessionSoundBtn"),
+    contentButtons: [...document.querySelectorAll("[data-content-option]")],
+    syllableButtons: [...document.querySelectorAll("[data-syllable-option]")],
     letterButtons: [...document.querySelectorAll("[data-letter-option]")],
     modeButtons: [...document.querySelectorAll("[data-mode-option]")],
+    syllableLevelGroup: document.getElementById("syllableLevelGroup"),
+    heroContentLabel: document.getElementById("heroContentLabel"),
     startSessionBtn: document.getElementById("startSessionBtn"),
     backHomeBtn: document.getElementById("backHomeBtn"),
     nextBtn: document.getElementById("nextBtn"),
@@ -36,6 +50,7 @@ const ui = {
     timerCaption: document.getElementById("timerCaption"),
     timerValue: document.getElementById("timerValue"),
     shownValue: document.getElementById("shownValue"),
+    sessionContentLabel: document.getElementById("sessionContentLabel"),
     readValue: document.getElementById("readValue"),
     skippedValue: document.getElementById("skippedValue"),
     paceValue: document.getElementById("paceValue"),
@@ -47,6 +62,7 @@ const ui = {
     resultPace: document.getElementById("resultPace"),
     resultSummary: document.getElementById("resultSummary"),
     resultSkippedBox: document.getElementById("resultSkippedBox"),
+    resultSkippedLabel: document.getElementById("resultSkippedLabel"),
     resultSkippedWords: document.getElementById("resultSkippedWords"),
     appShell: document.querySelector(".app-shell")
 };
@@ -88,20 +104,74 @@ function shuffleArray(array) {
     return copy;
 }
 
+function getVowelNucleusCount(item) {
+    const normalized = item
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleUpperCase("pt-BR");
+
+    return (normalized.match(/[AEIOU]+/g) || []).length;
+}
+
+function hasAtLeastTwoSyllables(item) {
+    return getVowelNucleusCount(item) >= 2;
+}
+
+function getItemComplexity(item) {
+    const decomposed = item.normalize("NFD");
+    const normalized = decomposed
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleUpperCase("pt-BR");
+    const clusters = normalized.match(/(?:BR|CR|DR|FR|GR|PR|TR|VR|BL|CL|FL|GL|PL|TL|VL)/g) || [];
+    const digraphs = normalized.match(/(?:CH|LH|NH|QU|GU)/g) || [];
+    const unusualClusters = normalized.match(/[BCDFGJKLMNPQRSTVWXYZ]{2,}/g) || [];
+    const closedSyllables = normalized.match(/[AEIOU][RSLMNX](?:$|[BCDFGJKLMNPQRSTVWXYZ])/g) || [];
+    const accentCount = decomposed.length - normalized.length;
+    const lengthScore = [...item].length;
+    const vowelNuclei = getVowelNucleusCount(item);
+
+    return (
+        lengthScore
+        + Math.max(0, vowelNuclei - 2) * 1.5
+        + Math.max(0, lengthScore - 5) * 0.7
+        + clusters.length * 2.2
+        + digraphs.length * 1.8
+        + unusualClusters.length * 1.4
+        + closedSyllables.length * 1.2
+        + Math.max(0, accentCount) * 8
+    );
+}
+
 function sortByComplexity(list) {
     return [...list].sort((first, second) => {
-        if (first.length !== second.length) {
-            return first.length - second.length;
+        const complexityDifference = getItemComplexity(first) - getItemComplexity(second);
+        if (complexityDifference !== 0) {
+            return complexityDifference;
         }
 
-        const complexityFirst = (first.match(/[BCDFGJKLMNPQRSTVWXYZ]{2,}/g) || []).length;
-        const complexitySecond = (second.match(/[BCDFGJKLMNPQRSTVWXYZ]{2,}/g) || []).length;
-        return complexityFirst - complexitySecond;
+        return [...first].length - [...second].length;
     });
 }
 
 function getModeLabel() {
     return state.mode === "timed" ? "Teste cronometrado" : "Leitura livre";
+}
+
+function getContentMeta() {
+    return CONTENT_META[state.content];
+}
+
+function getContentNoun(count) {
+    const meta = getContentMeta();
+    return count === 1 ? meta.singular : meta.plural;
+}
+
+function getContentDetailLabel() {
+    if (state.content !== "syllables") {
+        return getContentMeta().label;
+    }
+
+    return state.syllableLevel === "complex" ? "Sílabas complexas" : "Sílabas simples";
 }
 
 function getLetterLabel() {
@@ -128,6 +198,22 @@ function updateSoundButtons() {
 }
 
 function renderHomeSelections() {
+    ui.contentButtons.forEach((button) => {
+        const isActive = button.dataset.contentOption === state.content;
+        button.classList.toggle("is-selected", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    ui.syllableButtons.forEach((button) => {
+        const isActive = button.dataset.syllableOption === state.syllableLevel;
+        button.classList.toggle("is-selected", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    ui.syllableLevelGroup.hidden = state.content !== "syllables";
+    ui.benchmarkSection.hidden = state.content !== "words";
+    ui.heroContentLabel.textContent = getContentDetailLabel();
+
     ui.letterButtons.forEach((button) => {
         const isActive = button.dataset.letterOption === state.letter;
         button.classList.toggle("is-selected", isActive);
@@ -138,6 +224,74 @@ function renderHomeSelections() {
         const isActive = button.dataset.modeOption === state.mode;
         button.classList.toggle("is-selected", isActive);
         button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    ui.startSessionBtn.textContent = `Começar ${getContentDetailLabel().toLocaleLowerCase("pt-BR")}`;
+}
+
+function setDisplayItem(item) {
+    const itemLength = [...item].length;
+    const maximumSize = state.content === "letters" ? 30 : state.content === "syllables" ? 24 : 22;
+    const fittedSize = Math.min(maximumSize, 145 / Math.max(itemLength, 1));
+
+    ui.wordDisplay.textContent = item;
+    ui.wordDisplay.style.setProperty("--item-size", `${fittedSize}vw`);
+    ui.wordDisplay.classList.remove("is-intro");
+    ui.wordDisplay.classList.toggle("is-cursive", state.letter === "cursive");
+    // Apply the measured size before the browser can paint the provisional vw size.
+    fitDisplayItemToStage();
+}
+
+let displayFitFrame = null;
+
+function fitDisplayItemToStage() {
+    if (state.screen !== "session" || ui.wordDisplay.classList.contains("is-intro")) {
+        return;
+    }
+
+    const item = ui.wordDisplay.textContent.trim();
+    const stage = ui.wordDisplay.closest(".word-stage");
+    if (!item || !stage) {
+        return;
+    }
+
+    const itemLength = [...item].length;
+    const maximumSize = state.content === "letters" ? 30 : state.content === "syllables" ? 24 : 22;
+    const initialSize = Math.min(maximumSize, 145 / Math.max(itemLength, 1));
+    ui.wordDisplay.style.setProperty("--item-size", `${initialSize}vw`);
+
+    const stageStyle = window.getComputedStyle(stage);
+    const availableWidth = stage.clientWidth
+        - Number.parseFloat(stageStyle.paddingLeft)
+        - Number.parseFloat(stageStyle.paddingRight);
+    const availableHeight = stage.clientHeight
+        - Number.parseFloat(stageStyle.paddingTop)
+        - Number.parseFloat(stageStyle.paddingBottom);
+    const displayStyle = window.getComputedStyle(ui.wordDisplay);
+    const currentSize = Number.parseFloat(displayStyle.fontSize);
+
+    const canvas = fitDisplayItemToStage.canvas || document.createElement("canvas");
+    fitDisplayItemToStage.canvas = canvas;
+    const context = canvas.getContext("2d");
+    context.font = `${displayStyle.fontStyle} ${displayStyle.fontWeight} ${currentSize}px ${displayStyle.fontFamily}`;
+
+    const letterSpacing = Number.parseFloat(displayStyle.letterSpacing) || 0;
+    const measuredWidth = context.measureText(item).width + Math.max(0, itemLength - 1) * letterSpacing;
+    const widthLimitedSize = measuredWidth > 0 ? currentSize * (availableWidth * 0.94 / measuredWidth) : currentSize;
+    const heightLimitedSize = availableHeight > 0 ? availableHeight * 0.82 : currentSize;
+    const finalSize = Math.max(34, Math.min(currentSize, widthLimitedSize, heightLimitedSize));
+
+    ui.wordDisplay.style.setProperty("--item-size", `${finalSize}px`);
+}
+
+function scheduleDisplayFit() {
+    if (displayFitFrame) {
+        window.cancelAnimationFrame(displayFitFrame);
+    }
+
+    displayFitFrame = window.requestAnimationFrame(() => {
+        displayFitFrame = null;
+        fitDisplayItemToStage();
     });
 }
 
@@ -273,18 +427,61 @@ function closeInfoModal() {
     ui.body.classList.remove("modal-open");
 }
 
-function buildQueue() {
-    const orderedWords = sortByComplexity(shuffleArray(words));
-    if (state.letter === "uppercase") {
-        return orderedWords.map((word) => word.toUpperCase());
+function buildRepeatedQueue(source, targetLength = 100) {
+    const queue = [];
+
+    while (queue.length < targetLength) {
+        const round = shuffleArray(source);
+        if (queue.length > 0 && round.length > 1 && queue.at(-1) === round[0]) {
+            [round[0], round[1]] = [round[1], round[0]];
+        }
+        queue.push(...round);
     }
-    return orderedWords.map((word) => word.toLowerCase());
+
+    return queue.slice(0, targetLength);
+}
+
+function getContentSource() {
+    if (state.content === "letters") {
+        return letters;
+    }
+
+    if (state.content === "syllables") {
+        return syllables[state.syllableLevel];
+    }
+
+    if (state.content === "pseudowords") {
+        return pseudoWords;
+    }
+
+    return words;
+}
+
+function buildQueue() {
+    const source = getContentSource();
+    let orderedItems;
+
+    if (state.content === "pseudowords") {
+        const uniqueItems = [...new Set(source)].filter(hasAtLeastTwoSyllables);
+        orderedItems = sortByComplexity(shuffleArray(uniqueItems).slice(0, 100));
+    } else if (state.content === "words") {
+        const uniqueItems = [...new Set(source)];
+        orderedItems = sortByComplexity(shuffleArray(uniqueItems).slice(0, 100));
+    } else {
+        orderedItems = buildRepeatedQueue(source);
+    }
+
+    if (state.letter === "uppercase") {
+        return orderedItems.map((item) => item.toLocaleUpperCase("pt-BR"));
+    }
+    return orderedItems.map((item) => item.toLocaleLowerCase("pt-BR"));
 }
 
 function startSession(mode, letter) {
     state.mode = mode;
     state.letter = letter;
     ui.sessionScreen.dataset.mode = mode;
+    ui.sessionScreen.dataset.content = state.content;
     state.session = {
         status: "ready",
         timerId: null,
@@ -300,8 +497,11 @@ function startSession(mode, letter) {
 
     ui.sessionModeLabel.textContent = getModeLabel();
     ui.sessionLetterLabel.textContent = getLetterLabel();
+    ui.sessionContentLabel.textContent = getContentDetailLabel();
     ui.timerCaption.textContent = mode === "timed" ? "Tempo restante" : "Tempo de leitura";
-    ui.wordDisplay.textContent = state.letter === "cursive" ? "clique em próxima para começar" : "CLIQUE EM PRÓXIMA PARA COMEÇAR";
+    ui.wordDisplay.textContent = state.letter === "cursive" ? "pronto? clique em próxima" : "PRONTO? CLIQUE EM PRÓXIMA";
+    ui.wordDisplay.style.removeProperty("--item-size");
+    ui.wordDisplay.classList.add("is-intro");
     ui.wordDisplay.classList.toggle("is-cursive", state.letter === "cursive");
     ui.helperText.textContent = "Espaço avança • X marca dificuldade • Enter encerra";
 
@@ -363,11 +563,12 @@ function getTimerDisplay() {
 }
 
 function renderSessionStats() {
+    const meta = getContentMeta();
     ui.timerValue.textContent = getTimerDisplay();
     ui.shownValue.textContent = `${state.session.shownCount}/${state.session.queue.length}`;
     ui.readValue.textContent = `${state.session.readCount} lidas`;
     ui.skippedValue.textContent = String(state.session.skippedWords.length);
-    ui.paceValue.textContent = `${getPace()} PPM`;
+    ui.paceValue.textContent = `${getPace()} ${meta.pace}`;
 }
 
 function showNextWord() {
@@ -379,8 +580,7 @@ function showNextWord() {
     state.session.currentWord = state.session.queue[state.session.index];
     state.session.index += 1;
     state.session.shownCount = state.session.index;
-    ui.wordDisplay.textContent = state.session.currentWord;
-    ui.wordDisplay.classList.toggle("is-cursive", state.letter === "cursive");
+    setDisplayItem(state.session.currentWord);
     ui.helperText.textContent = state.mode === "timed" ? "Espaço avança • X marca dificuldade" : "Espaço avança • X marca dificuldade • Enter encerra";
     renderSessionStats();
 }
@@ -437,18 +637,21 @@ function handleSkipWord() {
 }
 
 function finishSession(reason = "manual") {
+    const meta = getContentMeta();
     clearTimer();
     state.session.status = "complete";
     playFinishSound();
 
     ui.resultTitle.textContent = reason === "time" ? "Tempo encerrado" : "Sessão concluída";
     ui.resultScore.textContent = String(state.session.readCount);
-    ui.resultScoreLabel.textContent = state.mode === "timed" ? "palavras lidas em 1 minuto" : "palavras lidas";
-    ui.resultPace.textContent = `${getPace()} PPM`;
+    ui.resultScoreLabel.textContent = state.mode === "timed" ? `${meta.plural} lidas em 1 minuto` : `${meta.plural} lidas`;
+    ui.resultPace.textContent = `${getPace()} ${meta.pace}`;
     ui.resultSummary.textContent =
         state.mode === "timed"
-            ? `Você confirmou ${state.session.readCount} palavras lidas e marcou ${state.session.skippedWords.length} com dificuldade.`
-            : `Você leu ${state.session.readCount} palavras nesta rodada de leitura livre.`;
+            ? `Você confirmou ${state.session.readCount} ${getContentNoun(state.session.readCount)} e marcou ${state.session.skippedWords.length} com dificuldade.`
+            : `Você leu ${state.session.readCount} ${getContentNoun(state.session.readCount)} nesta rodada.`;
+
+    ui.resultSkippedLabel.textContent = `${meta.label} com dificuldade`;
 
     if (state.session.skippedWords.length > 0) {
         ui.resultSkippedBox.classList.remove("hidden");
@@ -465,6 +668,9 @@ function goHome() {
     clearTimer();
     state.session = createIdleSession();
     delete ui.sessionScreen.dataset.mode;
+    delete ui.sessionScreen.dataset.content;
+    ui.wordDisplay.classList.remove("is-intro", "is-cursive");
+    ui.wordDisplay.style.removeProperty("--item-size");
     switchScreen("home");
 }
 
@@ -484,6 +690,26 @@ function retrySession() {
 
     startSession(state.mode, state.letter);
 }
+
+ui.contentButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        state.content = button.dataset.contentOption;
+        renderHomeSelections();
+        if (state.soundEnabled) {
+            playToggleSound();
+        }
+    });
+});
+
+ui.syllableButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        state.syllableLevel = button.dataset.syllableOption;
+        renderHomeSelections();
+        if (state.soundEnabled) {
+            playToggleSound();
+        }
+    });
+});
 
 ui.letterButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -566,5 +792,9 @@ document.addEventListener("keydown", (event) => {
 renderBenchmarks();
 updateSoundButtons();
 renderHomeSelections();
-document.addEventListener("fullscreenchange", syncFullscreenState);
+document.addEventListener("fullscreenchange", () => {
+    syncFullscreenState();
+    scheduleDisplayFit();
+});
+window.addEventListener("resize", scheduleDisplayFit);
 syncFullscreenState();

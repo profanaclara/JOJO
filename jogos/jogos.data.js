@@ -4,8 +4,8 @@ window.JOJO_GAMES = {
             title: "Alfabetização",
             cards: [
                 {
-                    title: "Leitura de palavras",
-                    description: "Teste de fluência com palavras isoladas.",
+                    title: "Fluência leitora",
+                    description: "Letras, sílabas e palavras.",
                     href: "./palavras/index.html",
                     art: "../assets/jojo-card-palavras.png",
                     status: "Praticar"

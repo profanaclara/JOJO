@@ -59,6 +59,7 @@ a {
 }
 
 .app-screen {
+    position: relative;
     min-height: 100vh;
     padding:
         calc(env(safe-area-inset-top, 0px) + 24px)
@@ -292,6 +293,53 @@ a {
     object-fit: cover;
     border-radius: 14px;
     box-shadow: 0 12px 24px rgba(73, 108, 179, 0.14);
+}
+
+.reference-strip {
+    width: min(100%, 112px);
+    margin: 12px auto 0;
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    opacity: 0.4;
+    transition: opacity var(--transition);
+}
+
+.reference-strip:hover,
+.reference-strip:focus-within {
+    opacity: 0.78;
+}
+
+.reference-strip__label {
+    color: #3f4c5d;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.reference-strip__logos {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    gap: 8px;
+}
+
+.reference-strip__logos a {
+    width: 92px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    filter: grayscale(1);
+}
+
+.reference-strip__logos img {
+    max-width: 100%;
+    max-height: 25px;
+    display: block;
+    object-fit: contain;
 }
 
 .sheet-backdrop {
@@ -590,6 +638,19 @@ a:focus-visible {
         height: 48px;
     }
 
+    .reference-strip {
+        position: absolute;
+        right: 30px;
+        bottom: 24px;
+        width: 112px;
+        margin: 0;
+        justify-items: center;
+    }
+
+    .reference-strip__logos {
+        gap: 8px;
+    }
+
     .sheet-backdrop {
         background: rgba(17, 33, 61, 0.12);
         backdrop-filter: blur(2px);
@@ -633,34 +694,41 @@ a:focus-visible {
     }
 
     .sheet-content {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         max-height: calc(min(72vh, 620px) - 156px);
-        align-items: start;
-        grid-auto-rows: min-content;
+        align-items: stretch;
+        grid-auto-rows: 122px;
     }
 
     .list-card,
     .section-card {
         min-height: 0;
         padding: 14px 16px;
-        height: auto;
-        align-self: start;
+        height: 100%;
+        align-self: stretch;
     }
 
     .list-card {
-        min-height: 176px;
-        grid-template-columns: 1fr;
-        justify-items: center;
-        text-align: center;
+        min-height: 122px;
+        height: 122px;
+        grid-template-columns: 82px minmax(0, 1fr);
+        grid-template-rows: 1fr;
+        gap: 14px;
+        justify-items: stretch;
+        text-align: left;
     }
 
     .list-card__art {
-        width: 98px;
-        height: 98px;
+        width: 82px;
+        height: 82px;
+        align-self: center;
     }
 
     .list-card__body {
-        justify-items: center;
+        width: 100%;
+        justify-items: start;
+        align-content: center;
+        gap: 4px;
     }
 
     .list-card h3,
@@ -671,6 +739,8 @@ a:focus-visible {
 
     .list-card p,
     .section-card p {
-        font-size: 0.92rem;
+        margin-top: 3px;
+        font-size: 0.82rem;
+        line-height: 1.32;
     }
 }

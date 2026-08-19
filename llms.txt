@@ -1,0 +1,23 @@
+# JOJO
+
+> Plataforma gratuita de jogos educacionais e ferramentas pedagógicas para leitura, matemática, organização do tempo e registros diários.
+
+Site oficial: https://jojo.profanaclara.com.br/
+Idioma principal: Português do Brasil
+Desenvolvido por: Ana Clara Silva de Lima
+
+## Conteúdo principal
+
+- Jogos: https://jojo.profanaclara.com.br/jogos/
+- Fluência com palavras: https://jojo.profanaclara.com.br/jogos/palavras/
+- Fluência com textos: https://jojo.profanaclara.com.br/jogos/textos/
+- Pop-it da soma: https://jojo.profanaclara.com.br/jogos/popit-soma/
+- Pop-it da subtração: https://jojo.profanaclara.com.br/jogos/popit-subtracao/
+- Tabuada de Pitágoras: https://jojo.profanaclara.com.br/jogos/tabuada-pitagoras/
+- Timer visual: https://jojo.profanaclara.com.br/jogos/timer/
+- Agenda pedagógica: https://jojo.profanaclara.com.br/agenda/
+- Privacidade: https://jojo.profanaclara.com.br/privacidade.html
+
+## Observações
+
+As atividades de palavras e textos apoiam práticas de fluência leitora e foram inspiradas em formatos de avaliação do Saeb. A plataforma é um recurso pedagógico e não substitui avaliação diagnóstica oficial.

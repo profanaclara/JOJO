@@ -216,17 +216,7 @@ function getCurrentTest() {
 }
 
 function getAvailableSteps(testData) {
-    const steps = ["text"];
-
-    if (getWordsListForDisplay(testData).length > 0) {
-        steps.push("words");
-    }
-
-    if (getPseudoWordsListForDisplay(testData).length > 0) {
-        steps.push("pseudo");
-    }
-
-    return steps;
+    return ["text"];
 }
 
 function getWordsListForDisplay(testData) {
@@ -588,59 +578,15 @@ function queueFullscreenTextFit() {
     window.setTimeout(fitFullscreenText, 260);
 }
 
-function resolveReadingPreset(plainText) {
-    const words = plainText.split(/\s+/).filter(Boolean);
-    const textLength = plainText.length;
+function getFullscreenTypography(plainText) {
     const paragraphCount = Math.max(1, ui.readingText.querySelectorAll("p").length);
-
-    if (textLength <= 340 && paragraphCount <= 6) {
-        return {
-            name: "short",
-            width: "min(calc(100vw - 320px), 980px)",
-            paddingY: "clamp(24px, 2.2vw, 34px)",
-            paddingX: "clamp(44px, 5vw, 78px)",
-            lineHeight: 1.34,
-            gap: 0.42,
-            minSize: 30,
-            maxSize: 62
-        };
-    }
-
-    if (textLength <= 860) {
-        return {
-            name: "story",
-            width: "min(calc(100vw - 320px), 1160px)",
-            paddingY: "clamp(22px, 2vw, 30px)",
-            paddingX: "clamp(42px, 4.8vw, 72px)",
-            lineHeight: 1.42,
-            gap: 0.34,
-            minSize: 22,
-            maxSize: 40
-        };
-    }
-
-    if (textLength <= 1220 || words.length <= 190) {
-        return {
-            name: "long",
-            width: "min(calc(100vw - 280px), 1340px)",
-            paddingY: "clamp(18px, 1.8vw, 26px)",
-            paddingX: "clamp(34px, 4.2vw, 60px)",
-            lineHeight: 1.32,
-            gap: 0.24,
-            minSize: 17,
-            maxSize: 28
-        };
-    }
+    const density = plainText.length / paragraphCount;
 
     return {
-        name: "dense",
-        width: "min(calc(100vw - 260px), 1480px)",
-        paddingY: "clamp(16px, 1.5vw, 22px)",
-        paddingX: "clamp(28px, 3.8vw, 48px)",
-        lineHeight: 1.22,
-        gap: 0.16,
+        lineHeight: density > 220 ? 1.25 : density > 140 ? 1.32 : 1.4,
+        gap: paragraphCount > 8 ? 0.2 : paragraphCount > 5 ? 0.3 : 0.42,
         minSize: 14,
-        maxSize: 22
+        maxSize: 64
     };
 }
 
@@ -655,14 +601,12 @@ function fitFullscreenText() {
         const textStage = ui.textStep?.querySelector(".text-stage");
         if (!ui.body.classList.contains("textos-fullscreen") || !textStage || !ui.readingText) {
             if (textStage) {
-                delete textStage.dataset.readingPreset;
-                textStage.style.removeProperty("--stage-reading-width");
-                textStage.style.removeProperty("--stage-reading-pad-y");
-                textStage.style.removeProperty("--stage-reading-pad-x");
+                textStage.classList.remove("is-measuring");
             }
             ui.readingText?.style.removeProperty("--reading-fit-size");
             ui.readingText?.style.removeProperty("--reading-fit-leading");
             ui.readingText?.style.removeProperty("--reading-fit-gap");
+            ui.textTitle?.style.removeProperty("--title-fit-size");
             return;
         }
 
@@ -671,41 +615,34 @@ function fitFullscreenText() {
             return;
         }
 
-        const preset = resolveReadingPreset(plainText);
+        const typography = getFullscreenTypography(plainText);
         const words = plainText.split(/\s+/).filter(Boolean);
         const longestWord = words.reduce((max, word) => Math.max(max, word.length), 1);
         const stageStyle = window.getComputedStyle(textStage);
-        textStage.dataset.readingPreset = preset.name;
-        textStage.style.setProperty("--stage-reading-width", preset.width);
-        textStage.style.setProperty("--stage-reading-pad-y", preset.paddingY);
-        textStage.style.setProperty("--stage-reading-pad-x", preset.paddingX);
-
-        const availableHeight = textStage.clientHeight
-            - Number.parseFloat(stageStyle.paddingTop)
-            - Number.parseFloat(stageStyle.paddingBottom)
-            - 6;
         const availableWidth = textStage.clientWidth
             - Number.parseFloat(stageStyle.paddingLeft)
             - Number.parseFloat(stageStyle.paddingRight)
-            - 6;
+            - 4;
         const glyphWidthRatio = state.textBoldEnabled ? 0.64 : 0.58;
         const longestWordLimit = availableWidth / Math.max(longestWord * glyphWidthRatio, 1);
-        const maxSize = Math.min(preset.maxSize, longestWordLimit);
-        const minSize = Math.min(preset.minSize, maxSize);
+        const maxSize = Math.min(typography.maxSize, longestWordLimit);
+        const minSize = Math.min(typography.minSize, maxSize);
 
         let low = minSize;
         let high = maxSize;
         let best = minSize;
 
-        ui.readingText.style.setProperty("--reading-fit-leading", String(preset.lineHeight));
-        ui.readingText.style.setProperty("--reading-fit-gap", `${preset.gap}em`);
+        textStage.classList.add("is-measuring");
+        ui.readingText.style.setProperty("--reading-fit-leading", String(typography.lineHeight));
+        ui.readingText.style.setProperty("--reading-fit-gap", `${typography.gap}em`);
 
         for (let step = 0; step < 18; step += 1) {
             const current = (low + high) / 2;
             ui.readingText.style.setProperty("--reading-fit-size", `${current}px`);
+            ui.textTitle.style.setProperty("--title-fit-size", `${Math.min(48, current * 1.18)}px`);
 
-            const fits = ui.readingText.scrollHeight <= availableHeight
-                && ui.readingText.scrollWidth <= availableWidth;
+            const fits = textStage.scrollHeight <= textStage.clientHeight + 1
+                && textStage.scrollWidth <= textStage.clientWidth + 1;
 
             if (fits) {
                 best = current;
@@ -715,7 +652,10 @@ function fitFullscreenText() {
             }
         }
 
-        ui.readingText.style.setProperty("--reading-fit-size", `${Math.floor(best * 10) / 10}px`);
+        const fittedSize = Math.floor(best * 10) / 10;
+        ui.readingText.style.setProperty("--reading-fit-size", `${fittedSize}px`);
+        ui.textTitle.style.setProperty("--title-fit-size", `${Math.min(48, fittedSize * 1.18)}px`);
+        textStage.classList.remove("is-measuring");
     });
 }
 
@@ -904,7 +844,7 @@ function renderQuestions(testData) {
 }
 
 function renderTextStep(testData) {
-    ui.textTitle.textContent = "";
+    ui.textTitle.textContent = testData.title;
     ui.readingText.classList.remove("is-long", "is-extra-long");
     ui.readingText.innerHTML = testData.text
         .split("\n")
@@ -1077,16 +1017,8 @@ function renderStepNavigation(testData) {
         state.currentStep = steps[0];
     }
 
-    ui.stepNavigation.innerHTML = steps
-        .map((step) => {
-            const activeClass = step === state.currentStep ? "is-active" : "";
-            return `
-                <button class="step-button ${activeClass}" type="button" data-step="${step}">
-                    ${STEP_META[step].title}
-                </button>
-            `;
-        })
-        .join("");
+    ui.stepNavigation.innerHTML = "";
+    ui.stepNavigation.classList.add("hidden");
 
 }
 
@@ -1108,8 +1040,6 @@ function renderSession() {
     ui.timeLimitLabel.textContent = `Meta: ${testData.maxTime}`;
     ui.maxErrorsLabel.textContent = `Meta: até ${testData.maxErrors} erros`;
     renderTextStep(testData);
-    renderWordsStep(testData);
-    renderPseudoStep(testData);
     renderStepNavigation(testData);
     renderVisibleStep();
     renderTimerAndErrors();

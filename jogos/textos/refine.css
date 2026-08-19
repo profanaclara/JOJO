@@ -1,0 +1,120 @@
+.screen--session {
+    padding-top: 18px;
+}
+
+.session-header {
+    min-height: 82px;
+    height: auto;
+    padding: 14px 22px;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+}
+
+.session-tools {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.session-center {
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.session-pill {
+    margin: 0;
+}
+
+.session-summary {
+    padding-top: 14px;
+}
+
+.session-toolbar {
+    justify-content: flex-end;
+}
+
+.text-stage h4 {
+    margin: 0 0 14px;
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    line-height: 1.15;
+    color: #405ed0;
+}
+
+body.textos-fullscreen #textStep,
+body.textos-fullscreen .surface-card#textStep {
+    padding: clamp(76px, 9vh, 108px) clamp(112px, 10vw, 180px) clamp(48px, 6vh, 82px);
+    place-items: center;
+}
+
+body.textos-fullscreen .text-stage {
+    width: min(100%, 1480px);
+    inline-size: min(100%, 1480px);
+    height: 100%;
+    max-height: 100%;
+    padding: clamp(28px, 4vh, 58px) clamp(42px, 5.5vw, 96px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(117, 151, 210, 0.2);
+    border-radius: clamp(24px, 2.4vw, 42px);
+    box-shadow: 0 24px 70px rgba(47, 82, 139, 0.1);
+    overflow: hidden;
+}
+
+body.textos-fullscreen .text-stage.is-measuring {
+    justify-content: flex-start;
+}
+
+body.textos-fullscreen .text-stage h4 {
+    flex: 0 0 auto;
+    margin: 0 0 0.55em;
+    font-size: var(--title-fit-size, 34px);
+    line-height: 1.08;
+    text-align: center;
+    color: #405ed0;
+}
+
+body.textos-fullscreen .reading-text,
+body.textos-fullscreen .reading-text.is-long,
+body.textos-fullscreen .reading-text.is-extra-long {
+    flex: 0 0 auto;
+    width: 100%;
+    font-size: var(--reading-fit-size, 24px);
+    line-height: var(--reading-fit-leading, 1.35);
+    text-align: left;
+}
+
+@media (max-width: 760px) {
+    .screen--session {
+        padding-top: 10px;
+    }
+
+    .session-header {
+        min-height: 72px;
+        padding: 10px 12px;
+    }
+
+    .session-tools {
+        gap: 6px;
+    }
+
+    .text-stage h4 {
+        font-size: 1.28rem;
+    }
+
+    body.textos-fullscreen #textStep,
+    body.textos-fullscreen .surface-card#textStep {
+        padding: 72px 78px 28px 22px;
+    }
+
+    body.textos-fullscreen .text-stage {
+        padding: 22px 24px;
+        border-radius: 24px;
+    }
+}

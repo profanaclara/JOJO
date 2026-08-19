@@ -8,13 +8,23 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="JOJO">
     <title>JOJO | Cabo de Guerra Matemático - Operações e Frações</title>
+    <meta name="description" content="Jogo competitivo em equipes para praticar operações e frações com cabo de guerra animado.">
+    <link rel="canonical" href="https://jojo.profanaclara.com.br/jogos/cabo-de-guerra-operacoes-fracoes/">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="JOJO">
+    <meta property="og:title" content="Cabo de Guerra: operações e frações | JOJO">
+    <meta property="og:description" content="Jogo competitivo em equipes para praticar operações e frações com cabo de guerra animado.">
+    <meta property="og:url" content="https://jojo.profanaclara.com.br/jogos/cabo-de-guerra-operacoes-fracoes/">
+    <meta property="og:image" content="https://jojo.profanaclara.com.br/assets/jojo-social-share.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="manifest" href="../../manifest.webmanifest">
-    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icon-192.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg?v=1">
     <link rel="apple-touch-icon" href="../../assets/icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css?v=7">
+    <link rel="stylesheet" href="./styles.css?v=8">
 </head>
 <body>
     <div id="app" class="math-tug-app is-setup-open" data-setup-step="1">
@@ -87,18 +97,6 @@
                         <div id="countdownValue" class="countdown-overlay__value">3</div>
                     </div>
 
-                    <div id="resultOverlay" class="result-overlay hidden">
-                        <div class="result-card">
-                            <p class="result-card__eyebrow">PARTIDA ENCERRADA</p>
-                            <img id="resultBadge" class="result-card__badge hidden" src="./assets/ganhou-azul.gif" alt="Equipe vencedora">
-                            <h2 id="resultTitle">EQUIPE AZUL VENCEU</h2>
-                            <p id="resultText">FOI UMA DISPUTA INCRÍVEL.</p>
-                            <div class="result-card__actions">
-                                <button id="playAgainBtn" class="primary-action" type="button">JOGAR DE NOVO</button>
-                                <button id="openSetupBtn" class="secondary-action" type="button">AJUSTAR PARTIDA</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="arena-panel__bottom">
@@ -142,6 +140,19 @@
 
             </section>
         </main>
+
+        <div id="resultOverlay" class="result-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+            <div class="result-card">
+                <p class="result-card__eyebrow">PARTIDA ENCERRADA</p>
+                <img id="resultBadge" class="result-card__badge hidden" src="./assets/ganhou-azul.gif" alt="Equipe vencedora">
+                <h2 id="resultTitle">EQUIPE AZUL VENCEU</h2>
+                <p id="resultText">FOI UMA DISPUTA INCRÍVEL.</p>
+                <div class="result-card__actions">
+                    <button id="playAgainBtn" class="primary-action" type="button">JOGAR DE NOVO</button>
+                    <button id="openSetupBtn" class="secondary-action" type="button">AJUSTAR PARTIDA</button>
+                </div>
+            </div>
+        </div>
 
         <div class="zoom-dock">
             <button id="zoomOutBtn" type="button" aria-label="Diminuir tamanho">−</button>

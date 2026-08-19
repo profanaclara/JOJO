@@ -32,7 +32,7 @@ function cardTemplate(card) {
 
     return `
         <${tag} class="game-card${card.disabled ? " is-disabled" : ""}"${href}${type}${disabled}>
-            <img src="${card.art}" alt="" aria-hidden="true">
+            <img src="${card.art}" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <strong>${escapeHtml(card.title)}</strong>
             <span>${escapeHtml(card.description)}</span>
             <small>${escapeHtml(card.status)}</small>
