@@ -24,15 +24,27 @@ Plataforma de jogos e ferramentas assistivas da JOJO.
 - `styles/`: estilos da home da plataforma
 - `scripts/`: dados e comportamento da home
 - `jogos/`: jogos e ferramentas integrados
+- `agenda/`: ferramenta de registro pedagogico
 - `docs/`: anotacoes rapidas de publicacao
 - `referencias/`: arquivos de referência e fontes originais
 
 ## Jogos atuais
 
+Linkados no menu (home e `jogos/`):
+
 - `jogos/palavras/`
 - `jogos/textos/`
 - `jogos/timer/`
+- `jogos/popit-soma/`
+- `jogos/popit-subtracao/`
+- `jogos/tabuada-pitagoras/`
+- `jogos/cabo-de-guerra-operacoes-fracoes/`
+
+Publicados mas sem link em nenhum menu (acesso so por URL direta - ver plano de organizacao):
+
 - `jogos/cabo-de-guerra/`
+- `jogos/cabo-de-guerra-fracoes/`
+- `jogos/jojo-cidade/`
 
 ## Fluxo de trabalho
 

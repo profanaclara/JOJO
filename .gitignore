@@ -12,3 +12,9 @@ Desktop.ini
 
 # Python local server cache
 __pycache__/
+
+# Pastas de trabalho local - nao fazem parte do site publicado
+_local/
+_descartados-local/
+tmp-online-cabo/
+referencias/originais/
