@@ -48,10 +48,6 @@ function hasProblem() {
     return state.a !== null && state.b !== null;
 }
 
-function formatTarget(value) {
-    return value === null ? "?" : value;
-}
-
 function resetState(keepProblem = true) {
     state.bubbles = Array.from({ length: TOTAL_BUBBLES }, () => null);
     state.tray = [];
@@ -66,11 +62,7 @@ function resetState(keepProblem = true) {
 }
 
 function clampDigit(value) {
-    const number = Number.parseInt(String(value), 10);
-    if (Number.isNaN(number)) {
-        return null;
-    }
-    return Math.max(0, Math.min(9, number));
+    return clampInt(value, 0, 9);
 }
 
 function syncInputs() {
