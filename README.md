@@ -38,13 +38,13 @@ Linkados no menu (home e `jogos/`):
 - `jogos/popit-soma/`
 - `jogos/popit-subtracao/`
 - `jogos/tabuada-pitagoras/`
-- `jogos/cabo-de-guerra-operacoes-fracoes/`
+- `jogos/cabo-de-guerra-operacoes-fracoes/` (versao com operacoes e fracoes juntas - versao final)
 
-Publicados mas sem link em nenhum menu (acesso so por URL direta - ver plano de organizacao):
+Nao publicado (so na maquina local, ainda nao commitado no Git):
 
-- `jogos/cabo-de-guerra/`
-- `jogos/cabo-de-guerra-fracoes/`
 - `jogos/jojo-cidade/`
+
+Removidos em 2026-09: `jogos/cabo-de-guerra/` e `jogos/cabo-de-guerra-fracoes/` eram versoes anteriores, sem link em nenhum menu, ja substituidas por `cabo-de-guerra-operacoes-fracoes`.
 
 ## Fluxo de trabalho
 
