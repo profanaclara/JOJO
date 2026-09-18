@@ -66,3 +66,17 @@ function playTone({ frequency, duration, type = "sine", volume = 0.08, delay = 0
         oscillator.stop(now + duration + 0.02);
     });
 }
+
+// Extraido de jogos/popit-soma/app.js, jogos/popit-subtracao/app.js e
+// jogos/tabuada-pitagoras/app.js: os tres tinham a mesma logica de
+// "sortear um novo problema diferente do anterior" (ate 5 tentativas),
+// so mudando o gerador usado em cada jogo. Comportamento identico ao
+// original - cada app.js continua responsavel por gerar o par e decidir
+// o que fazer com o resultado (estado, som, re-render).
+function pickDifferentPair(generatePair, previousKey) {
+    let next = generatePair();
+    for (let attempt = 0; attempt < 5 && `${next[0]}-${next[1]}` === previousKey; attempt += 1) {
+        next = generatePair();
+    }
+    return next;
+}

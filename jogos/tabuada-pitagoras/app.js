@@ -88,14 +88,7 @@ function shuffleProblem() {
     }
 
     const previous = `${state.a}-${state.b}`;
-    let nextA = randomFactor();
-    let nextB = randomFactor();
-    for (let attempt = 0; attempt < 5 && `${nextA}-${nextB}` === previous; attempt += 1) {
-        nextA = randomFactor();
-        nextB = randomFactor();
-    }
-    state.a = nextA;
-    state.b = nextB;
+    [state.a, state.b] = pickDifferentPair(() => [randomFactor(), randomFactor()], previous);
     syncInputs();
     softTone(0.58, 1.06);
     clearSelection();

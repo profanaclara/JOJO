@@ -92,11 +92,7 @@ function shuffleProblem() {
     }
 
     const previous = `${state.minuend}-${state.subtrahend}`;
-    let next = randomProblem();
-    for (let attempt = 0; attempt < 5 && `${next[0]}-${next[1]}` === previous; attempt += 1) {
-        next = randomProblem();
-    }
-    [state.minuend, state.subtrahend] = next;
+    [state.minuend, state.subtrahend] = pickDifferentPair(randomProblem, previous);
     syncInputs();
     softPop(0.58);
     resetState(true);
