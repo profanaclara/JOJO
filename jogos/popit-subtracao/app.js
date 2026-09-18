@@ -48,16 +48,8 @@ function hasProblem() {
     return state.minuend !== null && state.subtrahend !== null;
 }
 
-function formatTarget(value) {
-    return value === null ? "?" : value;
-}
-
 function clampDigit(value, min = 0) {
-    const number = Number.parseInt(String(value), 10);
-    if (Number.isNaN(number)) {
-        return null;
-    }
-    return Math.max(min, Math.min(9, number));
+    return clampInt(value, min, 9);
 }
 
 function syncInputs() {

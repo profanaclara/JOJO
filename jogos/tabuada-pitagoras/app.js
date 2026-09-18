@@ -32,11 +32,7 @@ const state = {
 };
 
 function clampFactor(value) {
-    const number = Number.parseInt(String(value), 10);
-    if (Number.isNaN(number)) {
-        return null;
-    }
-    return Math.max(1, Math.min(GRID_SIZE, number));
+    return clampInt(value, 1, GRID_SIZE);
 }
 
 function randomFactor() {
@@ -49,10 +45,6 @@ function hasProblem() {
 
 function answer() {
     return hasProblem() ? state.a * state.b : null;
-}
-
-function formatTarget(value) {
-    return value === null ? "?" : value;
 }
 
 function syncInputs() {
