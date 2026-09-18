@@ -295,52 +295,6 @@ function scheduleDisplayFit() {
     });
 }
 
-function ensureAudioContext() {
-    if (state.audioContext || !window.AudioContext) {
-        return;
-    }
-
-    state.audioContext = new window.AudioContext();
-}
-
-function runWithAudio(callback) {
-    ensureAudioContext();
-    if (!state.audioContext) {
-        return;
-    }
-
-    const context = state.audioContext;
-    if (context.state === "suspended") {
-        context.resume().then(() => callback(context)).catch(() => {});
-        return;
-    }
-
-    callback(context);
-}
-
-function playTone({ frequency, duration, type = "sine", volume = 0.08 }) {
-    if (!state.soundEnabled) {
-        return;
-    }
-
-    runWithAudio((context) => {
-        const oscillator = context.createOscillator();
-        const gainNode = context.createGain();
-        const now = context.currentTime;
-
-        oscillator.type = type;
-        oscillator.frequency.setValueAtTime(frequency, now);
-        gainNode.gain.setValueAtTime(0.0001, now);
-        gainNode.gain.exponentialRampToValueAtTime(volume, now + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-
-        oscillator.connect(gainNode);
-        gainNode.connect(context.destination);
-        oscillator.start(now);
-        oscillator.stop(now + duration + 0.02);
-    });
-}
-
 function playStartSound() {
     playTone({ frequency: 440, duration: 0.12, type: "triangle", volume: 0.09 });
     window.setTimeout(() => {

@@ -396,51 +396,6 @@ function syncQuestionsDrawer(force = false) {
     }
 }
 
-function ensureAudioContext() {
-    if (state.audioContext || !window.AudioContext) {
-        return;
-    }
-
-    state.audioContext = new window.AudioContext();
-}
-
-function runWithAudio(callback) {
-    ensureAudioContext();
-    if (!state.audioContext) {
-        return;
-    }
-
-    if (state.audioContext.state === "suspended") {
-        state.audioContext.resume().then(() => callback(state.audioContext)).catch(() => {});
-        return;
-    }
-
-    callback(state.audioContext);
-}
-
-function playTone({ frequency, duration, type = "sine", volume = 0.08, delay = 0 }) {
-    if (!state.soundEnabled) {
-        return;
-    }
-
-    runWithAudio((context) => {
-        const oscillator = context.createOscillator();
-        const gainNode = context.createGain();
-        const now = context.currentTime + delay;
-
-        oscillator.type = type;
-        oscillator.frequency.setValueAtTime(frequency, now);
-        gainNode.gain.setValueAtTime(0.0001, now);
-        gainNode.gain.exponentialRampToValueAtTime(volume, now + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-
-        oscillator.connect(gainNode);
-        gainNode.connect(context.destination);
-        oscillator.start(now);
-        oscillator.stop(now + duration + 0.02);
-    });
-}
-
 function playUiSound() {
     playTone({ frequency: 690, duration: 0.07, type: "triangle", volume: 0.08 });
 }
