@@ -5,7 +5,7 @@ Disallow: /_descartados-local/
 Disallow: /referencias/
 Disallow: /tmp-online-cabo/
 Disallow: /jogos/jojo-cidade/
-Disallow: /jogos/timer/fonte-original.html
+Disallow: /jogos/timer/_dev/
 Disallow: /jogos/cabo-de-guerra-operacoes-fracoes/gif-frame.html
 
 Sitemap: https://jojo.profanaclara.com.br/sitemap.xml
