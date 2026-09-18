@@ -1,17 +1,10 @@
 const STORAGE_KEY = "jojo_math_tug_teams_v1";
-const STANDARD_ROUNDS = [5, 10, 15, 20];
 
 const OPERATION_META = {
     add: { label: "ADIÇÃO", symbol: "+" },
     subtract: { label: "SUBTRAÇÃO", symbol: "-" },
     multiply: { label: "MULTIPLICAÇÃO", symbol: "×" },
     divide: { label: "DIVISÃO", symbol: "÷" },
-};
-
-const FRACTION_LEVEL_META = {
-    1: "METADES, TERÇOS E QUARTOS",
-    2: "ATÉ OITAVOS",
-    3: "ATÉ DOZE PARTES",
 };
 
 const refs = {
@@ -35,7 +28,6 @@ const refs = {
     leftTeamInput: document.getElementById("leftTeamInput"),
     rightTeamInput: document.getElementById("rightTeamInput"),
     changeTeamsBtn: document.getElementById("changeTeamsBtn"),
-    prevStepBtn: document.getElementById("prevStepBtn"),
     nextStepBtn: document.getElementById("nextStepBtn"),
     startMatchBtn: document.getElementById("startMatchBtn"),
     openSetupBtn: document.getElementById("openSetupBtn"),
@@ -99,9 +91,7 @@ const state = {
 
 const timers = {
     countdown: null,
-    countdownHide: null,
     feedback: null,
-    nextRound: null,
     clock: null,
 };
 
@@ -191,9 +181,6 @@ function bindEvents() {
     });
 
     refs.changeTeamsBtn.addEventListener("click", () => openSetup(3, true));
-    if (refs.prevStepBtn) {
-        refs.prevStepBtn.addEventListener("click", handlePrevStep);
-    }
     refs.nextStepBtn.addEventListener("click", handleNextStep);
     refs.startMatchBtn.addEventListener("click", startMatchFromSetup);
     refs.openSetupBtn.addEventListener("click", () => openSetup(1, true));
@@ -421,16 +408,6 @@ function toggleOperation(operation) {
     playTone("step");
 }
 
-function handlePrevStep() {
-    if (state.setupStep === 1) {
-        return;
-    }
-
-    state.setupStep -= 1;
-    renderSetupState();
-    playTone("step");
-}
-
 function handleNextStep() {
     if (state.setupStep >= 3) {
         return;
@@ -611,7 +588,8 @@ function handleKeypadPress(side, key) {
         const nextBuffer = buffer[activePart] === "0" ? key : `${buffer[activePart]}${key}`;
         buffer[activePart] = nextBuffer.slice(0, maxLength);
 
-        if (activePart === "numerator" && buffer.numerator) {
+        const numeratorLength = String(activeProblem.numerator).length;
+        if (activePart === "numerator" && buffer.numerator.length >= numeratorLength) {
             buffer.activePart = "denominator";
         }
 
@@ -783,9 +761,6 @@ function renderSetupState() {
         indicator.classList.toggle("is-done", stepNumber < state.setupStep);
     });
 
-    if (refs.prevStepBtn) {
-        refs.prevStepBtn.classList.toggle("hidden", state.setupStep === 1);
-    }
     refs.nextStepBtn.classList.toggle("hidden", state.setupStep === 3);
     refs.startMatchBtn.classList.toggle("hidden", state.setupStep !== 3);
 

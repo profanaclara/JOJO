@@ -44,7 +44,9 @@ Nao publicado (so na maquina local, ainda nao commitado no Git):
 
 - `jogos/jojo-cidade/`
 
-Removidos em 2026-09: `jogos/cabo-de-guerra/` e `jogos/cabo-de-guerra-fracoes/` eram versoes anteriores, sem link em nenhum menu, ja substituidas por `cabo-de-guerra-operacoes-fracoes`.
+O unico Cabo de Guerra mantido e `jogos/cabo-de-guerra-operacoes-fracoes/`, com os dois modos. O codigo e as midias das versoes antigas foram removidos. Os caminhos `jogos/cabo-de-guerra/` e `jogos/cabo-de-guerra-fracoes/` contem apenas um `index.html` de redirecionamento para preservar favoritos e links compartilhados. Todas as futuras alteracoes do jogo devem ser feitas na versao unificada.
+
+Teste de regressao do Cabo de Guerra (Node, apenas para desenvolvimento): `node --test tests/cabo-de-guerra.test.cjs`.
 
 ## Fluxo de trabalho
 
