@@ -179,17 +179,17 @@ a {
     width: auto;
     min-height: 52px;
     margin: 0 auto 10px;
-    padding: 0;
+    padding: 0 22px;
     border: 0;
-    border-radius: 0;
-    background: transparent;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 24px rgba(67, 95, 150, 0.12);
     color: #4370cb;
     font-family: "Archivo", sans-serif;
     font-size: 1.08rem;
     font-weight: 700;
     line-height: 1;
     white-space: nowrap;
-    box-shadow: none;
     filter: none;
 }
 
@@ -641,7 +641,7 @@ a:focus-visible {
     .reference-strip {
         position: absolute;
         right: 30px;
-        bottom: 24px;
+        bottom: 68px;
         width: 112px;
         margin: 0;
         justify-items: center;

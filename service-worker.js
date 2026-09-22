@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "jojo-static-";
-const CACHE_VERSION = `${CACHE_PREFIX}v2026-09-18-2`;
+const CACHE_VERSION = `${CACHE_PREFIX}v2026-09-21-1`;
 
 // Keep installation fast. Game pages and media enter the cache after their first visit.
 const APP_SHELL = [
@@ -7,7 +7,7 @@ const APP_SHELL = [
     "./index.html",
     "./offline.html",
     "./manifest.webmanifest",
-    "./styles/main.css?v=20",
+    "./styles/main.css?v=21",
     "./styles/menu.css?v=8",
     "./scripts/app.js?v=2",
     "./scripts/data.js?v=7",

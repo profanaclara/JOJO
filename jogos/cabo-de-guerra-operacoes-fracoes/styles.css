@@ -95,6 +95,7 @@ button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     text-decoration: none;
 }
 
@@ -102,6 +103,49 @@ button {
     display: block;
     width: clamp(144px, 18vw, 210px);
     height: auto;
+}
+
+/* Ícones padronizados (mesmo visual usado no Pop-it e na Tabuada de Pitágoras) */
+.jojo-icon-back {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Selo do botão de voltar: mesmo cartão branco arredondado usado no Pop-it/Tabuada/Timer,
+   para que o ícone leia como um botão tocável, não apenas um glifo solto ao lado da logo. */
+.jojo-icon-back-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 10px 22px rgba(10, 69, 109, 0.14);
+    color: #1172b0;
+}
+
+.zoom-dock .jojo-icon-sound {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.zoom-dock .jojo-icon-fullscreen {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .brand-link--topbar {
@@ -618,6 +662,9 @@ button {
     font-family: "Archivo", sans-serif;
     font-size: 1.2rem;
     font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .zoom-dock button.is-muted {
@@ -854,6 +901,15 @@ button {
     font-family: "Archivo", sans-serif;
     font-size: 2rem;
     font-weight: 800;
+}
+
+/* Ícones das operações (+, −, ×, ÷) — ilustrações 3D geradas no mesmo
+   estilo do restante do site, no lugar dos caracteres tipográficos. */
+.selection-card__symbol-img {
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+    display: block;
 }
 
 .selection-card strong,

@@ -187,14 +187,12 @@ function getLetterLabel() {
 }
 
 function updateSoundButtons() {
-    const icon = state.soundEnabled ? "🔊" : "🔇";
     const label = state.soundEnabled ? "Som ligado" : "Som desligado";
-    ui.toggleSoundBtn.innerHTML = `<span aria-hidden="true">${icon}</span><span class="sr-only">${label}</span>`;
-    ui.sessionSoundBtn.innerHTML = `<span aria-hidden="true">${icon}</span><span class="sr-only">${label}</span>`;
-    ui.toggleSoundBtn.setAttribute("aria-label", label);
-    ui.sessionSoundBtn.setAttribute("aria-label", label);
-    ui.toggleSoundBtn.setAttribute("aria-pressed", String(state.soundEnabled));
-    ui.sessionSoundBtn.setAttribute("aria-pressed", String(state.soundEnabled));
+    [ui.toggleSoundBtn, ui.sessionSoundBtn].forEach((button) => {
+        button.querySelector(".sr-only").textContent = label;
+        button.setAttribute("aria-label", label);
+        button.setAttribute("aria-pressed", String(state.soundEnabled));
+    });
 }
 
 function renderHomeSelections() {

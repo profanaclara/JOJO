@@ -24,12 +24,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css?v=8">
+    <link rel="stylesheet" href="./styles.css?v=11">
 </head>
 <body>
     <div id="app" class="math-tug-app is-setup-open" data-setup-step="1">
         <header class="topbar">
-            <a class="brand-link brand-link--topbar" href="../../" aria-label="Voltar à JOJO">
+            <a class="brand-link brand-link--topbar" href="../index.html?eixo=matematica" aria-label="Voltar aos jogos">
+                <span class="jojo-icon-back-badge"><svg class="jojo-icon-back" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg></span>
                 <img src="../../assets/jojo-horizontal.svg" alt="JOJO" class="brand-link__logo">
             </a>
 
@@ -158,8 +159,12 @@
             <button id="zoomOutBtn" type="button" aria-label="Diminuir tamanho">−</button>
             <strong id="zoomValue">100%</strong>
             <button id="zoomInBtn" type="button" aria-label="Aumentar tamanho">+</button>
-            <button id="fullscreenBtn" type="button" aria-label="Tela cheia">⛶</button>
-            <button id="soundToggleBtn" type="button" aria-label="Ativar ou desativar som">🔊</button>
+            <button id="fullscreenBtn" type="button" aria-label="Tela cheia">
+                <svg class="jojo-icon-fullscreen" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5"/></svg>
+            </button>
+            <button id="soundToggleBtn" type="button" aria-label="Ativar ou desativar som">
+                <img class="jojo-icon-sound" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+            </button>
         </div>
 
         <div id="setupBackdrop" class="setup-backdrop"></div>
@@ -167,7 +172,8 @@
         <section id="setupModal" class="setup-modal" role="dialog" aria-modal="true" aria-labelledby="setupTitle">
             <header class="setup-modal__header">
                 <div class="setup-modal__header-top">
-                    <a class="brand-link brand-link--modal" href="../../" aria-label="Voltar à JOJO">
+                    <a class="brand-link brand-link--modal" href="../index.html?eixo=matematica" aria-label="Voltar aos jogos">
+                        <span class="jojo-icon-back-badge"><svg class="jojo-icon-back" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg></span>
                         <img src="../../assets/jojo-horizontal.svg" alt="JOJO" class="brand-link__logo">
                     </a>
                 </div>
@@ -211,16 +217,16 @@
                     <div id="operationsMenu" class="operations-menu">
                         <div class="operations-menu__surface">
                             <button class="selection-card selection-card--operation-icon is-selected" type="button" data-operation="add" aria-label="Adição">
-                                <span class="selection-card__symbol">+</span>
+                                <span class="selection-card__symbol"><img class="selection-card__symbol-img" src="../../assets/jojo-cabo-soma.png" alt="" aria-hidden="true"></span>
                             </button>
                             <button class="selection-card selection-card--operation-icon" type="button" data-operation="subtract" aria-label="Subtração">
-                                <span class="selection-card__symbol">−</span>
+                                <span class="selection-card__symbol"><img class="selection-card__symbol-img" src="../../assets/jojo-cabo-subtracao.png" alt="" aria-hidden="true"></span>
                             </button>
                             <button class="selection-card selection-card--operation-icon" type="button" data-operation="multiply" aria-label="Multiplicação">
-                                <span class="selection-card__symbol">×</span>
+                                <span class="selection-card__symbol"><img class="selection-card__symbol-img" src="../../assets/jojo-cabo-multiplicacao.png" alt="" aria-hidden="true"></span>
                             </button>
                             <button class="selection-card selection-card--operation-icon" type="button" data-operation="divide" aria-label="Divisão">
-                                <span class="selection-card__symbol">÷</span>
+                                <span class="selection-card__symbol"><img class="selection-card__symbol-img" src="../../assets/jojo-cabo-divisao.png" alt="" aria-hidden="true"></span>
                             </button>
                         </div>
                     </div>
@@ -298,7 +304,7 @@
 
     <audio id="backgroundMusic" src="./assets/musicacabodeguerra.mp3" preload="auto" loop></audio>
 
-    <script src="./app.js?v=7"></script>
+    <script src="./app.js?v=8"></script>
     <script src="../../scripts/pwa.js?v=10"></script>
 </body>
 </html>

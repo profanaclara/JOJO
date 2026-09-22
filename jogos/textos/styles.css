@@ -126,6 +126,7 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     text-decoration: none;
 }
 
@@ -140,6 +141,54 @@ a {
     display: block;
     width: clamp(160px, 22vw, 240px);
     height: auto;
+}
+
+/* Ícones padronizados (mesmo visual usado no Pop-it e na Tabuada de Pitágoras) */
+.jojo-icon-back {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Selo do botão de voltar: mesmo cartão branco arredondado usado no Pop-it/Tabuada/Timer,
+   para que o ícone leia como um botão tocável, não apenas um glifo solto ao lado da logo. */
+.jojo-icon-back-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 10px 22px rgba(10, 69, 109, 0.14);
+    color: #1172b0;
+}
+
+.jojo-icon-sound {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.jojo-icon-fullscreen {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+button[aria-pressed="false"] .jojo-icon-sound {
+    filter: grayscale(0.85);
+    opacity: 0.62;
 }
 
 .ghost-button,
@@ -198,7 +247,7 @@ a {
     min-width: 48px;
     min-height: 48px;
     padding: 0;
-    border-radius: 999px;
+    border-radius: 15px;
     font-size: 1.15rem;
     line-height: 1;
 }
@@ -383,6 +432,15 @@ a {
     background: rgba(255, 255, 255, 0.2);
     font-size: 1.5rem;
     box-shadow: 0 10px 22px rgba(18, 42, 92, 0.14);
+}
+
+/* Ícones de série (substituem os emojis 🌱🌿🌳🌟) — ilustrações 3D geradas
+   no mesmo estilo dos ícones de Jogos/Ferramentas/Timer do site. */
+.year-card__icon-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
 }
 
 .year-card strong,

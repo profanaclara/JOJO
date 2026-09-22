@@ -65,14 +65,14 @@ window.JOJO_GAMES = {
                 {
                     title: "Formas",
                     description: "Reconhecer figuras e padrões.",
-                    art: "../assets/jojo-card-geometria.png",
+                    art: "../assets/jojo-geometria-em-breve.png",
                     status: "Em breve",
                     disabled: true
                 },
                 {
                     title: "Espaço",
                     description: "Localização, direção e comparação.",
-                    art: "../assets/jojo-card-geometria.png",
+                    art: "../assets/jojo-geometria-em-breve.png",
                     status: "Em breve",
                     disabled: true
                 }

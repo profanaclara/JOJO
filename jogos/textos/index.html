@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css?v=12">
+    <link rel="stylesheet" href="./styles.css?v=17">
     <link rel="stylesheet" href="./desktop.css?v=1">
     <link rel="stylesheet" href="./refine.css?v=2">
 </head>
@@ -32,7 +32,8 @@
     <div class="app-shell">
         <div id="homeScreen" class="screen screen--home">
             <div class="screen-topbar">
-                <a class="brand-link" href="../../" aria-label="Voltar à JOJO">
+                <a class="brand-link" href="../index.html?eixo=alfabetizacao" aria-label="Voltar aos jogos">
+                    <span class="jojo-icon-back-badge"><svg class="jojo-icon-back" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg></span>
                     <img src="../../assets/jojo-horizontal.svg" alt="JOJO" class="brand-link__logo">
                 </a>
                 <div class="home-top-actions">
@@ -41,7 +42,7 @@
                         <span class="sr-only">Abrir ajuda</span>
                     </button>
                     <button id="toggleSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <span aria-hidden="true">🔊</span>
+                        <img class="jojo-icon-sound" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
                         <span class="sr-only">Som ligado</span>
                     </button>
                 </div>
@@ -58,19 +59,19 @@
             <section class="mode-section">
                 <div class="year-grid">
                     <button class="year-card year-card--one" type="button" data-year="1">
-                        <span class="year-card__icon">🌱</span>
+                        <span class="year-card__icon"><img class="year-card__icon-img" src="../../assets/jojo-textos-ano1.png" alt="" aria-hidden="true"></span>
                         <strong>1º Ano</strong>
                     </button>
                     <button class="year-card year-card--two" type="button" data-year="2">
-                        <span class="year-card__icon">🌿</span>
+                        <span class="year-card__icon"><img class="year-card__icon-img" src="../../assets/jojo-textos-ano2.png" alt="" aria-hidden="true"></span>
                         <strong>2º Ano</strong>
                     </button>
                     <button class="year-card year-card--three" type="button" data-year="3">
-                        <span class="year-card__icon">🌳</span>
+                        <span class="year-card__icon"><img class="year-card__icon-img" src="../../assets/jojo-textos-ano3.png" alt="" aria-hidden="true"></span>
                         <strong>3º Ano</strong>
                     </button>
                     <button class="year-card year-card--four" type="button" data-year="4">
-                        <span class="year-card__icon">🌟</span>
+                        <span class="year-card__icon"><img class="year-card__icon-img" src="../../assets/jojo-textos-ano4-5.png" alt="" aria-hidden="true"></span>
                         <strong>4º e 5º Ano</strong>
                     </button>
                 </div>
@@ -85,6 +86,7 @@
         <div id="selectionScreen" class="screen screen--selection hidden">
             <div class="screen-topbar">
                 <button id="selectionBackBtn" class="brand-link brand-link--button" type="button" aria-label="Voltar">
+                    <span class="jojo-icon-back-badge"><svg class="jojo-icon-back" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg></span>
                     <img src="../../assets/jojo-horizontal.svg" alt="JOJO" class="brand-link__logo">
                 </button>
                 <div class="home-top-actions">
@@ -93,7 +95,7 @@
                         <span class="sr-only">Abrir ajuda</span>
                     </button>
                     <button id="selectionSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <span aria-hidden="true">🔊</span>
+                        <img class="jojo-icon-sound" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
                         <span class="sr-only">Som ligado</span>
                     </button>
                 </div>
@@ -122,7 +124,7 @@
 
                 <div class="session-tools">
                     <button id="sessionSoundBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <span aria-hidden="true">🔊</span>
+                        <img class="jojo-icon-sound" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
                         <span class="sr-only">Som ligado</span>
                     </button>
                     <button id="toggleBoldBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-pressed="false" aria-label="Ativar texto em negrito">
@@ -130,7 +132,7 @@
                         <span class="sr-only">Ativar texto em negrito</span>
                     </button>
                     <button id="toggleFullscreenBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-label="Entrar em tela cheia" title="Tela cheia">
-                        <span aria-hidden="true">⛶</span>
+                        <svg class="jojo-icon-fullscreen" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5"/></svg>
                         <span class="sr-only">Entrar em tela cheia</span>
                     </button>
                 </div>
@@ -303,7 +305,7 @@
 
     <script src="./data.js?v=2"></script>
     <script src="../../scripts/lib/jogo-utils.js?v=2"></script>
-    <script src="./app.js?v=13"></script>
+    <script src="./app.js?v=14"></script>
     <script src="../../scripts/pwa.js?v=10"></script>
 </body>
 </html>

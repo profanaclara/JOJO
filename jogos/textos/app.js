@@ -345,19 +345,12 @@ function switchScreen(nextScreen) {
 }
 
 function updateSoundButtons() {
-    const icon = state.soundEnabled ? "🔊" : "🔇";
     const label = state.soundEnabled ? "Som ligado" : "Som desligado";
-    const pressed = String(state.soundEnabled);
-    const markup = `<span aria-hidden="true">${icon}</span><span class="sr-only">${label}</span>`;
-    ui.toggleSoundBtn.innerHTML = markup;
-    ui.selectionSoundBtn.innerHTML = markup;
-    ui.sessionSoundBtn.innerHTML = markup;
-    ui.toggleSoundBtn.setAttribute("aria-label", label);
-    ui.selectionSoundBtn.setAttribute("aria-label", label);
-    ui.sessionSoundBtn.setAttribute("aria-label", label);
-    ui.toggleSoundBtn.setAttribute("aria-pressed", pressed);
-    ui.selectionSoundBtn.setAttribute("aria-pressed", pressed);
-    ui.sessionSoundBtn.setAttribute("aria-pressed", pressed);
+    [ui.toggleSoundBtn, ui.selectionSoundBtn, ui.sessionSoundBtn].forEach((button) => {
+        button.querySelector(".sr-only").textContent = label;
+        button.setAttribute("aria-label", label);
+        button.setAttribute("aria-pressed", String(state.soundEnabled));
+    });
 }
 
 function updateBoldButton() {

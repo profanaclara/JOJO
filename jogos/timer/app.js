@@ -364,7 +364,6 @@ function updateSoundButton() {
 function syncFullscreenState() {
     const isFullscreen = Boolean(document.fullscreenElement);
     ui.body.classList.toggle("is-fullscreen", isFullscreen);
-    ui.fullscreen.textContent = isFullscreen ? "↙" : "⛶";
     ui.fullscreen.setAttribute("aria-label", isFullscreen ? "Sair da tela cheia" : "Entrar em tela cheia");
     window.requestAnimationFrame(() => hourglassRenderer?.redraw());
     window.setTimeout(() => hourglassRenderer?.redraw(), 120);

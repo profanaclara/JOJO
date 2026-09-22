@@ -85,7 +85,7 @@ body.result-active {
     min-width: 48px;
     min-height: 48px;
     padding: 0;
-    border-radius: 999px;
+    border-radius: 15px;
     font-size: 1.15rem;
     line-height: 1;
 }
@@ -823,11 +823,45 @@ body.result-active {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     min-height: 48px;
     padding: 10px 14px;
-    border-radius: 999px;
+    border-radius: 18px;
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 10px 24px rgba(78, 108, 173, 0.12);
+}
+
+/* Ícones padronizados (mesmo visual usado no Pop-it e na Tabuada de Pitágoras) */
+.jojo-icon-back {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.jojo-icon-sound {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.jojo-icon-fullscreen {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+button[aria-pressed="false"] .jojo-icon-sound {
+    filter: grayscale(0.85);
+    opacity: 0.62;
 }
 
 .brand-link img {

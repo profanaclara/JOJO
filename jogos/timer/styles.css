@@ -55,6 +55,17 @@ button { color: inherit; }
 }
 .round-button img { width: 29px; height: 29px; object-fit: contain; }
 .round-button.is-muted img { filter: grayscale(1); opacity: .42; }
+/* Ícones padronizados (mesmo visual usado no Pop-it e na Tabuada de Pitágoras) */
+.jojo-icon-back,
+.jojo-icon-fullscreen {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
 .screen { min-height: calc(100vh - 124px); }
 .title-row {
@@ -419,6 +430,20 @@ body[data-running-mode="journey"] .header-actions {
     z-index: 10;
     top: 18px;
     right: max(18px, calc((100vw - 1420px) / 2));
+}
+
+/* Modo ampulheta (cronômetro) também usa o back button próprio da running-bar;
+   esconder o back button do header evita dois botões de voltar empilhados. */
+body[data-running-mode="hourglass"] .app-header > .round-button,
+body[data-running-mode="hourglass"] .app-logo {
+    display: none;
+}
+
+body[data-running-mode="hourglass"] .header-actions {
+    position: fixed;
+    z-index: 10;
+    top: 18px;
+    right: max(18px, calc((100vw - 1240px) / 2));
 }
 
 body[data-running-mode="journey"] .running-footer {

@@ -374,9 +374,7 @@ function toggleSound() {
 
 function renderZoomControls() {
     refs.zoomValue.textContent = `${Math.round(state.ui.zoom * 100)}%`;
-    refs.soundToggleBtn.textContent = state.ui.soundOn ? "🔊" : "🔇";
     refs.soundToggleBtn.classList.toggle("is-muted", !state.ui.soundOn);
-    refs.fullscreenBtn.textContent = document.fullscreenElement ? "🡽" : "⛶";
     syncFullscreenState();
 }
 
