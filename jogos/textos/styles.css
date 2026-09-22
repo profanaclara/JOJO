@@ -171,14 +171,14 @@ a {
 }
 
 .jojo-icon-sound {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     object-fit: contain;
 }
 
 .jojo-icon-fullscreen {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2.2;
@@ -237,9 +237,10 @@ button[aria-pressed="false"] .jojo-icon-sound {
 }
 
 .ghost-button--light {
-    background: rgba(255, 255, 255, 0.18);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1172b0;
     backdrop-filter: blur(10px);
+    box-shadow: 0 10px 20px rgba(10, 40, 80, 0.22);
 }
 
 .utility-button {
@@ -684,9 +685,10 @@ button[aria-pressed="false"] .jojo-icon-sound {
 }
 
 .icon-button--light {
-    background: rgba(255, 255, 255, 0.18);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1172b0;
     backdrop-filter: blur(10px);
+    box-shadow: 0 10px 20px rgba(10, 40, 80, 0.22);
 }
 
 .session-summary,
@@ -1814,4 +1816,36 @@ body.textos-fullscreen #wordsStep .chip__word,
 body.textos-fullscreen #pseudoStep .chip__word {
     font-size: 1.18rem;
     line-height: 1.26;
+}
+
+/* --- Codex-generated icon images (replacing emoji) --- */
+.control-icon-img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.auto-action-button .control-icon-img {
+    width: 22px;
+    height: 22px;
+}
+
+.fullscreen-exit .control-icon-img {
+    width: 18px;
+    height: 18px;
+}
+
+.result-line__mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.result-icon-img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    display: inline-block;
 }

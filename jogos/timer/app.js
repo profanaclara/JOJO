@@ -357,6 +357,7 @@ function restartSameMode() {
 
 function updateSoundButton() {
     ui.sound.classList.toggle("is-muted", !state.soundEnabled);
+    ui.sound.querySelector("img").src = `../../assets/jojo-icon-som-${state.soundEnabled ? "on" : "off"}.png`;
     ui.sound.setAttribute("aria-pressed", String(state.soundEnabled));
     ui.sound.setAttribute("aria-label", state.soundEnabled ? "Desligar som" : "Ligar som");
 }

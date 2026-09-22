@@ -349,15 +349,17 @@ body.result-active {
 }
 
 .icon-button--light {
-    background: rgba(255, 255, 255, 0.18);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1172b0;
     backdrop-filter: blur(10px);
+    box-shadow: 0 10px 20px rgba(10, 40, 80, 0.22);
 }
 
 .ghost-button--light {
-    background: rgba(255, 255, 255, 0.18);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1172b0;
     backdrop-filter: blur(10px);
+    box-shadow: 0 10px 20px rgba(10, 40, 80, 0.22);
 }
 
 .session-center {
@@ -844,14 +846,14 @@ body.result-active {
 }
 
 .jojo-icon-sound {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     object-fit: contain;
 }
 
 .jojo-icon-fullscreen {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2.2;
@@ -963,9 +965,13 @@ button[aria-pressed="false"] .jojo-icon-sound {
 }
 
 .option-card.is-selected {
-    background: linear-gradient(135deg, rgba(76, 130, 243, 0.22), rgba(255, 140, 109, 0.2));
-    border-color: rgba(76, 130, 243, 0.36);
-    box-shadow: var(--shadow-md);
+    background: linear-gradient(135deg, #4b84f4 0%, #5b53e8 100%);
+    border-color: rgba(75, 110, 245, 0.34);
+    box-shadow: 0 9px 20px rgba(75, 110, 245, 0.28);
+}
+
+.option-card.is-selected .option-card__label {
+    color: #fff;
 }
 
 .option-card__icon {
@@ -1987,9 +1993,10 @@ body.result-active .app-shell {
 
 .icon-button--light,
 .ghost-button--light {
-    background: rgba(255, 255, 255, 0.18);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1172b0;
     backdrop-filter: blur(10px);
+    box-shadow: 0 10px 20px rgba(10, 40, 80, 0.22);
 }
 
 .session-center {
@@ -2319,4 +2326,38 @@ body.result-active .app-shell {
         min-height: 48px;
         padding-inline: 18px;
     }
+}
+
+/* --- Codex-generated icon images (replacing emoji) --- */
+.home-decor__emoji {
+    width: clamp(40px, 4vw, 64px);
+    height: clamp(40px, 4vw, 64px);
+    object-fit: contain;
+}
+
+.option-card__icon--img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.jojo-icon-exitfs {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.floating-button__icon-img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    display: block;
+}
+
+.floating-button--skip .floating-button__icon-img {
+    margin: 0;
+}
+
+.floating-button--next .floating-button__icon-img {
+    margin-bottom: 4px;
 }

@@ -190,6 +190,7 @@ function updateSoundButtons() {
     const label = state.soundEnabled ? "Som ligado" : "Som desligado";
     [ui.toggleSoundBtn, ui.sessionSoundBtn].forEach((button) => {
         button.querySelector(".sr-only").textContent = label;
+        button.querySelector(".jojo-icon-sound").src = `../../assets/jojo-icon-som-${state.soundEnabled ? "on" : "off"}.png`;
         button.setAttribute("aria-label", label);
         button.setAttribute("aria-pressed", String(state.soundEnabled));
     });
@@ -451,7 +452,7 @@ function startSession(mode, letter) {
     ui.sessionLetterLabel.textContent = getLetterLabel();
     ui.sessionContentLabel.textContent = getContentDetailLabel();
     ui.timerCaption.textContent = mode === "timed" ? "Tempo restante" : "Tempo de leitura";
-    ui.wordDisplay.textContent = state.letter === "cursive" ? "pronto? clique em próxima" : "PRONTO? CLIQUE EM PRÓXIMA";
+    ui.wordDisplay.textContent = state.letter === "cursive" ? "pronto? toque no botão verde" : "PRONTO? TOQUE NO BOTÃO VERDE";
     ui.wordDisplay.style.removeProperty("--item-size");
     ui.wordDisplay.classList.add("is-intro");
     ui.wordDisplay.classList.toggle("is-cursive", state.letter === "cursive");

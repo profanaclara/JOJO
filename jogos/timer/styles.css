@@ -625,3 +625,12 @@ body.is-fullscreen[data-running-mode="hourglass"] .running-footer,
         max-width: 76vw;
     }
 }
+
+/* --- Codex-generated icon images (replacing emoji) --- */
+.control-button__icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    vertical-align: -4px;
+    margin-right: 6px;
+}

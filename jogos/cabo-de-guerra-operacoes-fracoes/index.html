@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css?v=11">
+    <link rel="stylesheet" href="./styles.css?v=12">
 </head>
 <body>
     <div id="app" class="math-tug-app is-setup-open" data-setup-step="1">
@@ -39,7 +39,7 @@
             </div>
 
             <button id="changeTeamsBtn" class="top-pill top-pill--ghost" type="button">
-                <span class="top-pill__icon">↺</span>
+                <img class="top-pill__icon top-pill__icon-img" src="../../assets/jojo-icon-trocar-equipes.png" alt="" aria-hidden="true">
                 <span>TROCAR EQUIPES</span>
             </button>
         </header>
@@ -68,7 +68,7 @@
                     <button type="button" data-key="9">9</button>
                     <button type="button" class="keypad__danger" data-key="clear">×</button>
                     <button type="button" data-key="0">0</button>
-                    <button type="button" class="keypad__success" data-key="submit">✓</button>
+                    <button type="button" class="keypad__success" data-key="submit" aria-label="Confirmar resposta"><img class="keypad-icon-img" src="../../assets/jojo-icon-check.png" alt="" aria-hidden="true"></button>
                 </div>
 
             </section>
@@ -136,7 +136,7 @@
                     <button type="button" data-key="9">9</button>
                     <button type="button" class="keypad__danger" data-key="clear">×</button>
                     <button type="button" data-key="0">0</button>
-                    <button type="button" class="keypad__success" data-key="submit">✓</button>
+                    <button type="button" class="keypad__success" data-key="submit" aria-label="Confirmar resposta"><img class="keypad-icon-img" src="../../assets/jojo-icon-check.png" alt="" aria-hidden="true"></button>
                 </div>
 
             </section>
@@ -160,10 +160,10 @@
             <strong id="zoomValue">100%</strong>
             <button id="zoomInBtn" type="button" aria-label="Aumentar tamanho">+</button>
             <button id="fullscreenBtn" type="button" aria-label="Tela cheia">
-                <svg class="jojo-icon-fullscreen" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5"/></svg>
+                <img class="jojo-icon-fullscreen" src="../../assets/jojo-icon-fullscreen.png" alt="" aria-hidden="true">
             </button>
             <button id="soundToggleBtn" type="button" aria-label="Ativar ou desativar som">
-                <img class="jojo-icon-sound" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                <img class="jojo-icon-sound" src="../../assets/jojo-icon-som-on.png" alt="" aria-hidden="true">
             </button>
         </div>
 
@@ -239,17 +239,17 @@
 
                     <div class="selection-grid selection-grid--levels">
                         <button class="selection-card selection-card--level is-selected" type="button" data-level="1">
-                            <span class="selection-card__level-icon">◔</span>
+                            <img class="selection-card__level-icon selection-card__level-icon-img" src="../../assets/jojo-icon-fracao-1-4.png" alt="" aria-hidden="true">
                             <strong>NÍVEL 1</strong>
                             <small id="levelHint1"></small>
                         </button>
                         <button class="selection-card selection-card--level" type="button" data-level="2">
-                            <span class="selection-card__level-icon">◑</span>
+                            <img class="selection-card__level-icon selection-card__level-icon-img" src="../../assets/jojo-icon-fracao-1-2.png" alt="" aria-hidden="true">
                             <strong>NÍVEL 2</strong>
                             <small id="levelHint2"></small>
                         </button>
                         <button class="selection-card selection-card--level" type="button" data-level="3">
-                            <span class="selection-card__level-icon">◕</span>
+                            <img class="selection-card__level-icon selection-card__level-icon-img" src="../../assets/jojo-icon-fracao-3-4.png" alt="" aria-hidden="true">
                             <strong>NÍVEL 3</strong>
                             <small id="levelHint3"></small>
                         </button>
@@ -296,15 +296,15 @@
             </div>
 
             <footer class="setup-modal__footer">
-                <button id="nextStepBtn" class="primary-action" type="button">PRÓXIMO →</button>
-                <button id="startMatchBtn" class="primary-action hidden" type="button">▶ INICIAR PARTIDA</button>
+                <button id="nextStepBtn" class="primary-action" type="button">PRÓXIMO <img class="primary-action__icon" src="../../assets/jojo-icon-next.png" alt="" aria-hidden="true"></button>
+                <button id="startMatchBtn" class="primary-action hidden" type="button"><img class="primary-action__icon" src="../../assets/jojo-icon-play.png" alt="" aria-hidden="true"> INICIAR PARTIDA</button>
             </footer>
         </section>
     </div>
 
     <audio id="backgroundMusic" src="./assets/musicacabodeguerra.mp3" preload="auto" loop></audio>
 
-    <script src="./app.js?v=8"></script>
+    <script src="./app.js?v=9"></script>
     <script src="../../scripts/pwa.js?v=10"></script>
 </body>
 </html>

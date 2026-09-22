@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css?v=17">
+    <link rel="stylesheet" href="./styles.css?v=19">
     <link rel="stylesheet" href="./desktop.css?v=1">
     <link rel="stylesheet" href="./refine.css?v=2">
 </head>
@@ -42,7 +42,7 @@
                         <span class="sr-only">Abrir ajuda</span>
                     </button>
                     <button id="toggleSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <img class="jojo-icon-sound" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                        <img class="jojo-icon-sound" src="../../assets/jojo-icon-som-on.png" alt="" aria-hidden="true">
                         <span class="sr-only">Som ligado</span>
                     </button>
                 </div>
@@ -95,7 +95,7 @@
                         <span class="sr-only">Abrir ajuda</span>
                     </button>
                     <button id="selectionSoundBtn" class="ghost-button ghost-button--pill utility-button" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <img class="jojo-icon-sound" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                        <img class="jojo-icon-sound" src="../../assets/jojo-icon-som-on.png" alt="" aria-hidden="true">
                         <span class="sr-only">Som ligado</span>
                     </button>
                 </div>
@@ -124,7 +124,7 @@
 
                 <div class="session-tools">
                     <button id="sessionSoundBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-pressed="true" aria-label="Som ligado">
-                        <img class="jojo-icon-sound" src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                        <img class="jojo-icon-sound" src="../../assets/jojo-icon-som-on.png" alt="" aria-hidden="true">
                         <span class="sr-only">Som ligado</span>
                     </button>
                     <button id="toggleBoldBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-pressed="false" aria-label="Ativar texto em negrito">
@@ -132,7 +132,7 @@
                         <span class="sr-only">Ativar texto em negrito</span>
                     </button>
                     <button id="toggleFullscreenBtn" class="ghost-button ghost-button--small ghost-button--light utility-button utility-button--light" type="button" aria-label="Entrar em tela cheia" title="Tela cheia">
-                        <svg class="jojo-icon-fullscreen" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5"/></svg>
+                        <img class="jojo-icon-fullscreen" src="../../assets/jojo-icon-fullscreen.png" alt="" aria-hidden="true">
                         <span class="sr-only">Entrar em tela cheia</span>
                     </button>
                 </div>
@@ -160,25 +160,25 @@
 
             <div class="control-dock">
                 <button id="startBtn" class="control-button control-button--start" type="button" aria-label="Iniciar" title="Iniciar">
-                    <span aria-hidden="true">▶</span>
+                    <img class="control-icon-img" src="../../assets/jojo-icon-play.png" alt="" aria-hidden="true">
                     <span class="sr-only">Iniciar</span>
                 </button>
                 <button id="stopBtn" class="control-button control-button--stop" type="button" disabled aria-label="Parar" title="Parar">
-                    <span aria-hidden="true">⏸</span>
+                    <img class="control-icon-img" src="../../assets/jojo-icon-pause.png" alt="" aria-hidden="true">
                     <span class="sr-only">Parar</span>
                 </button>
                 <button id="errorBtn" class="control-button control-button--warn" type="button" aria-label="Marcar erro" title="Marcar erro">
-                    <span aria-hidden="true">✕</span>
+                    <img class="control-icon-img" src="../../assets/jojo-icon-close.png" alt="" aria-hidden="true">
                     <span class="sr-only">Marcar erro</span>
                 </button>
                 <button id="resetBtn" class="control-button control-button--reset" type="button" aria-label="Reiniciar" title="Reiniciar">
-                    <span aria-hidden="true">↺</span>
+                    <img class="control-icon-img" src="../../assets/jojo-icon-reset.png" alt="" aria-hidden="true">
                     <span class="sr-only">Reiniciar</span>
                 </button>
             </div>
 
             <button id="exitFullscreenBtn" class="fullscreen-exit hidden" type="button" aria-label="Sair da tela cheia" title="Sair da tela cheia">
-                <span aria-hidden="true">✕</span>
+                <img class="control-icon-img" src="../../assets/jojo-icon-close.png" alt="" aria-hidden="true">
                 <span class="sr-only">Sair da tela cheia</span>
             </button>
 
@@ -228,11 +228,11 @@
                         </div>
                         <div class="auto-panel__actions">
                             <button id="startAutoWords" class="primary-button auto-action-button" type="button" aria-label="Iniciar palavras" title="Iniciar palavras">
-                                <span aria-hidden="true">▶</span>
+                                <img class="control-icon-img" src="../../assets/jojo-icon-play.png" alt="" aria-hidden="true">
                                 <span class="sr-only">Iniciar palavras</span>
                             </button>
                             <button id="markNotRead" class="secondary-button auto-action-button" type="button" disabled aria-label="Marcar como não lida" title="Marcar como não lida">
-                                <span aria-hidden="true">✕</span>
+                                <img class="control-icon-img" src="../../assets/jojo-icon-close.png" alt="" aria-hidden="true">
                                 <span class="sr-only">Marcar como não lida</span>
                             </button>
                         </div>
@@ -259,11 +259,11 @@
                         </div>
                         <div class="auto-panel__actions">
                             <button id="startAutoPseudos" class="primary-button auto-action-button" type="button" aria-label="Iniciar pseudopalavras" title="Iniciar pseudopalavras">
-                                <span aria-hidden="true">▶</span>
+                                <img class="control-icon-img" src="../../assets/jojo-icon-play.png" alt="" aria-hidden="true">
                                 <span class="sr-only">Iniciar pseudopalavras</span>
                             </button>
                             <button id="markPseudoNotRead" class="secondary-button auto-action-button" type="button" disabled aria-label="Marcar como não lida" title="Marcar como não lida">
-                                <span aria-hidden="true">✕</span>
+                                <img class="control-icon-img" src="../../assets/jojo-icon-close.png" alt="" aria-hidden="true">
                                 <span class="sr-only">Marcar como não lida</span>
                             </button>
                         </div>
@@ -305,7 +305,7 @@
 
     <script src="./data.js?v=2"></script>
     <script src="../../scripts/lib/jogo-utils.js?v=2"></script>
-    <script src="./app.js?v=14"></script>
+    <script src="./app.js?v=15"></script>
     <script src="../../scripts/pwa.js?v=10"></script>
 </body>
 </html>

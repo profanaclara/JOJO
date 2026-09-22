@@ -443,3 +443,75 @@ a:focus-visible {
         height: 34px;
     }
 }
+
+/* Compact, centered session controls with clear icon contrast. */
+.screen--session .session-tool-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.screen--session .session-tool-stack .utility-button,
+.screen--session #backHomeBtn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 14px;
+    background: #fff;
+    color: #17538b;
+    box-shadow: 0 3px 10px #142c5526;
+}
+.screen--session .session-tool-stack img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+.screen--session #backHomeBtn svg { width: 24px; height: 24px; }
+.screen--session .session-scoreboard__line--success { color: #fff; }
+.screen--session .session-actions__right { align-items: center; gap: 12px; }
+.screen--session .floating-button--next,
+.screen--session[data-mode="free"] .floating-button--next,
+.screen--session .floating-button--skip {
+    display: grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    min-width: 68px;
+    min-height: 68px;
+    padding: 10px;
+    border: 2px solid #c8d5e5;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 5px 16px #163b6326;
+}
+.screen--session .floating-button--next { border-color: #267340; }
+.screen--session .floating-button--skip { border-color: #bd3342; }
+.screen--session .floating-button__icon-img {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    object-fit: contain;
+}
+.screen--session .floating-button:focus-visible,
+.screen--session .utility-button:focus-visible,
+.screen--session #backHomeBtn:focus-visible { outline: 3px solid #152b58; outline-offset: 4px; }
+
+.screen--session .word-stage .helper-text { color: #4b5d75; opacity: 1; }
+
+.screen--session .floating-button--next,
+.screen--session[data-mode="free"] .floating-button--next {
+    width: 102px;
+    height: 102px;
+    min-width: 102px;
+    min-height: 102px;
+    transform: translateY(-12px);
+}
+.screen--session .floating-button--next .floating-button__icon-img {
+    width: 60px;
+    height: 60px;
+}

@@ -21,7 +21,7 @@
         @font-face { font-family: "Archivo"; src: url("../../assets/fonts/archivo-latin.woff2") format("woff2"); font-weight: 500 800; font-display: swap; }
         @font-face { font-family: "Inter"; src: url("../../assets/fonts/inter-latin.woff2") format("woff2"); font-weight: 400 800; font-display: swap; }
     </style>
-    <link rel="stylesheet" href="./styles.css?v=37">
+    <link rel="stylesheet" href="./styles.css?v=38">
 </head>
 <body>
     <main class="timer-app">
@@ -32,10 +32,10 @@
             <img class="app-logo" src="../../assets/jojo-horizontal.svg" alt="JOJO">
             <div class="header-actions">
                 <button id="soundToggleBtn" class="round-button" type="button" aria-pressed="true" aria-label="Desligar som">
-                    <img src="../../assets/jojo-som.png" alt="" aria-hidden="true">
+                    <img src="../../assets/jojo-icon-som-on.png" alt="" aria-hidden="true">
                 </button>
                 <button id="fullscreenBtn" class="round-button" type="button" aria-label="Entrar em tela cheia">
-                    <svg class="jojo-icon-fullscreen" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5"/></svg>
+                    <img class="jojo-icon-fullscreen" src="../../assets/jojo-icon-fullscreen.png" alt="" aria-hidden="true">
                 </button>
             </div>
         </header>
@@ -141,10 +141,10 @@
             <div class="running-footer">
                 <div class="elapsed-card"><span>Tempo corrido</span><strong id="elapsedValue">00:00:00</strong></div>
                 <div class="controls">
-                    <button id="pauseBtn" class="control-button control-button--pause" type="button">⏸ Pausar</button>
-                    <button id="resumeBtn" class="control-button control-button--resume" type="button" disabled>▶ Continuar</button>
-                    <button id="resetBtn" class="control-button control-button--reset" type="button">↻ Recomeçar</button>
-                    <button id="newTimerBtn" class="control-button control-button--back" type="button">✨ Novo timer</button>
+                    <button id="pauseBtn" class="control-button control-button--pause" type="button"><img class="control-button__icon" src="../../assets/jojo-icon-pause.png" alt="" aria-hidden="true"> Pausar</button>
+                    <button id="resumeBtn" class="control-button control-button--resume" type="button" disabled><img class="control-button__icon" src="../../assets/jojo-icon-play.png" alt="" aria-hidden="true"> Continuar</button>
+                    <button id="resetBtn" class="control-button control-button--reset" type="button"><img class="control-button__icon" src="../../assets/jojo-icon-reset.png" alt="" aria-hidden="true"> Recomeçar</button>
+                    <button id="newTimerBtn" class="control-button control-button--back" type="button"><img class="control-button__icon" src="../../assets/jojo-icon-novo.png" alt="" aria-hidden="true"> Novo timer</button>
                 </div>
             </div>
         </section>
@@ -164,6 +164,6 @@
 
     <script src="./data.js?v=5"></script>
     <script src="./hourglass-renderer.js?v=3"></script>
-    <script src="./app.js?v=34"></script>
+    <script src="./app.js?v=35"></script>
 </body>
 </html>
