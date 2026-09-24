@@ -18,6 +18,13 @@ window.JOJO_GAMES = {
                     status: "Praticar"
                 },
                 {
+                    title: "Gêneros textuais",
+                    description: "Leia, descubra e tente outra vez.",
+                    href: "./generos-textuais/index.html",
+                    art: "../assets/jojo-card-generos-textuais.png",
+                    status: "Jogar"
+                },
+                {
                     title: "Trilha de alfabetização",
                     description: "Sequência guiada para próximas versões.",
                     art: "../assets/jojo-card-trilha.png",

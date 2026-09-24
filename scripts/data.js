@@ -22,6 +22,13 @@ window.JOJO_DATA = {
                             art: "./assets/jojo-card-textos.png",
                             tag: "Alfabetização",
                             href: "./jogos/textos/"
+                        },
+                        {
+                            title: "Gêneros textuais",
+                            description: "Leia, descubra e tente outra vez.",
+                            art: "./assets/jojo-card-generos-textuais.png",
+                            tag: "Alfabetização",
+                            href: "./jogos/generos-textuais/"
                         }
                     ]
                 },

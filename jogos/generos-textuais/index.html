@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#eef5ff">
+    <title>JOJO | Gêneros textuais</title>
+    <meta name="description" content="Descubra os gêneros textuais em um jogo de leitura com imagens, novas tentativas e questões sem fim.">
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="../../manifest.webmanifest">
+    <link rel="stylesheet" href="./styles.css?v=3">
+    <script src="./data.js?v=1" defer></script>
+    <script src="./core.js?v=3" defer></script>
+    <script src="./app.js?v=2" defer></script>
+</head>
+<body>
+    <div class="app-shell">
+        <header class="screen-topbar">
+            <a class="brand-link" href="../index.html?eixo=alfabetizacao" aria-label="Voltar aos jogos">
+                <span class="back-badge"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg></span>
+                <img class="brand-link__logo" src="../../assets/jojo-horizontal.svg" alt="JOJO">
+            </a>
+            <div class="top-actions">
+                <button id="soundBtn" class="utility" aria-label="Desligar som" aria-pressed="true" title="Desligar som"><img src="../../assets/jojo-icon-som-on.png" alt=""></button>
+                <button id="fullscreenBtn" class="utility" aria-label="Entrar em tela cheia" title="Tela cheia"><img src="../../assets/jojo-icon-fullscreen.png" alt=""></button>
+            </div>
+        </header>
+        <main>
+            <div class="heading-row"><h1>GÊNEROS TEXTUAIS</h1><p class="score"><span id="round">TEXTO 1</span><span id="hits">0 ACERTOS</span></p></div>
+            <div id="question" class="question" aria-busy="true">
+                <section class="reading" aria-label="Texto da questão">
+                    <button id="enlargeBtn" class="image-button" aria-label="Ampliar texto" disabled><img id="cardImage" alt="Texto para identificar o gênero"></button>
+                    <button id="zoomBtn" class="zoom-button" disabled><img src="../../assets/jojo-icon-lupa.png" alt="" aria-hidden="true">AMPLIAR TEXTO</button>
+                    <p id="loadStatus" role="status">CARREGANDO TEXTO…</p>
+                    <button id="retryLoadBtn" class="zoom-button" hidden>TENTAR CARREGAR NOVAMENTE</button>
+                </section>
+                <section class="answer-panel" aria-labelledby="questionTitle">
+                    <h2 id="questionTitle" tabindex="-1">QUE TIPO DE TEXTO É ESTE?</h2>
+                    <div id="options" class="options"></div>
+                    <div class="helper">
+                        <img id="mascot" class="mascot" src="../../assets/jojo-mascote-hero.png" alt="" aria-hidden="true">
+                        <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"><strong id="feedbackTitle">LEIA E ESCOLHA.</strong><p id="feedbackText">VOCÊ TEM DUAS TENTATIVAS.</p></div>
+                    </div>
+                    <p id="advanceNote" class="advance-note" hidden>PRÓXIMO TEXTO EM <span id="seconds">5</span> S…</p>
+                </section>
+            </div>
+        </main>
+    </div>
+    <div id="confetti" aria-hidden="true"></div>
+    <dialog id="zoomDialog" aria-label="Texto ampliado">
+        <button id="closeZoomBtn" class="utility close-zoom" aria-label="Fechar texto ampliado"><img src="../../assets/jojo-icon-close.png" alt=""></button>
+        <img id="zoomImage" alt="Texto ampliado">
+        <details><summary>LER TRANSCRIÇÃO</summary><p id="transcript"></p></details>
+    </dialog>
+    <noscript>ATIVE O JAVASCRIPT PARA JOGAR.</noscript>
+</body>
+</html>
