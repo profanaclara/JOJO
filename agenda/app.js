@@ -521,7 +521,7 @@ async function downloadReportPdf() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: "mm", format: "a4" });
     let watermark = "";
-    try { watermark = await loadImageData("../assets/jojo-watermark.png"); } catch { watermark = ""; }
+    try { watermark = await loadImageData("../assets/jojo-watermark.webp"); } catch { watermark = ""; }
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
 

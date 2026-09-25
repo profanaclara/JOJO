@@ -375,7 +375,7 @@ function toggleSound() {
 function renderZoomControls() {
     refs.zoomValue.textContent = `${Math.round(state.ui.zoom * 100)}%`;
     refs.soundToggleBtn.classList.toggle("is-muted", !state.ui.soundOn);
-    refs.soundToggleBtn.querySelector("img").src = `../../assets/jojo-icon-som-${state.ui.soundOn ? "on" : "off"}.png`;
+    refs.soundToggleBtn.querySelector("img").src = `../../assets/jojo-icon-som-${state.ui.soundOn ? "on" : "off"}.webp`;
     refs.soundToggleBtn.setAttribute("aria-pressed", String(state.ui.soundOn));
     refs.soundToggleBtn.setAttribute("aria-label", state.ui.soundOn ? "Desligar som" : "Ligar som");
     refs.fullscreenBtn.setAttribute("aria-label", document.fullscreenElement ? "Sair da tela cheia" : "Entrar em tela cheia");

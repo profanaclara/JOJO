@@ -190,7 +190,7 @@ function updateSoundButtons() {
     const label = state.soundEnabled ? "Som ligado" : "Som desligado";
     [ui.toggleSoundBtn, ui.sessionSoundBtn].forEach((button) => {
         button.querySelector(".sr-only").textContent = label;
-        button.querySelector(".jojo-icon-sound").src = `../../assets/jojo-icon-som-${state.soundEnabled ? "on" : "off"}.png`;
+        button.querySelector(".jojo-icon-sound").src = `../../assets/jojo-icon-som-${state.soundEnabled ? "on" : "off"}.webp`;
         button.setAttribute("aria-label", label);
         button.setAttribute("aria-pressed", String(state.soundEnabled));
     });

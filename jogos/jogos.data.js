@@ -7,27 +7,27 @@ window.JOJO_GAMES = {
                     title: "Fluência leitora",
                     description: "Letras, sílabas e palavras.",
                     href: "./palavras/index.html",
-                    art: "../assets/jojo-card-palavras.png",
+                    art: "../assets/jojo-card-palavras.webp",
                     status: "Praticar"
                 },
                 {
                     title: "Leitura de textos",
                     description: "Textos, palavras e pseudopalavras.",
                     href: "./textos/index.html",
-                    art: "../assets/jojo-card-textos.png",
+                    art: "../assets/jojo-card-textos.webp",
                     status: "Praticar"
                 },
                 {
                     title: "Gêneros textuais",
                     description: "Leia, descubra e tente outra vez.",
                     href: "./generos-textuais/index.html",
-                    art: "../assets/jojo-card-generos-textuais.png",
+                    art: "../assets/jojo-card-generos-textuais.webp",
                     status: "Jogar"
                 },
                 {
                     title: "Trilha de alfabetização",
                     description: "Sequência guiada para próximas versões.",
-                    art: "../assets/jojo-card-trilha.png",
+                    art: "../assets/jojo-card-trilha.webp",
                     status: "Em breve",
                     disabled: true
                 }
@@ -40,28 +40,28 @@ window.JOJO_GAMES = {
                     title: "Pop-it da soma",
                     description: "Aperte, junte e conte as bolinhas.",
                     href: "./popit-soma/index.html",
-                    art: "../assets/jojo-card-popit.png",
+                    art: "../assets/jojo-card-popit.webp",
                     status: "Praticar"
                 },
                 {
                     title: "Pop-it da subtração",
                     description: "Aperte, retire e conte o que sobrou.",
                     href: "./popit-subtracao/index.html",
-                    art: "../assets/jojo-card-popit.png",
+                    art: "../assets/jojo-card-popit.webp",
                     status: "Praticar"
                 },
                 {
                     title: "Tabuada de Pitágoras",
                     description: "Ache o cruzamento da linha e coluna.",
                     href: "./tabuada-pitagoras/index.html",
-                    art: "../assets/jojo-card-pitagoras.png",
+                    art: "../assets/jojo-card-pitagoras.webp",
                     status: "Praticar"
                 },
                 {
                     title: "Cabo de Guerra",
                     description: "Versão completa do cabo de guerra matemático.",
                     href: "./cabo-de-guerra-operacoes-fracoes/index.html",
-                    art: "../assets/jojo-card-cabo-guerra.png",
+                    art: "../assets/jojo-card-cabo-guerra.webp",
                     status: "Jogar"
                 }
             ]
@@ -72,14 +72,14 @@ window.JOJO_GAMES = {
                 {
                     title: "Formas",
                     description: "Reconhecer figuras e padrões.",
-                    art: "../assets/jojo-geometria-em-breve.png",
+                    art: "../assets/jojo-geometria-em-breve.webp",
                     status: "Em breve",
                     disabled: true
                 },
                 {
                     title: "Espaço",
                     description: "Localização, direção e comparação.",
-                    art: "../assets/jojo-geometria-em-breve.png",
+                    art: "../assets/jojo-geometria-em-breve.webp",
                     status: "Em breve",
                     disabled: true
                 }

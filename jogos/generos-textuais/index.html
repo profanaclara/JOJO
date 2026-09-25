@@ -9,9 +9,9 @@
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="../../manifest.webmanifest">
     <link rel="stylesheet" href="./styles.css?v=3">
-    <script src="./data.js?v=1" defer></script>
+    <script src="./data.js?v=2" defer></script>
     <script src="./core.js?v=3" defer></script>
-    <script src="./app.js?v=2" defer></script>
+    <script src="./app.js?v=3" defer></script>
 </head>
 <body>
     <div class="app-shell">
@@ -21,8 +21,8 @@
                 <img class="brand-link__logo" src="../../assets/jojo-horizontal.svg" alt="JOJO">
             </a>
             <div class="top-actions">
-                <button id="soundBtn" class="utility" aria-label="Desligar som" aria-pressed="true" title="Desligar som"><img src="../../assets/jojo-icon-som-on.png" alt=""></button>
-                <button id="fullscreenBtn" class="utility" aria-label="Entrar em tela cheia" title="Tela cheia"><img src="../../assets/jojo-icon-fullscreen.png" alt=""></button>
+                <button id="soundBtn" class="utility" aria-label="Desligar som" aria-pressed="true" title="Desligar som"><img src="../../assets/jojo-icon-som-on.webp" alt=""></button>
+                <button id="fullscreenBtn" class="utility" aria-label="Entrar em tela cheia" title="Tela cheia"><img src="../../assets/jojo-icon-fullscreen.webp" alt=""></button>
             </div>
         </header>
         <main>
@@ -30,7 +30,7 @@
             <div id="question" class="question" aria-busy="true">
                 <section class="reading" aria-label="Texto da questão">
                     <button id="enlargeBtn" class="image-button" aria-label="Ampliar texto" disabled><img id="cardImage" alt="Texto para identificar o gênero"></button>
-                    <button id="zoomBtn" class="zoom-button" disabled><img src="../../assets/jojo-icon-lupa.png" alt="" aria-hidden="true">AMPLIAR TEXTO</button>
+                    <button id="zoomBtn" class="zoom-button" disabled><img src="../../assets/jojo-icon-lupa.webp" alt="" aria-hidden="true">AMPLIAR TEXTO</button>
                     <p id="loadStatus" role="status">CARREGANDO TEXTO…</p>
                     <button id="retryLoadBtn" class="zoom-button" hidden>TENTAR CARREGAR NOVAMENTE</button>
                 </section>
@@ -38,7 +38,7 @@
                     <h2 id="questionTitle" tabindex="-1">QUE TIPO DE TEXTO É ESTE?</h2>
                     <div id="options" class="options"></div>
                     <div class="helper">
-                        <img id="mascot" class="mascot" src="../../assets/jojo-mascote-hero.png" alt="" aria-hidden="true">
+                        <img id="mascot" class="mascot" src="../../assets/jojo-mascote-hero.webp" alt="" aria-hidden="true">
                         <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"><strong id="feedbackTitle">LEIA E ESCOLHA.</strong><p id="feedbackText">VOCÊ TEM DUAS TENTATIVAS.</p></div>
                     </div>
                     <p id="advanceNote" class="advance-note" hidden>PRÓXIMO TEXTO EM <span id="seconds">5</span> S…</p>
@@ -48,7 +48,7 @@
     </div>
     <div id="confetti" aria-hidden="true"></div>
     <dialog id="zoomDialog" aria-label="Texto ampliado">
-        <button id="closeZoomBtn" class="utility close-zoom" aria-label="Fechar texto ampliado"><img src="../../assets/jojo-icon-close.png" alt=""></button>
+        <button id="closeZoomBtn" class="utility close-zoom" aria-label="Fechar texto ampliado"><img src="../../assets/jojo-icon-close.webp" alt=""></button>
         <img id="zoomImage" alt="Texto ampliado">
         <details><summary>LER TRANSCRIÇÃO</summary><p id="transcript"></p></details>
     </dialog>

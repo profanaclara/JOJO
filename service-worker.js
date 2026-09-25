@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "jojo-static-";
-const CACHE_VERSION = `${CACHE_PREFIX}v2026-09-24-1`;
+const CACHE_VERSION = `${CACHE_PREFIX}v2026-09-24-2`;
 
 // Keep installation fast. Game pages and media enter the cache after their first visit.
 const APP_SHELL = [
@@ -10,16 +10,16 @@ const APP_SHELL = [
     "./styles/main.css?v=21",
     "./styles/menu.css?v=8",
     "./scripts/app.js?v=2",
-    "./scripts/data.js?v=9",
+    "./scripts/data.js?v=10",
     "./scripts/pwa.js?v=17",
     "./assets/jojo-horizontal.svg",
     "./assets/JOJOdownloadsemfundo.svg",
-    "./assets/jojo-menu-jogos.png",
-    "./assets/jojo-menu-ferramentas.png",
+    "./assets/jojo-menu-jogos.webp",
+    "./assets/jojo-menu-ferramentas.webp",
     "./assets/logo-profanapixelart-small.webp",
-    "./assets/referencia-bem-comum.png",
-    "./assets/referencia-caed-ufjf.png",
-    "./assets/referencia-saeb.png",
+    "./assets/referencia-bem-comum.webp",
+    "./assets/referencia-caed-ufjf.webp",
+    "./assets/referencia-saeb.webp",
     "./assets/fonts/archivo-latin.woff2",
     "./assets/fonts/inter-latin.woff2",
     "./assets/favicon-48.png",

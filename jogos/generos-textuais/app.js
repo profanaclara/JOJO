@@ -13,7 +13,7 @@
         $("soundBtn").setAttribute("aria-pressed", String(sound));
         $("soundBtn").setAttribute("aria-label", sound ? "Desligar som" : "Ligar som");
         $("soundBtn").title = sound ? "Desligar som" : "Ligar som";
-        $("soundBtn").firstElementChild.src = `../../assets/jojo-icon-som-${sound ? "on" : "off"}.png`;
+        $("soundBtn").firstElementChild.src = `../../assets/jojo-icon-som-${sound ? "on" : "off"}.webp`;
     }
     function playSound(correct) {
         if (!sound) return;
@@ -57,7 +57,7 @@
             if (correct || eliminated) {
                 const icon = document.createElement("img");
                 icon.className = "answer-icon"; icon.alt = "";
-                icon.src = `../../assets/jojo-icon-${correct ? "check" : "close"}.png`;
+                icon.src = `../../assets/jojo-icon-${correct ? "check" : "close"}.webp`;
                 button.append(icon);
             }
         });

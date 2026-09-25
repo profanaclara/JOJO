@@ -348,7 +348,7 @@ function updateSoundButtons() {
     const label = state.soundEnabled ? "Som ligado" : "Som desligado";
     [ui.toggleSoundBtn, ui.selectionSoundBtn, ui.sessionSoundBtn].forEach((button) => {
         button.querySelector(".sr-only").textContent = label;
-        button.querySelector(".jojo-icon-sound").src = `../../assets/jojo-icon-som-${state.soundEnabled ? "on" : "off"}.png`;
+        button.querySelector(".jojo-icon-sound").src = `../../assets/jojo-icon-som-${state.soundEnabled ? "on" : "off"}.webp`;
         button.setAttribute("aria-label", label);
         button.setAttribute("aria-pressed", String(state.soundEnabled));
     });
@@ -1057,7 +1057,7 @@ function checkAnswers() {
             return `
                 <div class="result-line ${result.isCorrect ? "result-line--ok" : "result-line--error"}">
                     <span>${result.label}</span>
-                    <span class="result-line__mark">${result.isCorrect ? "<img class=\"result-icon-img\" src=\"../../assets/jojo-icon-check.png\" alt=\"Correto\">" : `<img class=\"result-icon-img\" src=\"../../assets/jojo-icon-close.png\" alt=\"Incorreto\">${escapeHtml(result.correctAnswer)}`}</span>
+                    <span class="result-line__mark">${result.isCorrect ? "<img class=\"result-icon-img\" src=\"../../assets/jojo-icon-check.webp\" alt=\"Correto\">" : `<img class=\"result-icon-img\" src=\"../../assets/jojo-icon-close.webp\" alt=\"Incorreto\">${escapeHtml(result.correctAnswer)}`}</span>
                 </div>
             `;
         })
