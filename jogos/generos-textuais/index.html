@@ -8,7 +8,7 @@
     <meta name="description" content="Descubra os gêneros textuais em um jogo de leitura com imagens, novas tentativas e questões sem fim.">
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="../../manifest.webmanifest">
-    <link rel="stylesheet" href="./styles.css?v=3">
+    <link rel="stylesheet" href="./styles.css?v=4">
     <script src="./data.js?v=2" defer></script>
     <script src="./core.js?v=3" defer></script>
     <script src="./app.js?v=3" defer></script>
@@ -26,7 +26,13 @@
             </div>
         </header>
         <main>
-            <div class="heading-row"><h1>GÊNEROS TEXTUAIS</h1><p class="score"><span id="round">TEXTO 1</span><span id="hits">0 ACERTOS</span></p></div>
+            <div class="heading-row">
+                <h1>GÊNEROS TEXTUAIS</h1>
+                <p class="score">
+                    <span id="round">TEXTO 1</span>
+                    <span id="hits">0 ACERTOS</span>
+                </p>
+            </div>
             <div id="question" class="question" aria-busy="true">
                 <section class="reading" aria-label="Texto da questão">
                     <button id="enlargeBtn" class="image-button" aria-label="Ampliar texto" disabled><img id="cardImage" alt="Texto para identificar o gênero"></button>
@@ -39,7 +45,10 @@
                     <div id="options" class="options"></div>
                     <div class="helper">
                         <img id="mascot" class="mascot" src="../../assets/jojo-mascote-hero.webp" alt="" aria-hidden="true">
-                        <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"><strong id="feedbackTitle">LEIA E ESCOLHA.</strong><p id="feedbackText">VOCÊ TEM DUAS TENTATIVAS.</p></div>
+                        <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true">
+                            <strong id="feedbackTitle">LEIA E ESCOLHA.</strong>
+                            <p id="feedbackText">VOCÊ TEM DUAS TENTATIVAS.</p>
+                        </div>
                     </div>
                     <p id="advanceNote" class="advance-note" hidden>PRÓXIMO TEXTO EM <span id="seconds">5</span> S…</p>
                 </section>
@@ -50,7 +59,10 @@
     <dialog id="zoomDialog" aria-label="Texto ampliado">
         <button id="closeZoomBtn" class="utility close-zoom" aria-label="Fechar texto ampliado"><img src="../../assets/jojo-icon-close.webp" alt=""></button>
         <img id="zoomImage" alt="Texto ampliado">
-        <details><summary>LER TRANSCRIÇÃO</summary><p id="transcript"></p></details>
+        <details>
+            <summary>LER TRANSCRIÇÃO</summary>
+            <p id="transcript"></p>
+        </details>
     </dialog>
     <noscript>ATIVE O JAVASCRIPT PARA JOGAR.</noscript>
 </body>
