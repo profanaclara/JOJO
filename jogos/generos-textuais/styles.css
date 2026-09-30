@@ -510,6 +510,83 @@ body:has(dialog[open]) {
     overflow: hidden;
 }
 
+/* Introdução: player nativo, carregado apenas ao escolher assistir. */
+.intro-dialog {
+    width: min(960px, calc(100vw - 32px));
+    max-height: calc(100svh - 32px);
+    padding: clamp(14px, 3vw, 24px);
+    box-shadow: 0 20px 80px #10284c40;
+}
+
+.intro-dialog h2 {
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    margin: 0 0 14px;
+}
+
+.intro-player {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #182438;
+}
+
+.intro-player video {
+    display: block;
+    width: 100%;
+    max-height: calc(100svh - 210px);
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+}
+
+.intro-play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 22px;
+    background: #fff;
+    color: #162b50;
+    font-weight: 800;
+    box-shadow: 0 6px 28px #10284c40;
+}
+
+.intro-play img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.intro-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.intro-footer p {
+    flex: 1 1 220px;
+    margin: 0;
+    font-size: .8rem;
+    line-height: 1.5;
+    color: #445776;
+}
+
+.intro-skip {
+    min-height: 44px;
+    border: 0;
+    border-radius: 12px;
+    padding: 12px 18px;
+    background: #5144ca;
+    color: #fff;
+    font-weight: 800;
+}
+
 /* Telas menores */
 @media (max-width: 800px) {
     .app-shell {

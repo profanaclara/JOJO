@@ -8,10 +8,10 @@
     <meta name="description" content="Descubra os gêneros textuais em um jogo de leitura com imagens, novas tentativas e questões sem fim.">
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="../../manifest.webmanifest">
-    <link rel="stylesheet" href="./styles.css?v=4">
+    <link rel="stylesheet" href="./styles.css?v=5">
     <script src="./data.js?v=2" defer></script>
     <script src="./core.js?v=3" defer></script>
-    <script src="./app.js?v=3" defer></script>
+    <script src="./app.js?v=4" defer></script>
 </head>
 <body>
     <div class="app-shell">
@@ -55,6 +55,20 @@
             </div>
         </main>
     </div>
+    <dialog id="introDialog" class="intro-dialog" aria-labelledby="introTitle">
+        <h2 id="introTitle">ANTES DE JOGAR</h2>
+        <div class="intro-player">
+            <video id="introVideo" preload="none" playsinline poster="../../assets/videos/jojo-generos-textuais-poster.webp?v=1" aria-label="Apresentação dos gêneros textuais"></video>
+            <button id="playIntroBtn" class="intro-play" type="button" autofocus>
+                <img src="../../assets/jojo-icon-play.webp" alt="">
+                ASSISTIR
+            </button>
+        </div>
+        <div class="intro-footer">
+            <p id="introStatus" role="status">CONHEÇA OS GÊNEROS TEXTUAIS COM O JOJO.</p>
+            <button id="skipIntroBtn" class="intro-skip" type="button">PULAR E JOGAR</button>
+        </div>
+    </dialog>
     <div id="confetti" aria-hidden="true"></div>
     <dialog id="zoomDialog" aria-label="Texto ampliado">
         <button id="closeZoomBtn" class="utility close-zoom" aria-label="Fechar texto ampliado"><img src="../../assets/jojo-icon-close.webp" alt=""></button>

@@ -187,5 +187,43 @@
         requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" }));
     });
     if (!document.documentElement.requestFullscreen) $("fullscreenBtn").hidden = true;
-    syncSound(); nextQuestion();
+    const intro = $("introDialog"), video = $("introVideo"), playIntro = $("playIntroBtn");
+    let started = false;
+    function startGame() {
+        if (started) return;
+        started = true;
+        // Cancel any download and release the decoder when the introduction closes.
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+        nextQuestion(true);
+    }
+    playIntro.addEventListener("click", async () => {
+        // No MP4 request until the user chooses to watch.
+        if (!video.hasAttribute("src")) video.src = "../../assets/videos/jojo-generos-textuais.mp4";
+        video.controls = true;
+        playIntro.hidden = true;
+        $("introStatus").textContent = "VOCÊ PODE PULAR QUANDO QUISER.";
+        try {
+            await video.play();
+            if (intro.open) video.focus();
+        } catch (_) {
+            if (!intro.open) return;
+            playIntro.hidden = false;
+            $("introStatus").textContent = "TOQUE EM ASSISTIR PARA REPRODUZIR OU PULE PARA JOGAR.";
+        }
+    });
+    video.addEventListener("error", () => {
+        if (!intro.open || !video.hasAttribute("src")) return;
+        $("introStatus").textContent = "NÃO FOI POSSÍVEL ABRIR O VÍDEO. VOCÊ PODE PULAR E JOGAR.";
+    });
+    video.addEventListener("ended", () => intro.close());
+    $("skipIntroBtn").addEventListener("click", () => intro.close());
+    // Escape, skipping, and natural completion all start exactly one round.
+    intro.addEventListener("close", startGame);
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden && intro.open) video.pause();
+    });
+    syncSound();
+    intro.showModal();
 })();

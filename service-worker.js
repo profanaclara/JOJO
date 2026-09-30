@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "jojo-static-";
-const CACHE_VERSION = `${CACHE_PREFIX}v2026-09-24-2`;
+const CACHE_VERSION = `${CACHE_PREFIX}v2026-09-30-1`;
 
 // Keep installation fast. Game pages and media enter the cache after their first visit.
 const APP_SHELL = [
@@ -65,7 +65,8 @@ self.addEventListener("fetch", (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    if (request.method !== "GET" || request.headers.has("range")) {
+    // Stream videos directly; never duplicate a full MP4 in the offline cache.
+    if (request.method !== "GET" || request.headers.has("range") || request.destination === "video" || /\.(mp4|webm)$/i.test(url.pathname)) {
         return;
     }
 
