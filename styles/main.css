@@ -205,6 +205,7 @@ a {
 }
 
 .home-action {
+    text-decoration: none;
     min-height: 86px;
     border: 0;
     border-radius: 28px;
@@ -744,3 +745,7 @@ a:focus-visible {
         line-height: 1.32;
     }
 }
+
+.home-help-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; margin-top: 8px; }
+.home-help-links a { display: inline-flex; align-items: center; min-height: 44px; color: #305684; font-size: .82rem; text-underline-offset: 3px; }
+.home-help-links a:focus-visible { outline: 3px solid #305fbd; outline-offset: 3px; border-radius: 4px; }

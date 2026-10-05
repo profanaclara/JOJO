@@ -11,11 +11,14 @@ Desenvolvido por: Ana Clara Silva de Lima
 - Jogos: https://jojo.profanaclara.com.br/jogos/
 - Fluência com palavras: https://jojo.profanaclara.com.br/jogos/palavras/
 - Fluência com textos: https://jojo.profanaclara.com.br/jogos/textos/
+- Gêneros textuais: https://jojo.profanaclara.com.br/jogos/generos-textuais/
+- Cabo de Guerra (operações e frações): https://jojo.profanaclara.com.br/jogos/cabo-de-guerra-operacoes-fracoes/
 - Pop-it da soma: https://jojo.profanaclara.com.br/jogos/popit-soma/
 - Pop-it da subtração: https://jojo.profanaclara.com.br/jogos/popit-subtracao/
 - Tabuada de Pitágoras: https://jojo.profanaclara.com.br/jogos/tabuada-pitagoras/
 - Timer visual: https://jojo.profanaclara.com.br/jogos/timer/
 - Agenda pedagógica: https://jojo.profanaclara.com.br/agenda/
+- Ajuda e dúvidas frequentes: https://jojo.profanaclara.com.br/ajuda.html
 - Privacidade: https://jojo.profanaclara.com.br/privacidade.html
 
 ## Observações

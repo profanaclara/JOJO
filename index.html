@@ -2,6 +2,9 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="google-site-verification" content="czz5yqcmvEUicfWXA0OI70uXG4imL-na0TyB9M91kiY">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-mpCrWD7GnvIgmvGP3IXGSXuqs/+spvbBbBaZ/FJpRJ4='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; frame-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#dbe9ff">
     <meta name="mobile-web-app-capable" content="yes">
@@ -21,6 +24,8 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="JOJO em tablet e celular com jogos e ferramentas educativas">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta name="twitter:image:alt" content="Ilustração da JOJO em tablet e celular com jogos e ferramentas educativas">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="JOJO | Plataforma Educativa">
     <meta name="twitter:description" content="Jogos educacionais e ferramentas para leitura, matemática, fluência, organização do tempo e registros pedagógicos.">
@@ -31,7 +36,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles/main.css?v=21">
+    <link rel="stylesheet" href="./styles/main.css?v=23">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -96,14 +101,14 @@
             </header>
 
             <section class="home-actions" aria-label="Acesso rápido da plataforma">
-                <button class="home-action home-action--games" type="button" data-section="games">
+                <a class="home-action home-action--games" href="./jogos/" data-section="games">
                     <img class="home-action__icon home-action__icon--controle" src="./assets/jojo-menu-jogos.webp" alt="" aria-hidden="true">
                     <span class="home-action__label">Jogos</span>
-                </button>
-                <button class="home-action home-action--tools" type="button" data-section="tools">
+                </a>
+                <a class="home-action home-action--tools" href="./agenda/" data-section="tools">
                     <img class="home-action__icon home-action__icon--cerebro" src="./assets/jojo-menu-ferramentas.webp" alt="" aria-hidden="true">
                     <span class="home-action__label">Ferramentas</span>
-                </button>
+                </a>
             </section>
 
             <button id="installAppBtn" class="install-app-button" type="button" aria-label="Baixar app JOJO" title="Baixar app JOJO">
@@ -119,6 +124,7 @@
                 >
                 <p>Desenvolvido por Ana Clara Silva de Lima</p>
             </footer>
+            <nav class="home-help-links" aria-label="Ajuda e privacidade"><a href="./ajuda.html">Como usar</a><a href="./privacidade.html">Privacidade</a></nav>
 
             <aside class="reference-strip" aria-label="Referências pedagógicas">
                 <span class="reference-strip__label">Referências</span>
@@ -164,7 +170,7 @@
     </div>
 
     <script src="./scripts/data.js?v=10"></script>
-    <script src="./scripts/app.js?v=2"></script>
+    <script src="./scripts/app.js?v=3"></script>
     <script src="./scripts/pwa.js?v=17"></script>
 </body>
 </html>

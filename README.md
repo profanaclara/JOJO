@@ -34,6 +34,7 @@ Linkados no menu (home e `jogos/`):
 
 - `jogos/palavras/`
 - `jogos/textos/`
+- `jogos/generos-textuais/`
 - `jogos/timer/`
 - `jogos/popit-soma/`
 - `jogos/popit-subtracao/`
@@ -65,3 +66,11 @@ A JOJO foi pensada para publicar como site estatico no GitHub Pages, sem backend
 - funciona como site e como app instalavel pelo navegador
 
 Mais detalhes em `docs/deploy-github-pages.md`.
+
+## Validação de segurança e descoberta
+
+`node --test tests/*.test.cjs` verifica os jogos, a política de conteúdo, a seleção de arquivos públicos, a exibição segura de datas na agenda e os links do sitemap. O GitHub Actions executa os testes e publica apenas o diretório `_site/`, preparado por `scripts/prepare-site.cjs`. Node não é necessário para usar o site.
+
+Análise dos vídeos e limites das correções: `docs/revisao-videos-seguranca-seo.md`.
+
+Complemento com os cinco vídeos, ajuda, página 404 e orientações do Search Console: `docs/revisao-videos-2026-10-05.md`. A ajuda pública fica em `ajuda.html`.

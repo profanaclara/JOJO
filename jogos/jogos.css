@@ -288,3 +288,11 @@ a:focus-visible {
         font-size: 0.68rem;
     }
 }
+
+.games-directory {
+    margin: 24px 0;
+    color: #244e9a;
+}
+.games-directory summary { cursor: pointer; padding: 12px 0; }
+.games-directory nav { display: flex; flex-wrap: wrap; gap: 12px 24px; padding: 12px 0; }
+.games-directory a { color: inherit; }

@@ -161,7 +161,12 @@ function renderSheet() {
 }
 
 ui.homeButtons.forEach((button) => {
-    button.addEventListener("click", () => openSheet(button.dataset.section, button));
+    button.addEventListener("click", (event) => {
+        // Keep normal link behavior for new tabs and navigation without JavaScript.
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        openSheet(button.dataset.section, button);
+    });
 });
 
 ui.closeButton.addEventListener("click", closeSheet);

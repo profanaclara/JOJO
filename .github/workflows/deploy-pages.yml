@@ -29,10 +29,21 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Setup Node for validation
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate games, security and SEO
+        run: node --test tests/*.test.cjs
+
+      - name: Prepare public files only
+        run: node scripts/prepare-site.cjs
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: .
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment

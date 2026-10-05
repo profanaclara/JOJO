@@ -355,7 +355,7 @@ function prepareHistory() {
 function renderHistoryMonths() {
     const months = [...new Set(recordsForStudent().map((record) => record.date.slice(0, 7)))];
     if (state.historyMonth !== "all" && !months.includes(state.historyMonth)) state.historyMonth = "all";
-    ui.historyMonth.innerHTML = `<option value="all">Todos os meses</option>${months.map((month) => `<option value="${month}"${state.historyMonth === month ? " selected" : ""}>${escapeHtml(monthLabel(month))}</option>`).join("")}`;
+    ui.historyMonth.innerHTML = `<option value="all">Todos os meses</option>${months.map((month) => `<option value="${escapeHtml(month)}"${state.historyMonth === month ? " selected" : ""}>${escapeHtml(monthLabel(month))}</option>`).join("")}`;
 }
 
 function filteredRecords() {
@@ -381,7 +381,7 @@ function renderHistory() {
             const summary = [record.mood.join(", "), record.activityStatus].filter(Boolean).join(" · ");
             return `${heading}<div class="record-row${record.key === state.activeRecordKey ? " is-active" : ""}">
                 <button class="record-open" type="button" data-open-record="${escapeHtml(record.key)}"><strong>${escapeHtml(dayLabel(record.date))}</strong><span>${escapeHtml(summary)}</span></button>
-                <button class="record-select${state.reportDates.has(record.date) ? " is-selected" : ""}" type="button" data-select-date="${record.date}" aria-label="${state.reportDates.has(record.date) ? "Remover" : "Incluir"} no relatório">${state.reportDates.has(record.date) ? "✓" : "+"}</button>
+                <button class="record-select${state.reportDates.has(record.date) ? " is-selected" : ""}" type="button" data-select-date="${escapeHtml(record.date)}" aria-label="${state.reportDates.has(record.date) ? "Remover" : "Incluir"} no relatório">${state.reportDates.has(record.date) ? "✓" : "+"}</button>
             </div>`;
         }).join("");
         ui.historyList.innerHTML = `<div class="month-group">${ui.historyList.innerHTML}</div>`;

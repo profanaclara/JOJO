@@ -18,3 +18,13 @@ _local/
 _descartados-local/
 tmp-online-cabo/
 referencias/originais/
+
+# Credenciais e artefatos de desenvolvimento
+.env
+.env.*
+*.pem
+*.key
+*.p12
+_site/
+.playwright-cli/
+output/
