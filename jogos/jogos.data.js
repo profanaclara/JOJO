@@ -25,6 +25,13 @@ window.JOJO_GAMES = {
                     status: "Jogar"
                 },
                 {
+                    title: "Detetives dos Textos",
+                    description: "Investigue 30 textos e descubra dez gêneros.",
+                    href: "./detetives-dos-textos/",
+                    art: "../assets/jojo-card-generos-textuais.webp",
+                    status: "Jogar"
+                },
+                {
                     title: "Trilha de alfabetização",
                     description: "Sequência guiada para próximas versões.",
                     art: "../assets/jojo-card-trilha.webp",

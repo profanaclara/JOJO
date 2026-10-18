@@ -7,7 +7,7 @@
     const dialog = $("zoomDialog");
     let ready = false, remaining = 0, lastTick = 0, frame = 0, loadToken = 0;
     let sound = true, audio;
-    try { sound = localStorage.getItem("jojo-findes-sound") !== "off"; } catch (_) { /* Storage may be unavailable. */ }
+    try { sound = localStorage.getItem("jojo-detetives-sound") !== "off"; } catch (_) { /* Storage may be unavailable. */ }
 
     function syncSound() {
         $("soundBtn").setAttribute("aria-pressed", String(sound));
@@ -171,7 +171,7 @@
     $("soundBtn").addEventListener("click", () => {
         sound = !sound; syncSound();
         if (!sound && audio) audio.suspend().catch(() => {});
-        try { localStorage.setItem("jojo-findes-sound", sound ? "on" : "off"); } catch (_) { /* Optional preference. */ }
+        try { localStorage.setItem("jojo-detetives-sound", sound ? "on" : "off"); } catch (_) { /* Optional preference. */ }
     });
     $("fullscreenBtn").addEventListener("click", async () => {
         try {

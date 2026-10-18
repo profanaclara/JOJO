@@ -24,3 +24,5 @@ Desenvolvido por: Ana Clara Silva de Lima
 ## Observações
 
 As atividades de palavras e textos apoiam práticas de fluência leitora e foram inspiradas em formatos de avaliação do Saeb. A plataforma é um recurso pedagógico e não substitui avaliação diagnóstica oficial.
+
+- Detetives dos Textos: https://jojo.profanaclara.com.br/jogos/detetives-dos-textos/ — jogo com 30 textos e dez gêneros textuais.

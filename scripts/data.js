@@ -29,6 +29,13 @@ window.JOJO_DATA = {
                             art: "./assets/jojo-card-generos-textuais.webp",
                             tag: "Alfabetização",
                             href: "./jogos/generos-textuais/"
+                        },
+                        {
+                            title: "Detetives dos Textos",
+                            description: "Investigue 30 textos e descubra dez gêneros.",
+                            art: "./assets/jojo-card-generos-textuais.webp",
+                            tag: "Leitura",
+                            href: "./jogos/detetives-dos-textos/"
                         }
                     ]
                 },

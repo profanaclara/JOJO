@@ -23,12 +23,16 @@ test("publication excludes drafts, credentials and development files", () => {
     }
 });
 
-test("FINDES publishes its player and media without teacher materials", () => {
+test("Text detectives publishes its player and media without teacher materials", () => {
+    assert.ok(read("scripts/data.js").includes('href: "./jogos/detetives-dos-textos/"'));
+    assert.ok(read("jogos/jogos.data.js").includes('href: "./detetives-dos-textos/"'));
+    assert.ok(read("jogos/detetives-dos-textos/index.html").includes('aria-label="Voltar aos jogos"'));
+    assert.doesNotMatch(read("jogos/detetives-dos-textos/index.html"), /findes/i);
     for (const file of ["index.html", "app.js", "core.js", "data.js", "styles.css", "assets/intro-generos.mp4", "assets/cartao-30.png", "ui/fonts/inter-latin.woff2"]) {
-        assert.equal(isPublicFile(`jogos/generos-findes/${file}`), true, file);
+        assert.equal(isPublicFile(`jogos/detetives-dos-textos/${file}`), true, file);
     }
     for (const file of ["material-professor/geracoes.json", "material-professor/montar.py", "material-professor/ACERVO-E-FONTES.md", "LEIA-ME.md", "galeria.html"]) {
-        assert.equal(isPublicFile(`jogos/generos-findes/${file}`), false, file);
+        assert.equal(isPublicFile(`jogos/detetives-dos-textos/${file}`), false, file);
     }
 });
 
