@@ -23,6 +23,15 @@ test("publication excludes drafts, credentials and development files", () => {
     }
 });
 
+test("FINDES publishes its player and media without teacher materials", () => {
+    for (const file of ["index.html", "app.js", "core.js", "data.js", "styles.css", "assets/intro-generos.mp4", "assets/cartao-30.png", "ui/fonts/inter-latin.woff2"]) {
+        assert.equal(isPublicFile(`jogos/generos-findes/${file}`), true, file);
+    }
+    for (const file of ["material-professor/geracoes.json", "material-professor/montar.py", "material-professor/ACERVO-E-FONTES.md", "LEIA-ME.md", "galeria.html"]) {
+        assert.equal(isPublicFile(`jogos/generos-findes/${file}`), false, file);
+    }
+});
+
 test("publication artifact contains only allowed files and refuses a stale output", () => {
     const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "jojo-publication-"));
     try {

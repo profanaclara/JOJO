@@ -6,7 +6,7 @@ const ROOT_FILES = new Set([
     "manifest.webmanifest", "robots.txt", "sitemap.xml", "llms.txt", "CNAME", ".nojekyll"
 ]);
 const GAMES = new Set([
-    "palavras", "textos", "generos-textuais", "popit-soma", "popit-subtracao",
+    "palavras", "textos", "generos-textuais", "generos-findes", "popit-soma", "popit-subtracao",
     "tabuada-pitagoras", "timer", "cabo-de-guerra-operacoes-fracoes",
     "cabo-de-guerra", "cabo-de-guerra-fracoes"
 ]);
@@ -27,6 +27,10 @@ function isPublicFile(relativePath) {
     if (parts[0] !== "jogos") return false;
     if (parts.length === 2) return ["index.html", "jogos.css", "jogos.js", "jogos.data.js"].includes(parts[1]);
     if (!GAMES.has(parts[1])) return false;
+    if (parts[1] === "generos-findes") {
+        if (parts.length === 3) return ["index.html", "styles.css", "app.js", "core.js", "data.js"].includes(parts[2]);
+        return ["assets", "ui"].includes(parts[2]) && MEDIA.has(extension);
+    }
     if (parts.length === 3) return [".html", ".css", ".js"].includes(extension);
     return parts[2] === "assets" && MEDIA.has(extension);
 }
